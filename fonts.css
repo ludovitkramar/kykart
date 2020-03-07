@@ -1,0 +1,118 @@
+@font-face {
+   font-family: 'Cantarell-Bold';
+   src: url('/Cantarell-Bold.otf')
+}
+
+.Cantarell-Bold{
+  font-family: Cantarell-Bold;
+}
+
+@font-face {
+   font-family: 'Cantarell-BoldOblique';
+   src: url('/Cantarell-BoldOblique.otf')
+}
+
+.Cantarell-BoldOblique{
+  font-family: Cantarell-BoldOblique;
+}
+
+@font-face {
+   font-family: 'Cantarell-Oblique';
+   src: url('/Cantarell-Oblique.otf')
+}
+
+.Cantarell-Oblique{
+  font-family: Cantarell-Oblique;
+}
+
+@font-face {
+   font-family: 'Cantarell-Regular';
+   src: url('/Cantarell-Regular.otf')
+}
+
+.Cantarell-Regular{
+  font-family: Cantarell-Regular;
+}
+
+@font-face {
+   font-family: 'LinBiolinum_R';
+   src: url('/LinBiolinum_R.otf')
+}
+
+.LinBiolinum_R{
+  font-family: LinBiolinum_R;
+}
+
+@font-face {
+   font-family: 'LinBiolinum_RB';
+   src: url('/LinBiolinum_RB.otf')
+}
+
+.LinBiolinum_RB{
+  font-family: LinBiolinum_RB;
+}
+
+@font-face {
+   font-family: 'LinBiolinum_RI';
+   src: url('/LinBiolinum_RI.otf')
+}
+
+.LinBiolinum_RI{
+  font-family: LinBiolinum_RI;
+}
+
+@font-face {
+   font-family: 'robotolocal';
+   src: url('/PT_Sans-Regular.ttf')
+}
+
+.PT_Sans {
+  font-family: robotolocal;
+}
+
+
+.text-10{
+  font-size: 10px;
+}
+.text-12{
+  font-size: 12px;
+}
+.text-14{
+  font-size: 14px;
+}
+.text-15{
+  font-size: 15px;
+}
+.text-16{
+  font-size: 16px;
+}
+.text-17{
+  font-size: 17px;
+}
+.text-18{
+  font-size: 18px;
+}
+.text-8{
+  font-size: 8px;
+}
+.text-7{
+  font-size: 7px;
+}
+.text-20{
+  font-size: 20px;
+}
+.text-22{
+  font-size: 22px;
+}
+.text-26{
+  font-size: 26px;
+}
+.text-32{
+  font-size: 32px;
+}
+.text-36{
+  font-size: 36px;
+}
+.text-48{
+  font-size: 48px;
+}

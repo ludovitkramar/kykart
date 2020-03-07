@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="lXyZWoCv5EukUF8g35rh48KI1_gGj-ekF2UJ585nSl8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/old.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/fonts.css">
+  <link rel="stylesheet" href="/music-reproductor.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <title>kykart</title>
+</head>
+<body>
+  <script id="dsq-count-scr" src="//kykart.disqus.com/count.js" async></script>
+  <div class="banner">
+    <a href="/"><img src="/kykart_new.png" class="b-logo"></a>
+  </div>
+<ul class="bar">
+<li class="navbar"><a href="/" class="btn">Home</a></li>
+<li class="navbar"><a href="/music" class="btn">Music Player</a></li>
+<li class="navbar"><a href="/nextcloud" class="btn">Nextcloud</a></li>
+<li class="navbar dropdown"><a href="javascript:void(0)" class="btn dropdown">Content<i class="fas fa-caret-down" style="margin-left:10px;"></i></a>
+<div class="dropdown-content">
+  <a href="/posts" class="dc-link">Random Posts</a>
+  <a href="/photos" class="dc-link">Photos</a>
+  <a class="dc-link" href="/SVIATOS">長尾龜歷險記</a>
+  <a class="dc-link" href="/villancicos">Villancicos</a>
+</div>
+</li>
+
+<li class="navbar dropdown"><a href="javascript:void(0)" class="btn dropdown">Other<i class="fas fa-caret-down" style="margin-left:10px;"></i></a>
+<div class="dropdown-content">
+  <a class="dc-link" href="/uploading">File Uploading</a>
+  <a class="dc-link" href="/comments/">Feedback page</a>
+  <a class="dc-link" href="/template">Template</a>
+  <a class="dc-link" href="/admin">Admin</a>
+</div>
+</li>
+<li class="navbar right"><a href="javascript:shWebsiteNav()" class="btn right hide-when-big" id="shWebNav">Show website navigation<i class="fas fa-caret-down" style="margin-left:10px;"></i></a></li>
+<script type="text/javascript">
+  var status = 0;
+  function shWebsiteNav() {
+    var navbox = document.getElementById('colum-left');
+    var shWebNavBut = document.getElementById('shWebNav');
+    if (status == 0) {
+      status = 1;
+      navbox.style.display = 'block';
+      shWebNavBut.innerHTML = 'Hide website navigation<i class="fas fa-caret-up" style="margin-left:10px;"></i>';
+    } else {
+      status = 0;
+      navbox.style.display = 'none';
+      shWebNavBut.innerHTML = 'Show website navigation<i class="fas fa-caret-down" style="margin-left:10px;"></i>';
+    }
+  }
+</script>
+</ul>
+<div class="colum-left">
+  <div class="rounded-bordered-box navbox"  id="colum-left">
+    <p class="ui">Website navigation:</p>
+    <ul class="nav ui">
+      <li class="nav ui main">The kykart Project:</li>
+      <ul class="nav ui">
+        <li class="nav ui"> <a class="ui" href="/">Homepage</a> </li>
+        <ul class="nav ui">
+          <li class="nav ui"> <a class="ui" href="/#about">About the project</a> </li>
+          <li class="nav ui"> <a class="ui" href="/#news">News and updates</a> </li>
+        </ul>
+        <li class="nav ui"> <a class="ui" href="/music">Music Player</a> </li>
+	<li class="nav ui"> <a class="ui" href="/nextcloud">Nextcloud</a> </li>
+        <li class="nav ui"> <a class="ui" href="/posts">Random Posts</a> </li>
+        <li class="nav ui"> <a class="ui" href="/photos">Photos</a> </li>
+	<li class="nav ui"> <a class="ui" href="/villancicos">Villancicos</a> </li>
+        <li class="nav ui"> <a class="ui" href="/uploading">File Uploading</a> </li>
+        <li class="nav ui"> <a class="ui" href="/SVIATOS/">長尾龜歷險記</a> </li>
+        <li class="nav ui"> <a class="ui" href="/comments/">Feedback page</a> </li>
+        <li class="nav ui"> <a class="ui" href="/admin/">Admin</a> </li>
+      </ul>
+      <li class="nav ui main">Archives:</li>
+      <ul class="nav ui">
+        <li class="nav ui"> <a class="ui" href="/v3">3rd Version</a> </li>
+        <li class="nav ui"> <a class="ui" href="/v2">2nd Version</a> </li>
+        <li class="nav ui"> <a class="ui" href="/v1">1st Version</a> </li>
+        <li class="nav ui">Download ZIP files:</li>
+        <ul class="nav ui">
+          <li class="nav ui"> <a class="ui" href="/old_zips/OldPage(v3).zip">3rd Version ZIP</a> </li>
+          <li class="nav ui"> <a class="ui" href="/old_zips/NewPage(v4.3)(2019-June-23).zip">Version 4.3 ZIP</a> </li>
+          <li class="nav ui"> <a class="ui" href="/old_zips/NewPage(v4.4)(2019-June-23).zip">Complete version 4.4 ZIP</a> </li>
+        </ul>
+      </ul>
+      <li class="nav ui main"><a href="http://kearn.ddns.net">KEARN</a></li>
+    </ul>
+  </div>
+</div>
