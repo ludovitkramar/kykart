@@ -61,12 +61,38 @@
       </div>
       <div class="trContainer">
         <h1 class="center" id="portfolio">Portfolio</h1>
-        <p class="center">Documents, certificates, shows, advertisements, we've got it all!</p>
+        <p class="center lightGrey">Documents, certificates, shows, advertisements, we've got it all!</p>
 
       </div>
       <div class="trContainer colorBox">
-        <h1 class="center" id="contact">Contact</h1>
-        <p class="center">Fill this form or <a class="trLink" href="mailto:ludovit.34@gmail.com">write an email!</a></p>
+        <h1 class="center" id="contact">Are you interested?</h1>
+        <p class="center lightGrey">Fill this form or <a class="trLink" href="mailto:ludovit.34@gmail.com?subject=kykart%20Translation%20website">write an email!</a></p>
+
+        <form name="kykartTranslation" method="POST" data-netlify="true">
+          <p>
+            <label>Your Name: <input type="text" name="name" /></label>   
+          </p>
+          <p>
+            <label>Your Email: <input type="email" name="email" /></label>
+          </p>
+          <p>
+            <label>Language <select name="language[]">
+              <option value="s2e">Spanish to English</option>
+              <option value="s2c">Spanish to Chinese</option>
+              <option value="c2s">Chinese to Spanish</option>
+              <option value="c2e">Chinese to English</option>
+              <option value="e2s">English to Spanish</option>
+              <option value="e2c">English to Chinese</option>
+            </select></label>
+          </p>
+          <p>
+            <label>Message: <textarea name="message"></textarea></label>
+          </p>
+          <p>
+            <button type="submit">Send</button>
+          </p>
+        </form>
+        
 
       </div>
       <br /><span></span>
