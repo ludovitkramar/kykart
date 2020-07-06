@@ -160,12 +160,28 @@ div.footer {
 .flagBall{
     opacity: .6;
     width: 100%;
-    transition: 1.7s;
+    transition: 2s;
 }
 
 .flagBall:hover {
-    transform: rotate(-20deg);
+    transform: rotate(10deg);
     opacity: 1;
+}
+
+ul.trCheckList {
+    margin-top: 10px;
+    margin-left: 40px;
+    padding: 5px;
+    list-style-type: none;
+}
+
+ul.trCheckList > li {
+    margin: .2em;
+    font-size: 1.3em;
+}
+
+.lightGrey {
+    color: #B5B5B0;
 }
 
 /*@keyframes {
