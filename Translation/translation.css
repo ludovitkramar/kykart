@@ -2,6 +2,10 @@ body {
     background-color: #222222;
 }
 
+::selection {
+    background-color: #858585;
+}
+
 * {
     color: #fff;
     padding: 0%;
@@ -198,6 +202,64 @@ a.trLink:hover {
 
 a.trLink:active {
     background-color: #00000022;
+}
+
+.black {
+    color: #000;
+}
+
+.trFormFlex {
+    display: flex;
+    margin: 14px;
+}
+
+.trFormLabel {
+    line-height: 40px;
+    width: 150px;
+}
+
+.trFormElement {
+    width: 100%;
+}
+
+.trFormElement > input {
+    width: 100%;
+}
+
+.trInput {
+    height: 36px;
+    transition: .3s;
+    border-radius: 5px;
+    border-width: 0px;
+    padding: 2px;
+}
+
+.trInput:focus {
+    box-shadow: 0px 0px 7px 0px rgb(153, 205, 229);
+}
+
+.trFormSubmit {
+    border-radius: 7px;
+    background-color: #6b6b6b;
+    width: 120px;
+    height: 50px;
+    border: #555555 solid 0px;
+    border-bottom-width: 5px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.trFormSubmit:hover {
+    background-color: #868686;
+    border-color: #555555;
+}
+
+.trFormSubmit:active {
+    border-color: #303030;
+    background-color: #181818;
+    margin-top: 4px;
+    border-bottom-width: 1px;
+    height: 46px;
 }
 
 /*@keyframes {

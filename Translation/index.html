@@ -66,17 +66,17 @@
       </div>
       <div class="trContainer colorBox">
         <h1 class="center" id="contact">Are you interested?</h1>
-        <p class="center lightGrey">Fill this form or <a class="trLink" href="mailto:ludovit.34@gmail.com?subject=kykart%20Translation%20website">write an email!</a></p>
-
+        <p class="center lightGrey">Fill this form or <a class="trLink" href="mailto:ludovit.34@gmail.com?subject=kykart%20Translation%20website">write an email!</a>, we will get in contact with you as soon as possible!</p>
+        <!--FORM THAT WORKS WELL (for netlify) BUT IS SUPER UGLY
         <form name="kykartTranslation" method="POST" data-netlify="true">
           <p>
-            <label>Your Name: <input type="text" name="name" /></label>   
+            <label>Your Name: <input type="text" name="name" class="black"/></label>   
           </p>
           <p>
-            <label>Your Email: <input type="email" name="email" /></label>
+            <label>Your Email: <input type="email" name="email" class="black"/></label>
           </p>
           <p>
-            <label>Language <select name="language[]">
+            <label>Language <select name="language[]" class="black">
               <option value="s2e">Spanish to English</option>
               <option value="s2c">Spanish to Chinese</option>
               <option value="c2s">Chinese to Spanish</option>
@@ -86,13 +86,46 @@
             </select></label>
           </p>
           <p>
-            <label>Message: <textarea name="message"></textarea></label>
+            <label>Message: <textarea name="message" class="black"></textarea></label>
           </p>
           <p>
-            <button type="submit">Send</button>
+            <button type="submit" class="black">Send</button>
           </p>
         </form>
-        
+        -->
+
+        <div style="margin-top: 30px;">
+        <form name="kykartTranslation" method="POST" data-netlify="true">
+          <div class="trFormFlex">
+            <div class="trFormLabel"><label>Your Name: </label></div>
+            <div class="trFormElement"><input type="text" name="name" class="black trInput" /></div>
+          </div>
+          <div class="trFormFlex">
+            <div class="trFormLabel"><label>Your Email: </label></div>
+            <div class="trFormElement"><input type="email" name="email" class="black trInput"/></div>
+          </div>
+          <div class="trFormFlex">
+            <div class="trFormLabel"><label>Language: </label></div>
+            <div class="trFormElement"><select name="language[]" class="black">
+              <option value="none">---Please select---</option>
+              <option value="s2e">Spanish to English</option>
+              <option value="s2c">Spanish to Chinese</option>
+              <option value="c2s">Chinese to Spanish</option>
+              <option value="c2e">Chinese to English</option>
+              <option value="e2s">English to Spanish</option>
+              <option value="e2c">English to Chinese</option>
+            </select></div>
+          </div>
+          <div class="trFormFlex">
+            <div class="trFormLabel"><label>Message:</label></div>
+            <div class="trFormElement"><textarea name="message" class="black trInput" style="width: 100%; height: 200px;"></textarea></div>
+          </div>
+          <div class="trFormFlex">
+            <div class="trFormLabel"></div>
+            <div class="trFormElement"><button type="submit" class="trFormSubmit">Send</button></div>
+          </div>
+        </form>
+        </div>
 
       </div>
       <br /><span></span>
