@@ -208,6 +208,40 @@ a.trLink:active {
     color: #000;
 }
 
+.trPortfolioFlex {
+    margin-top: 10px;
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    height: 400px;
+    overflow: hidden;
+    transition: .2s;
+}
+
+.trPortfolioElement {
+    width: 25%;
+    overflow: hidden;
+    padding: 20px;
+    perspective: 100px;
+}
+
+.trPortfolioImg {
+    position: relative;
+    height: 100%;
+    transition: .1s;
+    cursor: pointer;
+    object-fit: contain;
+    opacity: .6;
+}
+
+.trPortfolioImg:hover {
+    opacity: .9;
+}
+
+.trPortfolioImg:active {
+    transform: scale(0.9);
+}
+
 .trFormFlex {
     display: flex;
     margin: 14px;
@@ -281,6 +315,9 @@ h1 {
         width: 100%;
     }
     
+    .trPortfolioFlex {
+        height: 300px;
+    }
 }
 
 @media screen and (max-width: 830px){
@@ -288,6 +325,10 @@ h1 {
         /*width: 33%;*/
         height: 50px;
         margin-left: -5px;
+    }
+
+    .trPortfolioFlex {
+        height: 200px;
     }
 
     .tr3Flags{
