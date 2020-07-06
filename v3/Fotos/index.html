@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>kykart</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content=" initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/mobile.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body onload="fixleft()">
+<script src="../hs.js"></script>
+<!--  sidebar starts here -->
+<!--SH button-->
+<div class="button_sh" onclick="hideshow()" id="button_sh"><i class="fa fa-bars" style="position:absolute; color: white; margin-left: 10.5px; font-size: 32px; margin-top: 8px; z-index: 149;"></i><div class="circle_animation"></div></div>
+<div class="shCover" id="shCover" onclick="hideshow()"></div>
+<!--SH button-->
+<div class="header_contain" id="header_contain">
+<div class="header">
+<div class="bar">
+<div class="button" onclick="location.href='/v3/'"><p class="but"><i class="fa fa-home"> </i> Home</p></div>
+<div class="button" onclick="location.href='/v3/Composiciones'"><p class="but"><i class="fa fa-music"> </i> Composiciones</p></div>
+<div class="button_active"><p class="but"><b><i class="fa fa-photo"> </i> Fotos</b></p></div>
+<div class="button" onclick="location.href='/v3/EmptyPage'"><p class="but"><i class="fa fa-file"> </i> EmptyPage</p></div>
+<div class="button" onclick="location.href='/v3/SVIATOS'"><p class="but"><i class="fa fa-file"> </i> 長尾龜歷險記</p></div>
+</div>
+<div class="bottombutton">
+<div class="button" onclick="location.href='/'"><p class="but"><i class="fa fa-desktop"> </i> Back to v4</p></div>
+<div class="button" onclick="location.href='/v2'"><p class="but"><i class="fa fa-desktop"> </i> version 2</p></div>
+<div class="button" onclick="location.href='/v1'"><p class="but"><i class="fa fa-desktop"> </i> version 1</p></div>
+</div>
+</div><img src="/kykart.png" class="logo">
+</div>
+<!-- sidebar ends here-->
+
+<!-- Los bloques start-->
+<div class="topbar"></div>
+
+<script src="../pic.js">
+
+</script>
+
+<div class="blocks">
+<div class="flex_container">
+<div class="imgPreview">
+<img class="preview" src="./1.jpg" onclick="coverall(), pic1()">
+<div class="imgPreviewDescription">Estas son unas virutas de un lapicero de color.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./2.jpg" onclick="coverall(), pic2()">
+<div class="imgPreviewDescription">Esta es una rosa en un tiesto a la cual la hice esta foto para pintarla en la clase de dibujo art&iacutestico.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./3.jpg" onclick="coverall(), pic3()">
+<div class="imgPreviewDescription">Esta casita en ruinas se situa al lado del molino abandonado en Miraflores.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./4.jpg" onclick="coverall(), pic4()">
+<div class="imgPreviewDescription">Estas flores se escapan totalmente de mi memoria.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./5.jpg" onclick="coverall(), pic5()">
+<div class="imgPreviewDescription">Esta foto fue tomada en el monte A-Li de Taiw&aacuten.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./6.jpg" onclick="coverall(), pic6()">
+<div class="imgPreviewDescription">Esta foto tambi&eacuten es de A-Li-Shan.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./7.jpg" onclick="coverall(), pic7()">
+<div class="imgPreviewDescription">Esta foto del tronco tambi&eacuten es de A-Li-Shan.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./8.jpg" onclick="coverall(), pic8()">
+<div class="imgPreviewDescription">Esta fotograf&iacutea tambien fue tomada en A-Li-Shan.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./9.jpg" onclick="coverall(), pic9()">
+<div class="imgPreviewDescription">Esto es Kaohsiung desde la azotea del edificio en el cual vivo.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./10.jpg" onclick="coverall(), pic10()">
+<div class="imgPreviewDescription">Este es un paisaje de Miraflores, esto esta muy cerca de la fuente del pino.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./11.jpg" onclick="coverall(), pic11()">
+<div class="imgPreviewDescription">Un amanecer desde el avi&oacuten.</div></div>
+<div class="imgPreview">
+<img class="preview" src="./12.jpg" onclick="coverall(), pic12()">
+<div class="imgPreviewDescription">Esta rocas pertenecen al mismo lugar que la casa en ruinas.</div></div>
+</div>
+</div>
+<div class="coverall" id="coverall" onclick="hidecoverall()"><img src="" class="coverall" id="fullpic"></div>
+<!-- Los bloques end-->
+<div class="footer"><span class="footer">Informaci&oacuten sobre materiales con derechos de autor.</span></div>
+
+
+</body>
+</html>

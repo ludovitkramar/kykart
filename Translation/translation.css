@@ -1,0 +1,236 @@
+body {
+    background-color: #222222;
+}
+
+* {
+    color: #fff;
+    padding: 0%;
+    margin: 0%;
+    font-family: Nunito;
+}
+
+div.trHeaderBG {
+    border: 2px solid #494947;
+    width: 300%;
+    height: 500px;
+    rotate: -5deg;
+    margin-left: -150%;
+    margin-top: -200px;
+}
+
+div.transformContainer {
+    width: 100%;
+    overflow: hidden;
+}
+
+div.Front {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 100;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+div.trContent {
+    width: 1600px;
+    transition: .5s;
+    
+}
+
+.trContentContainer {
+    display: flex;
+    justify-content: center;
+}
+
+div.trHeaderBox {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.trHeaderBox > div {
+    /*border: 1px solid white;*/
+    display: flex;
+    align-items: center;
+}
+
+img.trLogo {
+    /*width: 33%;*/
+    height: 100px;
+    margin-left: -15px;
+    transition: .5s;
+}
+
+.trHeaderText {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.trGreenButton {
+    background-color: #1DBF73;
+    border-radius: 6px;
+    margin: 20px;
+    padding: 15px;
+    transition: .2s;
+    position: sticky;
+}
+
+.trGreenButton:hover {
+    background-color: #79ddab;
+}
+
+.trGreenButton:active {
+    background-color: #137f4b;
+    padding-top: 19px;
+    padding-bottom: 11px;
+    box-shadow: 0px 10px 30px #000000cc inset;
+}
+
+a.trButtonA {
+    text-decoration: none;
+}
+
+div.footer {
+    background-color: #272725;
+    /*MAYBE USE THAT COLOR IF DOESNT LOOK GOOD*/
+}
+
+.trNavBar {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 50px;
+    border-radius: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: #494947;
+    margin: 10px;
+    transition: .5s;
+}
+
+.trNavBar > a {
+    height: 100%;
+    background-color: #494947;
+    padding-left: 12px;
+    padding-right: 12px;
+    flex-grow: 1;
+    line-height: 50px;
+    text-align: center;
+    transition: .2s;
+}
+
+.trNavBar > a:hover {
+    background-color: #6B6B68;
+}
+
+.trNavBar > a:active {
+    background-color: #3b3b39;
+}
+
+.trContainer {
+    margin: 10px;
+    padding: 20px;
+}
+
+.center {
+    text-align: center;
+}
+
+.trIllustration {
+    align-self: center;
+    width: 30%;
+}
+
+.tr3Flags{
+    margin-top: 40px;
+    width: 60%;
+    display: flex;
+    margin-left: 20%;
+    flex-wrap: nowrap;
+    transition: .5s;
+}
+
+.tr3Flags > div {
+    overflow: hidden;
+}
+
+.flagBall{
+    opacity: .6;
+    width: 100%;
+    transition: 1.7s;
+}
+
+.flagBall:hover {
+    transform: rotate(-20deg);
+    opacity: 1;
+}
+
+/*@keyframes {
+    REMEMBER THE ANIMATIONS
+}*/
+
+h1 {
+    font-size: 44px;
+}
+
+.colorBox {
+    background-color: #494947;
+    border-radius: 20px;
+}
+
+@media screen and (max-width: 1600px){
+    div.trContent {
+        margin-left: 0%;
+        width: 100%;
+    }
+    
+}
+
+@media screen and (max-width: 830px){
+    img.trLogo {
+        /*width: 33%;*/
+        height: 50px;
+        margin-left: -5px;
+    }
+
+    .tr3Flags{
+        width: 100%;
+        margin-left: 0px;
+    }
+
+    .trGreenButton {
+        background-color: #1DBF73;
+        border-radius: 4px;
+        margin: 10px;
+        padding: 6px;
+        transition: .2s;
+    }
+    
+    .trGreenButton:hover {
+        background-color: #79ddab;
+    }
+    
+    .trGreenButton:active {
+        background-color: #137f4b;
+        padding-top: 7px;
+        padding-bottom: 5px;
+        box-shadow: 0px 10px 30px #000000cc inset;
+    }
+   
+    .trNavBar {
+        height: 36px;
+    }
+    
+    .trNavBar > a {
+        line-height: 36px;
+    }
+}
+
+@media screen and (max-width: 550px){
+    .trHeaderText {
+        display: none;
+    }
+}

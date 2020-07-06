@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>kykart</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content=" initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/mobile.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body onload="fixleft()">
+<script src="/hs.js"></script>
+
+<!--  sidebar starts here -->
+<!--SH button-->
+<div class="button_sh" onclick="hideshow()" id="button_sh"><i class="fa fa-bars" style="position:absolute; color: white; margin-left: 10.5px; font-size: 32px; margin-top: 8px; z-index: 149;"></i><div class="circle_animation"></div></div>
+<div class="shCover" id="shCover" onclick="hideshow()"></div>
+<!--SH button-->
+<div class="header_contain" id="header_contain">
+<div class="header">
+<div class="bar">
+<div class="button" onclick="location.href='/v3/'"><p class="but"><i class="fa fa-home"> </i> Home</p></div>
+<div class="button" onclick="location.href='/v3/Composiciones'"><p class="but"><i class="fa fa-music"> </i> Composiciones</p></div>
+<div class="button" onclick="location.href='/v3/Fotos'"><p class="but"><i class="fa fa-photo"> </i> Fotos</p></div>
+<div class="button_active"><p class="but"><b><i class="fa fa-file"> </i> EmptyPage</b></p></div>
+<div class="button" onclick="location.href='/v3/SVIATOS'"><p class="but"><i class="fa fa-file"> </i> 長尾龜歷險記</p></div>
+</div>
+<div class="bottombutton">
+<div class="button" onclick="location.href='/'"><p class="but"><i class="fa fa-desktop"> </i> Back to v4</p></div>
+<div class="button" onclick="location.href='/v2'"><p class="but"><i class="fa fa-desktop"> </i> version 2</p></div>
+<div class="button" onclick="location.href='/v1'"><p class="but"><i class="fa fa-desktop"> </i> version 1</p></div>
+</div>
+</div><img src="/kykart.png" class="logo">
+</div>
+<!-- sidebar ends here-->
+<div class="topbar"></div>
+
+<div class="blocks" style="padding-bottom: 6px; padding-top: 5px;">
+<form action="" method="post" enctype="multipart/form-data" style="margin-left: 10px;">
+    <h2>File uploading</h2><h5>Maximum size is approximately 50MB</h5>
+    <input type="file" name="fileToUpload" id="fileToUpload" style="background-color: brown; border: none;color: white;padding: 10px; text-align: center; font-size: 16px; margin: 4px 2px; border-radius: 8px; cursor: pointer; ">
+    <input type="submit" value="Upload" name="submit" style="background-color: orange; border: none;color: white;padding: 11px; text-align: center; font-size: 16px; margin: 4px 2px; border-radius: 8px; cursor: pointer; ">
+</form>
+</div>
+
+<div class="blocks">
+<iframe src="/v3/uploads" style="left: 0px; right: 0px; width: 100%;  top:0px; " height="500px;" name="iframe" id="your-frame-id"  onload="setIframeHeight(document.getElementById('your-frame-id'));"></iframe>
+</div>
+<!--Following is auto adjust iframe size-->
+<!--<script type="text/javascript">
+function setIframeHeight(iframe) {
+	if (iframe) {
+		var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+		if (iframeWin.document.body) {
+			iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+		}
+	}
+};
+</script>-->
+
+<div class="footer"><span class="footer">Informaci&oacuten sobre materiales con derechos de autor.</span></div>
+</body>
+</html>

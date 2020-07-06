@@ -1,0 +1,191 @@
+ 
+<!--THIS IS THE UNIVERSAL HEADER-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="lXyZWoCv5EukUF8g35rh48KI1_gGj-ekF2UJ585nSl8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/old.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/fonts.css">
+  <link rel="stylesheet" href="/music-reproductor.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <title>kykvit</title>
+</head>
+<body>
+  
+  <div class="banner">
+    <a href="/"><img src="/kykvit.png" class="b-logo"></a>
+  </div>
+<ul class="bar">
+<li class="navbar"><a href="/" class="btn">Home</a></li>
+<li class="navbar"><a href="/Translation/" class="btn">Translation</a></li>
+<li class="navbar dropdown"><a href="javascript:void(0)" class="btn dropdown">Content<i class="fas fa-caret-down" style="margin-left:10px;"></i></a>
+<div class="dropdown-content">
+  <a href="/photos" class="dc-link">Photos</a>
+  <a href="/music" class="dc-link">Music Player</a>
+  <a class="dc-link" href="/SVIATOS">長尾龜歷險記</a>
+  <a class="dc-link" href="/villancicos">Villancicos</a>
+  <a class="dc-link" href="/ToDOs.htm">ToDo Bubbles</a>
+
+</div>
+</li>
+
+<li class="navbar dropdown"><a href="javascript:void(0)" class="btn dropdown">Other<i class="fas fa-caret-down" style="margin-left:10px;"></i></a>
+<div class="dropdown-content">
+  <a class="dc-link" href="/comments/">Feedback page</a>
+  <a class="dc-link" href="/template">Template</a>
+</div>
+</li>
+<li class="navbar right"><a href="javascript:shWebsiteNav()" class="btn right hide-when-big" id="shWebNav">Show website navigation<i class="fas fa-caret-down" style="margin-left:10px;"></i></a></li>
+<script type="text/javascript">
+  var status = 0;
+  function shWebsiteNav() {
+    var navbox = document.getElementById('colum-left');
+    var shWebNavBut = document.getElementById('shWebNav');
+    if (status == 0) {
+      status = 1;
+      navbox.style.display = 'block';
+      shWebNavBut.innerHTML = 'Hide website navigation<i class="fas fa-caret-up" style="margin-left:10px;"></i>';
+    } else {
+      status = 0;
+      navbox.style.display = 'none';
+      shWebNavBut.innerHTML = 'Show website navigation<i class="fas fa-caret-down" style="margin-left:10px;"></i>';
+    }
+  }
+</script>
+</ul>
+<div class="colum-left">
+  <div class="rounded-bordered-box navbox"  id="colum-left">
+    <p class="ui">Website navigation:</p>
+    <ul class="nav ui">
+      <li class="nav ui main">kykvit Project:</li>
+      <ul class="nav ui">
+        <li class="nav ui"> <a class="ui" href="/">Homepage</a> </li>
+        <ul class="nav ui">
+          <li class="nav ui"> <a class="ui" href="/#about">About the project</a> </li>
+          <li class="nav ui"> <a class="ui" href="/#news">News and updates</a> </li>
+        </ul>
+        <li class="nav ui"> <a class="ui" href="/Translation/">Translation</a> </li>
+        <li class="nav ui"> <a class="ui" href="/music">Music Player</a> </li>
+        <li class="nav ui"> <a class="ui" href="/photos">Photos</a> </li>
+	<li class="nav ui"> <a class="ui" href="/villancicos">Villancicos</a> </li>
+        <li class="nav ui"> <a class="ui" href="/SVIATOS/">長尾龜歷險記</a> </li>
+	<li class="nav ui"> <a class="ui" href="/ToDOs.htm">ToDo Bubbles</a> </li>
+        <li class="nav ui"> <a class="ui" href="/comments/">Feedback page</a> </li>
+      </ul>
+      <li class="nav ui main">Archives:</li>
+      <ul class="nav ui">
+        <li class="nav ui"> <a class="ui" href="/v3">3rd Version</a> </li>
+        <li class="nav ui"> <a class="ui" href="/v2">2nd Version</a> </li>
+        <li class="nav ui"> <a class="ui" href="/v1">1st Version</a> </li>
+      </ul>
+      <li class="nav ui main"><a href="http://kearn.ddns.net">KEARN</a></li>
+    </ul>
+  </div>
+</div>
+<div class="colum-center">
+<!--THE CONTENT STARTS FROM HERE----------------------------------------------->
+<script src="pic.js">
+
+</script>
+
+<div class="invisible-box">
+<div class="old-flex_container">
+<div class="old-imgPreview">
+<img class="old-preview" src="1.jpg" onclick="coverall(), pic1()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Estas son unas virutas de un lapicero de color.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="2.jpg" onclick="coverall(), pic2()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Esta es una rosa en un tiesto a la cual la hice esta foto para pintarla en la clase de dibujo art&iacutestico.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="3.jpg" onclick="coverall(), pic3()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Esta casita en ruinas se situa al lado del molino abandonado en Miraflores.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="4.jpg" onclick="coverall(), pic4()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Estas flores se escapan totalmente de mi memoria.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="5.jpg" onclick="coverall(), pic5()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Esta foto fue tomada en el monte A-Li de Taiw&aacuten.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="6.jpg" onclick="coverall(), pic6()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Esta foto tambi&eacuten es de A-Li-Shan.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="7.jpg" onclick="coverall(), pic7()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Esta foto del tronco tambi&eacuten es de A-Li-Shan.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="8.jpg" onclick="coverall(), pic8()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Esta fotograf&iacutea tambien fue tomada en A-Li-Shan.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="9.jpg" onclick="coverall(), pic9()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Esto es Kaohsiung desde la azotea del edificio en el cual vivo.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="10.jpg" onclick="coverall(), pic10()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Este es un paisaje de Miraflores, esto esta muy cerca de la fuente del pino.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="11.jpg" onclick="coverall(), pic11()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Un amanecer desde el avi&oacuten.</div></div>
+<div class="old-imgPreview">
+<img class="old-preview" src="12.jpg" onclick="coverall(), pic12()">
+<div class="old-imgPreviewDescription Cantarell-Regular">Esta rocas pertenecen al mismo lugar que la casa en ruinas.</div></div>
+</div>
+</div>
+<div class="old-coverall" id="coverall" onclick="hidecoverall()"><img src="" class="old-coverall" id="fullpic"></div>
+
+
+
+<!--THE CONTENT ENDS HERE------------------------------------------------------>
+</div>
+<div class="colum-right">
+<!--Right colum starts--------------------------------------------------------->
+
+<!--Right colum ends----------------------------------------------------------->
+</div>
+<div class="footer">
+<img src="/kykart_new.png" alt="" class="footerLogo">
+<div class="footer-flex-container">
+ <div class="flex-colum">
+   <b><p class="ui footerText text-14">kykvit</p></b>
+   <a href="/" class="ui footerLink">Homepage</a><br />
+   <a href="/#about" class="ui footerLink">About</a><br />
+   <a href="/#news" class="ui footerLink">News</a><br />
+   <a href="#" class="ui footerLink"> </a><br />
+ </div>
+ <div class="flex-colum">
+   <b><p class="ui footerText text-14">Translation</p></b>
+   <a href="/Translation/" class="ui footerLink">Information</a><br />
+   <a href="https://www.fiverr.com/share/K30Lwk" class="ui footerLink">Fiverr page</a><br />
+   <a href="/Translation/#portfolio" class="ui footerLink">Portfolio</a><br />
+   <a href="/Translation/#contact" class="ui footerLink">Contact</a><br />
+ </div>
+ <div class="flex-colum">
+   <b><p class="ui footerText text-14">Hosting</p></b>
+   <a href="/music" class="ui footerLink">Music</a><br />
+   <a href="/photos" class="ui footerLink">Photos</a><br />
+   <a href="/SVIATOS/" class="ui footerLink">長尾龜歷險記</a><br />
+   <a href="/villancicos" class="ui footerLink">Villancicos</a><br />
+ </div>
+ <div class="flex-colum">
+   <b><p class="ui footerText text-14">Server</p></b>
+   <a href="/admin/" class="ui footerLink">Administration</a><br />
+   <a href="/posts" class="ui footerLink">Posts</a><br />
+   <a href="http://kearn.ddns.net" class="ui footerLink">KEARN</a><br />
+   <a href="/nextcloud" class="ui footerLink">Nextcloud</a><br />
+ </div>
+</div>
+
+  <div class="disclamers ui">
+    <span class="greyText"><a href="https://fontawesome.com" class="greyLink"><i class="fab fa-font-awesome"></i> Font Awesome</a> icons are used</span>
+    <span class="greyText"> | </span>
+    <a href="/comments/" class="greyLink">Do you have a comment or suggestion?</a>
+    <br /><span class="greyText ui">
+    <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">kykvit Project</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://kykvit.com" property="cc:attributionName" rel="cc:attributionURL" class="ui footerLink">Ludovit Kramar Garcia</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/" class="ui footerLink">Creative Commons Attribution 4.0 International License</a>.<br />
+    <a class="ui footerLink" rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+    </span>
+  </div>
+</div>
+</body>
+</html>
