@@ -184,6 +184,22 @@ ul.trCheckList > li {
     color: #B5B5B0;
 }
 
+a.trLink {
+    color: #fff;
+    text-decoration: none;
+    transition: .4s;
+    background-color: #ffffff22;
+}
+
+a.trLink:hover {
+    background-color: #ffffff22;
+    text-decoration: underline;
+}
+
+a.trLink:active {
+    background-color: #00000022;
+}
+
 /*@keyframes {
     REMEMBER THE ANIMATIONS
 }*/
