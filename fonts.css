@@ -1,42 +1,11 @@
-@font-face {
-   font-family: 'Cantarell-Bold';
-   src: url('/Cantarell-Bold.otf')
-}
-
 .sourceSans {
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 400;
 }
 
-.Cantarell-Bold{
-  font-family: Cantarell-Bold;
-}
-
-@font-face {
-   font-family: 'Cantarell-BoldOblique';
-   src: url('/Cantarell-BoldOblique.otf')
-}
-
-.Cantarell-BoldOblique{
-  font-family: Cantarell-BoldOblique;
-}
-
-@font-face {
-   font-family: 'Cantarell-Oblique';
-   src: url('/Cantarell-Oblique.otf')
-}
-
-.Cantarell-Oblique{
-  font-family: Cantarell-Oblique;
-}
-
-@font-face {
-   font-family: 'Cantarell-Regular';
-   src: url('/Cantarell-Regular.otf')
-}
-
 .Cantarell-Regular{
-  font-family: Cantarell-Regular;
+  /*font-family: Cantarell-Regular;*/
+  font-family: 'Cantarell', sans-serif;
 }
 
 @font-face {
@@ -65,16 +34,6 @@
 .LinBiolinum_RI{
   font-family: LinBiolinum_RI;
 }
-
-@font-face {
-   font-family: 'robotolocal';
-   src: url('/PT_Sans-Regular.ttf')
-}
-
-.PT_Sans {
-  font-family: robotolocal;
-}
-
 
 .text-10{
   font-size: 10px;
