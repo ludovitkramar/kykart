@@ -3,6 +3,11 @@
    src: url('/Cantarell-Bold.otf')
 }
 
+.sourceSans {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+}
+
 .Cantarell-Bold{
   font-family: Cantarell-Bold;
 }
