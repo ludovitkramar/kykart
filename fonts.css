@@ -3,9 +3,29 @@
   font-weight: 400;
 }
 
+.Cantarell-Bold{
+  /*font-family: Cantarell-Regular;*/
+  font-family: 'Cantarell', sans-serif;
+  font-weight: 700;
+}
+
+.Cantarell-BoldOblique{
+  /*font-family: Cantarell-Regular;*/
+  font-family: 'Cantarell', sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.Cantarell-Oblique{
+  /*font-family: Cantarell-Regular;*/
+  font-family: 'Cantarell', sans-serif;
+  font-style: oblique;
+}
+
 .Cantarell-Regular{
   /*font-family: Cantarell-Regular;*/
   font-family: 'Cantarell', sans-serif;
+  font-weight: 400;
 }
 
 @font-face {
