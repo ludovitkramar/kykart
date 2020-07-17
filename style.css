@@ -1,9 +1,44 @@
 *{
-  margin: 0px;
-  word-wrap: break-word;
+  margin: 0;
 }
+
+html{
+  /*height: 100%;*/
+}
+
 body{
+  /*height: 100%;*/
+  /*min-height: 100%;*/
   /*background-color: #f9f9f9;*/
+}
+
+html,body{
+    height: 100%
+}
+
+#header{
+    background-color: yellow;
+    height: 100px;
+    width: 100%;
+}
+
+#holder {
+    min-height: 100%;
+    position:relative;
+}
+
+#body {
+    padding-bottom: 300px;
+    display: flex;
+    
+}
+
+#footer{
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    float: left;
 }
 
 div.banner {
@@ -11,7 +46,7 @@ div.banner {
   height: 120px;
   background-image: linear-gradient(-35deg, #7ecece , #7CCFE5 , #44BADF );
   /*KEARN ORANGEbackground-image: linear-gradient(250deg, #f06543, #f09d51);*/
-  position: relative;
+  /*position: ;*/
 }
 
 img.b-logo {
@@ -158,18 +193,18 @@ a:hover{
 
 .colum-left{
   width: 18%;
-  float: left;
+  /*float: left;*/
 }
 
 .colum-center{
   width: 74%;
-  float: left;
+  /*float: left;*/
   background-color: #fff;
 }
 
 .colum-right{
   width: 8%;
-  float: left;
+  /*float: left;*/
 }
 
 .rounded-bordered-box {
@@ -245,11 +280,9 @@ iframe.uploads {
 }
 
 div.footer {
-  width: 100%;
   background-color: #16252c;
-  height: auto;
-  float: left;
 }
+
 img.footerLogo {
   width: 9%;
   margin-left: 2%;
