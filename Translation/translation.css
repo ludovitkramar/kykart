@@ -266,6 +266,8 @@ a.trLink:active {
     border-radius: 5px;
     border-width: 0px;
     padding: 2px;
+    resize: vertical;
+    overflow: scroll;
 }
 
 .trInput:focus {
