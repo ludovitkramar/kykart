@@ -271,7 +271,7 @@ a.trLink:active {
     transition: none;
 }
 
-.trInput > {
+.trInput > option {
     color: black;
 }
 
