@@ -1,4 +1,4 @@
 # kykart
-## kykvit project website
+## kykvit website
 
 Hosted on http://kykvit.com
