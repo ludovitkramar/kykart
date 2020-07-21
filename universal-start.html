@@ -1,20 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta name="google-site-verification" content="lXyZWoCv5EukUF8g35rh48KI1_gGj-ekF2UJ585nSl8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="/old.css">
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="/fonts.css">
-  <link rel="stylesheet" href="/music-reproductor.css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <title>kykvit</title>
-</head>
-<body>
-  
+<div id="holder"> <!--THIS LINE may BREAK THE PAGES THAT DOESNT USE THE STANDART STYLING FORMAT-->
   <div class="banner">
     <a href="/"><img src="/kykvit.png" class="b-logo"></a>
   </div>
@@ -39,23 +23,8 @@
 </div>
 </li>
 <li class="navbar right"><a href="javascript:shWebsiteNav()" class="btn right hide-when-big" id="shWebNav">Show website navigation<i class="fas fa-caret-down" style="margin-left:10px;"></i></a></li>
-<script type="text/javascript">
-  var status = 0;
-  function shWebsiteNav() {
-    var navbox = document.getElementById('colum-left');
-    var shWebNavBut = document.getElementById('shWebNav');
-    if (status == 0) {
-      status = 1;
-      navbox.style.display = 'block';
-      shWebNavBut.innerHTML = 'Hide website navigation<i class="fas fa-caret-up" style="margin-left:10px;"></i>';
-    } else {
-      status = 0;
-      navbox.style.display = 'none';
-      shWebNavBut.innerHTML = 'Show website navigation<i class="fas fa-caret-down" style="margin-left:10px;"></i>';
-    }
-  }
-</script>
 </ul>
+<div id="body"> <!--THIS LINE WILL BREAK THE PAGES THAT DOESNT USE THE STANDART STYLING FORMAT-->
 <div class="colum-left">
   <div class="rounded-bordered-box navbox"  id="colum-left">
     <p class="ui">Website navigation:</p>
@@ -81,7 +50,7 @@
         <li class="nav ui"> <a class="ui" href="/v2">2nd Version</a> </li>
         <li class="nav ui"> <a class="ui" href="/v1">1st Version</a> </li>
       </ul>
-      <li class="nav ui main"><a href="http://kearn.ddns.net">KEARN</a></li>
+      <li class="nav ui main"><a href="http://art.kykvit.com">KEARN</a></li>
     </ul>
   </div>
 </div>
