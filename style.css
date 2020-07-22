@@ -348,6 +348,9 @@ div.blue-rounded-box {
   .btn {
     transition: none;
   }
+  #body {
+    display: inline-block;
+  }
   div.colum-right {
     width: 5%;
   }
