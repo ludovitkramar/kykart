@@ -8,36 +8,23 @@
   <script src="./generateHead.js"></script>
 </head>
 <body>
-<!--here goes universal start-->
-<script src="./generateHeader.js"></script>
-<!--here goes universal content template-->
-<div class="colum-center">
-  <!--THE CONTENT STARTS FROM HERE----------------------------------------------->
-  <div class="invisible-box">
-    <span class="ui">Nunito (UI) (google)</span><br />
-    <span style="font-family: Source Serif Pro;">Source Serif Pro (google)</span><br />
-    <span class="PT_Sans">PT_Sans</span><br />
-    <span class="Cantarell-Bold">Cantarell-Bold</span><br />
-    <span class="Cantarell-BoldOblique">Cantarell-BoldOblique</span><br />
-    <span class="Cantarell-Oblique">Cantarell-Oblique</span><br />
-    <span class="Cantarell-Regular">Cantarell-Regular</span><br />
-    <span class="LinBiolinum_R">LinBiolinum_R</span><br />
-    <span class="LinBiolinum_RB">LinBiolinum_RB</span><br />
-    <span class="LinBiolinum_RI">LinBiolinum_RI</span><br />
+<div id="holder">
+  <div class="banner" id="banner"></div>
+  <ul class="bar" id="bar"></ul>
+  <div id="body">
+    <div class="colum-left" id="columLeft"></div>
+    <div class="colum-center">
+      <!--HERE IS WHERE THE CONTENTS GO!-->
+      <p class="content">This is a page constructed with javascript from components that correspond to the structure of this design. This is to create a dynamically modifiable design on a static server.</p>
+    </div>
+    <div class="colum-right"></div>
   </div>
-  
-  
-  
-  <!--THE CONTENT ENDS HERE------------------------------------------------------>
-  </div>
-  <div class="colum-right">
-  <!--Right colum starts--------------------------------------------------------->
-  R
-  <!--Right colum ends----------------------------------------------------------->
-  </div>
-  </div>
-<!--universal content templaste ends here-->
-<!--here goes universal end-->
-<script src="./generateFooter.js"></script>
+  <div class="footer" id="footer"></div>
+</div>
+<script src="/universalFormat/uniBanner.js"></script>
+<script src="/universalFormat/uniBar.js"></script>
+<script src="/universalFormat/uniColumLeft.js"></script>
+<script src="/universalFormat/uniFooter.js"></script>
+<script src="/universalFormat/shNavigation.js"></script>
 </body>
 </html>
