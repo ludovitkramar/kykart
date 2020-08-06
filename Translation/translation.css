@@ -389,6 +389,8 @@ h1 {
     animation-name: dialogOpen;
     animation-duration: .2s;
     animation-timing-function: ease-out;
+    border-radius: 20px;
+    background-color: var(--body-bg);
 }
 
 @keyframes dialogOpen {
