@@ -349,7 +349,7 @@ h1 {
     position: sticky;
 }
 
-.trBlueButton > span {
+.trBlueButton > * {
     color: #ffffff;
 }
 
