@@ -21,7 +21,7 @@
     <div class="trContent">
   <!--anything outside of "Front" will be broken-->
       <div class="trHeaderBox">
-        <div style="flex-grow: 1;"><img src="./kykvitTranslation.png" class="trLogo" id="trLogo"></div>
+        <div style="flex-grow: 1;"><img src="./kykvitTranslation.png" class="trLogo" id="trLogo" alt="kykvit Translation"></div>
         <div>
           <span class="trHeaderText">Available at Fiverr!</span>
         </div>
@@ -38,9 +38,9 @@
         <h1 class="center">Specialized in the big 3</h1>
         <p class="center lightGrey">We offer translation in the three most spoken languages of the world! English, Chinese, and Spanish!</p>
         <div class="tr3Flags">
-          <div><img class="flagBall" src="./spain_640.png"></div>
-          <div><img class="flagBall" src="./usa_640.png"></div>
-          <div><img class="flagBall" src="./china_640.png"></div>
+          <div><img class="flagBall" src="./spain_640.png" alt="Spain flag"></div>
+          <div><img class="flagBall" src="./usa_640.png" alt="USA flag"></div>
+          <div><img class="flagBall" src="./china_640.png" alt="PROC flag"></div>
         </div>
       </div>
       <div class="trContainer colorBox">
@@ -60,15 +60,15 @@
         <p class="center lightGrey">Documents, certificates, shows, advertisements, we've got it all!</p>
         <div class="trPortfolioFlex">
           <div class="trPortfolioElement">
-            <img src="./doc1p1o.png" class="trPortfolioImg">
+            <img src="./doc1p1o.png" class="trPortfolioImg" alt="Sample Document">
           </div>
           <div class="trPortfolioElement">
-            <img src="./doc2p1t.png" class="trPortfolioImg">
+            <img src="./doc2p1t.png" class="trPortfolioImg" alt="Sample Document">
           </div>
           <div class="trPortfolioElement">
-            <img src="./doc2p2o.png" class="trPortfolioImg">
+            <img src="./doc2p2o.png" class="trPortfolioImg" alt="Sample Document">
           </div><div class="trPortfolioElement">
-            <img src="./doc3.png" class="trPortfolioImg" id="trDoc3" onclick="showDoc3()">
+            <img src="./doc3.png" class="trPortfolioImg"  alt="Sample Document">
           </div>
         </div>
       </div>
@@ -78,16 +78,16 @@
         <div style="margin-top: 30px;">
         <form name="kykvitTranslation" method="POST" data-netlify="true">
           <div class="trFormFlex">
-            <div class="trFormLabel"><label>Your Name: </label></div>
-            <div class="trFormElement"><input type="text" name="name" class="black trInput" /></div>
+            <div class="trFormLabel"><label for="formYourname">Your Name: </label></div>
+            <div class="trFormElement"><input type="text" name="name" class="black trInput" id="formYourname"/></div>
           </div>
           <div class="trFormFlex">
-            <div class="trFormLabel"><label>Your Email: </label></div>
-            <div class="trFormElement"><input type="email" name="email" class="black trInput"/></div>
+            <div class="trFormLabel"><label for="formYouremail">Your Email: </label></div>
+            <div class="trFormElement"><input type="email" name="email" class="black trInput" id="formYouremail"/></div>
           </div>
           <div class="trFormFlex">
-            <div class="trFormLabel"><label>Language: </label></div>
-            <div class="trFormElement"><select name="language[]" class="black trInput">
+            <div class="trFormLabel"><label for="formLangselect">Language: </label></div>
+            <div class="trFormElement"><select name="language[]" class="black trInput" id="formLangselect">
               <option value="none">---Please select---</option>
               <option value="s2e">Spanish to English</option>
               <option value="s2c">Spanish to Chinese</option>
@@ -98,8 +98,8 @@
             </select></div>
           </div>
           <div class="trFormFlex">
-            <div class="trFormLabel"><label>Message:</label></div>
-            <div class="trFormElement"><textarea name="message" class="black trInput" style="width: 100%; height: 200px;"></textarea></div>
+            <div class="trFormLabel"><label for="formMessage">Message:</label></div>
+            <div class="trFormElement"><textarea name="message" class="black trInput" style="width: 100%; height: 200px;" id="formMessage"></textarea></div>
           </div>
           <div class="trFormFlex">
             <div class="trFormLabel"></div>
