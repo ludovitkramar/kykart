@@ -1,30 +1,25 @@
+.darkTheme {
+    --body-bg: #222222;
+    --selection: #858585;
+    --text: #ffffff;
+    --blocks-bg: #494947;
+    --navbar-bg: #494947;
+    --footer-bg: #272725;
+}
+
 body {
-    background-color: #222222;
+    background-color: var(--body-bg);
 }
 
 ::selection {
-    background-color: #858585;
+    background-color: var(--selection);
 }
 
 * {
-    color: #fff;
+    color: var(--text);
     padding: 0%;
     margin: 0%;
     font-family: Nunito;
-}
-
-div.trHeaderBG {
-    border: 2px solid #494947;
-    width: 300%;
-    height: 500px;
-    rotate: -5deg;
-    margin-left: -150%;
-    margin-top: -200px;
-}
-
-div.transformContainer {
-    width: 100%;
-    overflow: hidden;
 }
 
 div.Front {
@@ -81,6 +76,7 @@ img.trLogo {
     padding: 15px;
     transition: .2s;
     position: sticky;
+    color: #ffffff;
 }
 
 .trGreenButton:hover {
@@ -99,8 +95,7 @@ a.trButtonA {
 }
 
 div.footer {
-    background-color: #272725;
-    /*MAYBE USE THAT COLOR IF DOESNT LOOK GOOD*/
+    background-color: var(--footer-bg);
 }
 
 .trNavBar {
@@ -110,14 +105,14 @@ div.footer {
     border-radius: 10px;
     padding-right: 10px;
     padding-left: 10px;
-    background-color: #494947;
+    background-color: var(--navbar-bg);
     margin: 10px;
     transition: .5s;
 }
 
 .trNavBar > a {
     height: 100%;
-    background-color: #494947;
+    background-color: var(--navbar-bg);
     padding-left: 12px;
     padding-right: 12px;
     flex-grow: 1;
@@ -312,7 +307,7 @@ h1 {
 }
 
 .colorBox {
-    background-color: #494947;
+    background-color: var(--blocks-bg);
     border-radius: 20px;
 }
 
