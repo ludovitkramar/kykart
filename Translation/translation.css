@@ -136,6 +136,7 @@ img.trLogo {
 
 .trBlueButton > * {
     color: #ffffff;
+    text-decoration: none;
 }
 
 .trBlueButton:hover {
