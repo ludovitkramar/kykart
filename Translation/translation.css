@@ -96,14 +96,10 @@ img.trLogo {
 
 .trGreenButton {
     background-color: #1DBF73;
-    border-radius: 6px;
-    margin: 20px;
-    padding: 15px;
-    transition: .2s;
-    position: sticky;
+    /*position: sticky;*/
 }
 
-.trGreenButton > span {
+.trGreenButton > * {
     color: #ffffff;
 }
 
@@ -113,13 +109,38 @@ img.trLogo {
 
 .trGreenButton:active {
     background-color: #137f4b;
+    
+}
+
+.trButtonA {
+    text-decoration: none;
+    border-radius: 6px;
+    margin: 20px;
+    padding: 15px;
+    transition: .2s;
+}
+
+.trButtonA:active {
     padding-top: 19px;
     padding-bottom: 11px;
     box-shadow: 0px 10px 30px #000000cc inset;
 }
 
-a.trButtonA {
-    text-decoration: none;
+.trBlueButton {
+    background-color: #1d7ebf;
+}
+
+.trBlueButton > * {
+    color: #ffffff;
+}
+
+.trBlueButton:hover {
+    background-color: #79a1dd;
+}
+
+.trBlueButton:active {
+    background-color: #13397f;
+    box-shadow: 0px 10px 30px #000000cc inset;
 }
 
 div.footer {
@@ -340,30 +361,6 @@ h1 {
     border-radius: 20px;
 }
 
-.trBlueButton {
-    background-color: #1d7ebf;
-    border-radius: 6px;
-    margin: 20px;
-    padding: 15px;
-    transition: .2s;
-    position: sticky;
-}
-
-.trBlueButton > * {
-    color: #ffffff;
-}
-
-.trBlueButton:hover {
-    background-color: #79a1dd;
-}
-
-.trBlueButton:active {
-    background-color: #13397f;
-    padding-top: 19px;
-    padding-bottom: 11px;
-    box-shadow: 0px 10px 30px #000000cc inset;
-}
-
 @media screen and (max-width: 1600px){
     div.trContent {
         margin-left: 0%;
@@ -391,24 +388,13 @@ h1 {
         margin-left: 0px;
     }
 
-    .trGreenButton {
+    .trButtonA {
         border-radius: 4px;
         margin: 10px;
         padding: 6px;
     }
     
-    .trGreenButton:active {
-        padding-top: 7px;
-        padding-bottom: 5px;
-    }
-   
-    .trBlueButton {
-        border-radius: 4px;
-        margin: 10px;
-        padding: 6px;
-    }
-    
-    .trBlueButton:active {
+    .trButtonA:active {
         padding-top: 7px;
         padding-bottom: 5px;
     }
