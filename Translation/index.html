@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="darkTheme">
 <head>
   <meta name="google-site-verification" content="lXyZWoCv5EukUF8g35rh48KI1_gGj-ekF2UJ585nSl8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,12 +20,12 @@
     <div class="trContent">
   <!--anything outside of "Front" will be broken-->
       <div class="trHeaderBox">
-        <div style="flex-grow: 1;"><img src="./kykvitTranslation.png" class="trLogo"></div>
+        <div style="flex-grow: 1;"><img src="./kykvitTranslation.png" class="trLogo" id="trLogo"></div>
         <div>
           <span class="trHeaderText">Available at Fiverr!</span>
         </div>
-        
-        <div><a href="https://www.fiverr.com/share/K30Lwk" class="trButtonA trGreenButton"><span class="">Fiverr page</span></a></div>
+        <div><a class="trButtonA trBlueButton" href="javascript:alert('Not implemented');"><span><i class="fas fa-globe"></i>&nbsp;&nbsp;LANG</span></a></div>
+        <div><a href="https://www.fiverr.com/share/K30Lwk" class="trButtonA trGreenButton"><span class="">Fiverr</span></a></div>
       </div>
       <div class="trNavBar ">
         <a class="trButtonA" href="https://www.fiverr.com/share/K30Lwk"><span>Fiverr</span></a>
@@ -69,43 +69,11 @@
           </div><div class="trPortfolioElement">
             <img src="./doc3.png" class="trPortfolioImg" id="trDoc3" onclick="showDoc3()">
           </div>
-          <script>
-            function showDoc3() {
-              
-            }
-          </script>
         </div>
       </div>
       <div class="trContainer colorBox">
         <h1 class="center" id="contact">Contact</h1>
         <p class="center lightGrey">Fill this form, <a class="trLink" href="mailto:ludovit.34@gmail.com?subject=kykvit%20Translation%20website">write an email</a>, or visit our <a href="https://www.fiverr.com/share/K30Lwk" class="trLink">Fiverr page</a>, we will be in contact with you soon!</p>
-        <!--FORM THAT WORKS WELL (for netlify) BUT IS SUPER UGLY
-        <form name="kykartTranslation" method="POST" data-netlify="true">
-          <p>
-            <label>Your Name: <input type="text" name="name" class="black"/></label>   
-          </p>
-          <p>
-            <label>Your Email: <input type="email" name="email" class="black"/></label>
-          </p>
-          <p>
-            <label>Language <select name="language[]" class="black">
-              <option value="s2e">Spanish to English</option>
-              <option value="s2c">Spanish to Chinese</option>
-              <option value="c2s">Chinese to Spanish</option>
-              <option value="c2e">Chinese to English</option>
-              <option value="e2s">English to Spanish</option>
-              <option value="e2c">English to Chinese</option>
-            </select></label>
-          </p>
-          <p>
-            <label>Message: <textarea name="message" class="black"></textarea></label>
-          </p>
-          <p>
-            <button type="submit" class="black">Send</button>
-          </p>
-        </form>
-        -->
-
         <div style="margin-top: 30px;">
         <form name="kykvitTranslation" method="POST" data-netlify="true">
           <div class="trFormFlex">
@@ -159,6 +127,7 @@
    <a href="https://www.fiverr.com/share/K30Lwk" class="ui footerLink">Fiverr page</a><br />
    <a href="/Translation/#portfolio" class="ui footerLink">Portfolio</a><br />
    <a href="/Translation/#contact" class="ui footerLink">Contact</a><br />
+   <a href="javascript:toggleTheme();" class="ui footerLink">Toggle theme</a><br />
  </div>
  <div class="flex-colum">
    <b><p class="ui footerText text-14">Hosting</p></b>
@@ -177,11 +146,11 @@
 </div>
 
   <div class="disclamers ui">
-    <span class="greyText"><a href="https://fontawesome.com" class="greyLink"><i class="fab fa-font-awesome"></i> Font Awesome</a> icons are used</span>
+    <span class="greyText"><a href="https://fontawesome.com" class="greyLink"><i class="fab fa-font-awesome" style="color: white;"></i> Font Awesome</a> icons are used</span>
     <span class="greyText"> | </span>
     <a href="/comments/" class="greyLink">Do you have a comment or suggestion?</a>
     <br /><span class="greyText ui">
-    <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">kykvit Project</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://kykvit.com" property="cc:attributionName" rel="cc:attributionURL" class="ui footerLink">Ludovit Kramar Garcia</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/" class="ui footerLink">Creative Commons Attribution 4.0 International License</a>.<br />
+    <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title" style="color:white;">kykvit Project</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://kykvit.com" property="cc:attributionName" rel="cc:attributionURL" class="ui footerLink">Ludovit Kramar Garcia</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/" class="ui footerLink">Creative Commons Attribution 4.0 International License</a>.<br />
     <a class="ui footerLink" rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </span>
   </div>
@@ -189,4 +158,31 @@
 </body>
 </html>
 </div>
+<script>
+  function setTheme(themeName) {
+    localStorage.setItem('theme', themeName);
+    document.documentElement.className = themeName;
+    if(localStorage.getItem('theme') === 'lightTheme') {
+      document.getElementById('trLogo').src = "./kykvitTranslationLight.png";
+    } else {
+      document.getElementById('trLogo').src = "./kykvitTranslation.png";
+    }
+  }
+
+function toggleTheme() {
+  if(localStorage.getItem('theme') === 'darkTheme'){
+    setTheme('lightTheme');
+  } else {
+    setTheme('darkTheme');
+  }
+}
+
+(function () {
+  if(localStorage.getItem('theme') === 'lightTheme'){
+    setTheme('lightTheme');
+  } else {
+    setTheme('darkTheme');
+  }
+})()
+</script>
 </body></html>

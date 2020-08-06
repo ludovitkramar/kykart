@@ -4,7 +4,32 @@
     --text: #ffffff;
     --blocks-bg: #494947;
     --navbar-bg: #494947;
+    --navbar-txt: #fff;
     --footer-bg: #272725;
+    --navBar-hover: #6B6B68;
+    --navBar-active: #3b3b39;
+    --light-text: #B5B5B0;
+    --trLink-text: #ffffff;
+    --trLink-bg: #ffffff22;
+    --trLink-bg-hover: #ffffff22;
+    --trLink-bg-active: #00000022;
+}
+
+.lightTheme {
+    --body-bg: #ffffff;
+    --selection: #acacac;
+    --text: #222222;
+    --blocks-bg: #f1f1f1;
+    --navbar-bg: #7e7e7b;
+    --navbar-txt: #fff;
+    --footer-bg: #272725;
+    --navBar-hover: #6B6B68;
+    --navBar-active: #3b3b39;
+    --light-text: #626262;
+    --trLink-text: #303847;
+    --trLink-bg: #d6d6d650;
+    --trLink-bg-hover: #cccccc6c;
+    --trLink-bg-active: #00000057;
 }
 
 body {
@@ -76,6 +101,9 @@ img.trLogo {
     padding: 15px;
     transition: .2s;
     position: sticky;
+}
+
+.trGreenButton > span {
     color: #ffffff;
 }
 
@@ -122,11 +150,15 @@ div.footer {
 }
 
 .trNavBar > a:hover {
-    background-color: #6B6B68;
+    background-color: var(--navBar-hover);
 }
 
 .trNavBar > a:active {
-    background-color: #3b3b39;
+    background-color: var(--navBar-active);
+}
+
+.trNavBar > a > span {
+    color: var(--navbar-txt);
 }
 
 .trContainer {
@@ -180,23 +212,23 @@ ul.trCheckList > li {
 }
 
 .lightGrey {
-    color: #B5B5B0;
+    color: var(--light-text);
 }
 
 a.trLink {
-    color: #fff;
+    color: var(--trLink-text);
     text-decoration: none;
     transition: .4s;
-    background-color: #ffffff22;
+    background-color: var(--trLink-bg);
 }
 
 a.trLink:hover {
-    background-color: #ffffff22;
+    background-color: var(--trLink-bg-hover);
     text-decoration: underline;
 }
 
 a.trLink:active {
-    background-color: #00000022;
+    background-color: var(--trLink-bg-active);
 }
 
 .black {
@@ -283,6 +315,7 @@ a.trLink:active {
     border-bottom-width: 5px;
     cursor: pointer;
     transition: .2s;
+    color: #fff;
 }
 
 .trFormSubmit:hover {
@@ -298,10 +331,6 @@ a.trLink:active {
     height: 46px;
 }
 
-/*@keyframes {
-    REMEMBER THE ANIMATIONS
-}*/
-
 h1 {
     font-size: 44px;
 }
@@ -309,6 +338,30 @@ h1 {
 .colorBox {
     background-color: var(--blocks-bg);
     border-radius: 20px;
+}
+
+.trBlueButton {
+    background-color: #1d7ebf;
+    border-radius: 6px;
+    margin: 20px;
+    padding: 15px;
+    transition: .2s;
+    position: sticky;
+}
+
+.trBlueButton > span {
+    color: #ffffff;
+}
+
+.trBlueButton:hover {
+    background-color: #79a1dd;
+}
+
+.trBlueButton:active {
+    background-color: #13397f;
+    padding-top: 19px;
+    padding-bottom: 11px;
+    box-shadow: 0px 10px 30px #000000cc inset;
 }
 
 @media screen and (max-width: 1600px){
@@ -322,7 +375,7 @@ h1 {
     }
 }
 
-@media screen and (max-width: 830px){
+@media screen and (max-width: 1060px){
     img.trLogo {
         /*width: 33%;*/
         height: 50px;
@@ -339,24 +392,27 @@ h1 {
     }
 
     .trGreenButton {
-        background-color: #1DBF73;
         border-radius: 4px;
         margin: 10px;
         padding: 6px;
-        transition: .2s;
-    }
-    
-    .trGreenButton:hover {
-        background-color: #79ddab;
     }
     
     .trGreenButton:active {
-        background-color: #137f4b;
         padding-top: 7px;
         padding-bottom: 5px;
-        box-shadow: 0px 10px 30px #000000cc inset;
     }
    
+    .trBlueButton {
+        border-radius: 4px;
+        margin: 10px;
+        padding: 6px;
+    }
+    
+    .trBlueButton:active {
+        padding-top: 7px;
+        padding-bottom: 5px;
+    }
+
     .trNavBar {
         height: 36px;
     }
@@ -366,7 +422,7 @@ h1 {
     }
 }
 
-@media screen and (max-width: 550px){
+@media screen and (max-width: 750px){
     .trHeaderText {
         display: none;
     }
