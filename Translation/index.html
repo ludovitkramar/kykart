@@ -16,6 +16,64 @@
   <title>kykvit Translation</title>
 </head>
 <body>
+<div class="coverall" onclick="hideCoverAll()" id="coverall">
+  <script>
+    function hideCoverAll() {
+      //Hides the overllay and the different elements it contains.
+      console.log('hideCoverAll says Hi!');
+      document.getElementById('coverall').style.display = 'none';
+      document.getElementById('langSelect').style.display = 'none';
+      document.getElementById('picViewer').style.display = 'none';
+    }
+
+    function showLangSelect() {
+      //Open the overlay with the language selection tool.
+      document.getElementById('coverall').style.display = 'flex';
+      document.getElementById('langSelect').style.display = 'block';
+    }
+
+    function setLang(LANG) {
+      //stores the selected language to local storage and call applyLang()
+      localStorage.setItem('LANG', LANG);
+      console.log(localStorage.getItem('LANG'));
+      applyLang();
+    }
+
+    function applyLang() {
+    //Checks for saved LANG key and run some code, redirect or something, not yet implemented.
+      var language = localStorage.getItem('LANG');
+      switch(language) {
+        case 'en':
+          console.log('Language is set to English');
+          break;
+        case 'es':
+          console.log('La lengua configurada es español');
+          alert('Aún no está finalizada la traducción de la página.');
+          break;
+        case 'zh':
+          console.log('設定的語言是中文');
+          alert('頁面尚在翻譯中');
+          break;
+        default:
+          console.log('No language is set, english is the default language.')
+          break;
+      }
+    }
+
+    applyLang()
+  </script>
+ <div class="langSelect colorBox" id="langSelect">
+   <H1>Please select your prefered language</H1><br />
+   <div class="langSelectList">
+     <a href="javascript:setLang('en');" class="">English</a>
+     <a href="javascript:setLang('es');" class="">Español</a>
+     <a href="javascript:setLang('zh');" class="">中文</a>
+   </div>
+ </div>
+ <div class="picViewer" id="picViewer">
+   Nothing to see here
+ </div>
+</div>
 <div class="Front">
   <div class="trContentContainer">
     <div class="trContent">
@@ -26,13 +84,13 @@
           <span class="trHeaderText">Available at Fiverr!</span>
         </div>
         <div><a href="https://www.fiverr.com/share/K30Lwk" class="trButtonA trGreenButton"><span class="">Fiverr</span></a></div>
-        <div><a class="trButtonA trBlueButton" href="javascript:alert('Not implemented');"><span><i class="fas fa-globe" style="color: white;"></i>&nbsp;&nbsp;LANG</span></a></div>      
+        <div><a class="trButtonA trBlueButton" href="javascript:showLangSelect();"><span><i class="fas fa-globe" style="color: white;"></i>&nbsp;&nbsp;LANG</span></a></div>      
       </div>
       <div class="trNavBar ">
-        <a class="trButtonA" href="https://www.fiverr.com/share/K30Lwk"><span>Fiverr</span></a>
-        <a class="trButtonA" href="#portfolio"><span>Portfolio</span></a>
-        <a class="trButtonA" href="#contact"><span>Contact</span></a>
-        <a class="trButtonA" href="/"><span>About</span></a>
+        <a class="" href="https://www.fiverr.com/share/K30Lwk"><span>Fiverr</span></a>
+        <a class="" href="#portfolio"><span>Portfolio</span></a>
+        <a class="" href="#contact"><span>Contact</span></a>
+        <a class="" href="/"><span>About</span></a>
       </div>
       <div class="trContainer">
         <h1 class="center">Specialized in the big 3</h1>
