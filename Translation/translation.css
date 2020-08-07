@@ -263,24 +263,28 @@ a.trLink:active {
 }
 
 .trPortfolioFlex {
-    margin-top: 10px;
     display: flex;
     width: 100%;
     flex-wrap: nowrap;
-    height: 400px;
-    overflow: hidden;
     transition: .2s;
+    flex-direction: row;
+}
+
+.trPortfolioRow {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .trPortfolioElement {
-    width: 25%;
-    overflow: hidden;
-    padding: 20px;
-    perspective: 100px;
+    height: 330px;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    transition: .2s;
 }
 
 .trPortfolioImg {
-    position: relative;
     height: 100%;
     transition: .1s;
     cursor: pointer;
@@ -393,6 +397,13 @@ h1 {
     background-color: var(--body-bg);
 }
 
+#picViewerImage {
+    height: 90%;
+    width: 90%;
+    object-fit: contain;
+    display: none;
+}
+
 @keyframes dialogOpen {
     0% {transform: scale(.8);}
     100% {transform: scale(1);}
@@ -423,18 +434,10 @@ h1 {
     background-color: var(--selection);
 }
 
-.picViewer {
-    display: none;
-}
-
 @media screen and (max-width: 1600px){
     div.trContent {
         margin-left: 0%;
         width: 100%;
-    }
-    
-    .trPortfolioFlex {
-        height: 300px;
     }
 }
 
@@ -445,7 +448,7 @@ h1 {
         margin-left: -5px;
     }
 
-    .trPortfolioFlex {
+    .trPortfolioElement {
         height: 200px;
     }
 
@@ -477,5 +480,17 @@ h1 {
 @media screen and (max-width: 750px){
     .trHeaderText {
         display: none;
+    }
+    .trPortfolioFlex {
+        flex-direction: column;
+    }
+    img.trLogo {
+        height: 50px;
+    }
+}
+
+@media screen and (max-width: 440px){
+    img.trLogo {
+        height: 35px;
     }
 }

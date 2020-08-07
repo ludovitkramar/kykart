@@ -17,51 +17,7 @@
 </head>
 <body>
 <div class="coverall" onclick="hideCoverAll()" id="coverall">
-  <script>
-    function hideCoverAll() {
-      //Hides the overllay and the different elements it contains.
-      console.log('hideCoverAll says Hi!');
-      document.getElementById('coverall').style.display = 'none';
-      document.getElementById('langSelect').style.display = 'none';
-      document.getElementById('picViewer').style.display = 'none';
-    }
-
-    function showLangSelect() {
-      //Open the overlay with the language selection tool.
-      document.getElementById('coverall').style.display = 'flex';
-      document.getElementById('langSelect').style.display = 'block';
-    }
-
-    function setLang(LANG) {
-      //stores the selected language to local storage and call applyLang()
-      localStorage.setItem('LANG', LANG);
-      console.log(localStorage.getItem('LANG'));
-      applyLang();
-    }
-
-    function applyLang() {
-    //Checks for saved LANG key and run some code, redirect or something, not yet implemented.
-      var language = localStorage.getItem('LANG');
-      switch(language) {
-        case 'en':
-          console.log('Language is set to English');
-          break;
-        case 'es':
-          console.log('La lengua configurada es español');
-          alert('Aún no está finalizada la traducción de la página.');
-          break;
-        case 'zh':
-          console.log('設定的語言是中文');
-          alert('頁面尚在翻譯中');
-          break;
-        default:
-          console.log('No language is set, english is the default language.')
-          break;
-      }
-    }
-
-    applyLang()
-  </script>
+  <script src="./trLangConf.js"></script>
  <div class="langSelect" id="langSelect">
    <H1>Please select your prefered language</H1><br />
    <div class="langSelectList">
@@ -70,9 +26,7 @@
      <a href="javascript:setLang('zh');" class="">中文</a>
    </div>
  </div>
- <div class="picViewer" id="picViewer">
-   Nothing to see here
- </div>
+   <img id="picViewerImage">
 </div>
 <div class="Front">
   <div class="trContentContainer">
@@ -117,16 +71,20 @@
         <h1 class="center" id="portfolio">Portfolio</h1>
         <p class="center lightGrey">Documents, certificates, shows, advertisements, we've got it all!</p>
         <div class="trPortfolioFlex">
-          <div class="trPortfolioElement">
-            <img src="./doc1p1o.png" class="trPortfolioImg" alt="Sample Document">
+          <div class="trPortfolioRow">
+            <div class="trPortfolioElement">
+              <img src="./doc1p1o.webp" class="trPortfolioImg" alt="Sample Document" onclick="showPic('doc1p1o.png')">
+            </div>
+            <div class="trPortfolioElement">
+              <img src="./doc2p1t.webp" class="trPortfolioImg" alt="Sample Document" onclick="showPic('doc2p1t.png')">
+            </div>
           </div>
-          <div class="trPortfolioElement">
-            <img src="./doc2p1t.png" class="trPortfolioImg" alt="Sample Document">
-          </div>
-          <div class="trPortfolioElement">
-            <img src="./doc2p2o.png" class="trPortfolioImg" alt="Sample Document">
-          </div><div class="trPortfolioElement">
-            <img src="./doc3.png" class="trPortfolioImg"  alt="Sample Document">
+          <div class="trPortfolioRow">
+           <div class="trPortfolioElement">
+              <img src="./doc2p2o.webp" class="trPortfolioImg" alt="Sample Document" onclick="showPic('doc2p2o.png')">
+            </div><div class="trPortfolioElement">
+             <img src="./doc3.webp" class="trPortfolioImg"  alt="Sample Document" onclick="showPic('doc3.png')">
+            </div>
           </div>
         </div>
       </div>
@@ -217,31 +175,6 @@
 </body>
 </html>
 </div>
-<script>
-  function setTheme(themeName) {
-    localStorage.setItem('theme', themeName);
-    document.documentElement.className = themeName;
-    if(localStorage.getItem('theme') === 'lightTheme') {
-      document.getElementById('trLogo').src = "./kykvitTranslationLight.png";
-    } else {
-      document.getElementById('trLogo').src = "./kykvitTranslation.png";
-    }
-  }
-
-function toggleTheme() {
-  if(localStorage.getItem('theme') === 'darkTheme'){
-    setTheme('lightTheme');
-  } else {
-    setTheme('darkTheme');
-  }
-}
-
-(function () {
-  if(localStorage.getItem('theme') === 'lightTheme'){
-    setTheme('lightTheme');
-  } else {
-    setTheme('darkTheme');
-  }
-})()
-</script>
+<script src="./trThemeConf.js"></script>
+<script src="./trPicView.js"></script>
 </body></html>
