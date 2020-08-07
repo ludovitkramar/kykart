@@ -277,7 +277,7 @@ a.trLink:active {
 }
 
 .trPortfolioElement {
-    height: 330px;
+    height: 430px;
     width: 100%;
     justify-content: center;
     display: flex;
@@ -438,6 +438,9 @@ h1 {
     div.trContent {
         margin-left: 0%;
         width: 100%;
+    }
+    .trPortfolioElement {
+        height: 330px;
     }
 }
 
