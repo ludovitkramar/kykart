@@ -2,9 +2,9 @@ function setTheme(themeName) {
     localStorage.setItem('theme', themeName);
     document.documentElement.className = themeName;
     if(localStorage.getItem('theme') === 'lightTheme') {
-      document.getElementById('trLogo').src = "./kykvitTranslationLight.png";
+      document.getElementById('trLogo').src = "/Translation/kykvitTranslationLight.png";
     } else {
-      document.getElementById('trLogo').src = "./kykvitTranslation.png";
+      document.getElementById('trLogo').src = "/Translation/kykvitTranslation.png";
     }
   }
 

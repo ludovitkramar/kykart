@@ -25,17 +25,19 @@ function hideCoverAll() {
     switch(language) {
       case 'en':
         console.log('Language is set to English');
+        window.location.replace('/Translation/');
         break;
       case 'es':
         console.log('La lengua configurada es español');
-        alert('Aún no está finalizada la traducción de la página.');
+        window.location.replace('/Translation/es/');
         break;
       case 'zh':
         console.log('設定的語言是中文');
-        alert('頁面尚在翻譯中');
+        window.location.replace('/Translation/zh/');
         break;
       default:
-        console.log('No language is set, english is the default language.')
+        console.log('No language is set, english is the default language.');
+        showLangSelect();
         break;
     }
   }
