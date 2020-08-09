@@ -21,25 +21,27 @@ function hideCoverAll() {
 
   function applyLang() {  
     var url = location.href;
-    
   //Checks for saved LANG key and redirects.
     var language = localStorage.getItem('LANG');
     switch(language) {
       case 'en':
         console.log('Language is set to English');
+        //If the url have es or have zh, redirect to english page
         if(url.indexOf('es') != -1 || url.indexOf('zh') != -1) {
         window.location.replace('/Translation/');
         }
         break;
       case 'es':
         console.log('La lengua configurada es español');
-        if(url.indexOf('es') != -1) {
+        //If the url doesn't has es, redirect to es.
+        if(url.indexOf('es') == -1) {
         window.location.replace('/Translation/es/');
         }
         break;
       case 'zh':
         console.log('設定的語言是中文');
-        if(url.indexOf('zh') != -1) {
+        //If the url doesn't have zh, redirect ro zh.
+        if(url.indexOf('zh') == -1) {
         window.location.replace('/Translation/zh/');
         }
         break;
