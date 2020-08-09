@@ -46,10 +46,16 @@ function hideCoverAll() {
         }
         break;
       default:
-        console.log('No language is set, english is the default language.');
-        showLangSelect();
+        console.log('No language is set, english is the default language. Lenguage selector should appaer.');
         break;
     }
   }
 
   applyLang()
+
+  window.addEventListener('load', function(){
+    var LANG = localStorage.getItem('LANG');
+    if(LANG != 'en' && LANG != 'es' && LANG !='zh') {
+      showLangSelect()
+    }
+  })
