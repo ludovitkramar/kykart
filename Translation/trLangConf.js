@@ -19,21 +19,29 @@ function hideCoverAll() {
     applyLang();
   }
 
-  function applyLang() {
-  //Checks for saved LANG key and run some code, redirect or something, not yet implemented.
+  function applyLang() {  
+    var url = location.href;
+    
+  //Checks for saved LANG key and redirects.
     var language = localStorage.getItem('LANG');
     switch(language) {
       case 'en':
         console.log('Language is set to English');
+        if(url.indexOf('es') != -1 || url.indexOf('zh') != -1) {
         window.location.replace('/Translation/');
+        }
         break;
       case 'es':
         console.log('La lengua configurada es español');
+        if(url.indexOf('es') != -1) {
         window.location.replace('/Translation/es/');
+        }
         break;
       case 'zh':
         console.log('設定的語言是中文');
+        if(url.indexOf('zh') != -1) {
         window.location.replace('/Translation/zh/');
+        }
         break;
       default:
         console.log('No language is set, english is the default language.');
