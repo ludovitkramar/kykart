@@ -55,7 +55,7 @@ function hideCoverAll() {
 
   window.addEventListener('load', function(){
     var LANG = localStorage.getItem('LANG');
-    if(LANG != 'en' && LANG != 'es' && LANG !='zh') {
+    if(LANG === null) {
       showLangSelect()
     }
   })
