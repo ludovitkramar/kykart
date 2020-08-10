@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
   <meta name="theme-color" content="#222222"/>
+  <!--
   <link rel="stylesheet" href="/old.css">
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/fonts.css">
@@ -12,17 +13,48 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="/Translation/translation.css">
+  -->
   <title>playground</title>
 </head>
 <body>
-<button id="run0">Run w3Arrays</button>
-<p id="demo0"></p>
+<button id="run0">Run w3Arrays</button><br />
+the array:<p id="demo0"></p>
+length:<p id="demo1"></p>
+sorted with sort():<p id="demo2"></p>
+Output a list:<p id="demo3"></p>
+<input id="pushThing"><button id="run1">Push!</button>
+<p id="demo4"></p>
+<p id="demo5"></p>
+<p id="demo6"></p>
+<p id="demo7"></p>
+<p id="demo8"></p>
+
 <script>
   document.getElementById("run0").addEventListener("click", w3Arrays);
+  document.getElementById("run1").addEventListener("click", w3ArraysPush);
   
+  var firstArray = ['dog', 'cat', 'rat', 'mouse', 'bird', 'zebra', 'octopus', 'alpaca', 'falcon'];
   function w3Arrays() {
-    var firstArray = ['dog', 'cat', 'rat', 'mouse', 'bird', 'zebra', 'octopus', 'alpaca', 'falcon'];
-    document.getElementById('demo0').innerHTML = firstArray[2];
+    //demo0
+    document.getElementById('demo0').innerHTML = firstArray;
+    //demo1
+    document.getElementById('demo1').innerHTML = firstArray.length;
+    //demo2
+    var sorted = firstArray.sort();
+    document.getElementById('demo2').innerHTML = sorted;
+    //demo3
+    var text = '<ul style="padding-left:40px;">';
+    for (i=0; i < firstArray.length; i++) {
+      text += '<li>' + firstArray[i] + '</li>'
+    }
+    text += '</ul>';
+    document.getElementById('demo3').innerHTML = text;
+    //demo4
+  }
+  function w3ArraysPush() {
+    var pushThing = document.getElementById('pushThing').value;
+    console.log(pushThing);
+    firstArray.push(pushThing);
   }
   </script>
 </body>
