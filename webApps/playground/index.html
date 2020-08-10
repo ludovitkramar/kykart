@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#222222"/>
+  <link rel="stylesheet" href="/old.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/fonts.css">
+  <link rel="stylesheet" href="/music-reproductor.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="/Translation/translation.css">
+  <title>playground</title>
+</head>
+<body>
+<button id="run0">Run w3Arrays</button>
+<p id="demo0"></p>
+<script>
+  document.getElementById("run0").addEventListener("click", w3Arrays);
+  
+  function w3Arrays() {
+    var firstArray = ['dog', 'cat', 'rat', 'mouse', 'bird', 'zebra', 'octopus', 'alpaca', 'falcon'];
+    document.getElementById('demo0').innerHTML = firstArray[2];
+  }
+  </script>
+</body>
+</html>
