@@ -33,10 +33,11 @@ Where to add: <input id="in3">How many to delete:<input id="in4">What to add(for
 <hr />
 The array: 
 <p id="demo5.0"></p>
+Sorting an array with a compare function, necesary to sort numbers.<br />
 arrayName.sort(function(a, b){return a - b});<p id="demo5"></p>
 Descending:<p id="demo6"></p>
 Concat(firstArray.concat(numbers)):<p id="demo7"></p>
-<p id="demo8"></p>
+Find the max and min number in a array: <p id="demo8.1"></p><p id="demo8.2"></p>
 
 <script>
   document.getElementById("run0").addEventListener("click", w3Arrays);
@@ -92,7 +93,7 @@ Concat(firstArray.concat(numbers)):<p id="demo7"></p>
     w3Arrays();
   }
     //-----------------------------------------------------Array sort 11 August 2020
-  var numbers = [1,39,65,36,3,3456,234,23456,23,2354,45,111, 'text?', 'a', 'A', 'b', 'B', '#'];
+  var numbers = [1,39,65,36,3,3456,234,23456,23,2354,45,111];
   function w3ArraySort() {
     console.log('Raw numeric array = ' + numbers);
     document.getElementById('demo5.0').innerHTML = numbers;
@@ -105,6 +106,21 @@ Concat(firstArray.concat(numbers)):<p id="demo7"></p>
     //demo 7
     var concatArray = firstArray.concat(numbers);
     document.getElementById('demo7').innerHTML = concatArray.join(' | ');
+    //demo 8, numbers min-max.
+    var max = -Infinity;
+    for(i=numbers.length; i>=0; i--) {
+      if(numbers[i]>max){
+        max = numbers[i];
+      }
+    }
+    document.getElementById('demo8.1').innerHTML = max;
+    var min = Infinity;
+    for(i=numbers.length; i>= 0; i--){
+      if(numbers[i] < min){
+        min = numbers[i];
+      }
+    }
+    document.getElementById('demo8.2').innerHTML = min;
   }
 
 
