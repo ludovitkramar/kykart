@@ -22,15 +22,25 @@ the array:<p id="demo0"></p>
 length:<p id="demo1"></p>
 sorted with sort():<p id="demo2"></p>
 Output a list:<p id="demo3"></p>
-<input id="pushThing"><button id="run1">Push!</button>
-<p id="demo4"></p>
-<p id="demo5"></p>
-<p id="demo6"></p>
-<p id="demo7"></p>
+<input id="pushThing"><button id="run1">Push!</button><br />
+Inverse sort:<p id="demo4"></p>
+Join:<p id="demo4.1"></p>
+Shifted:<p id="demo4.2"></p>
+<button onclick="arrayPop()">Pop!</button><br />
+<button onclick="arrayShift()">Shift!</button><br />
+<input id="in2"><button onclick="arrayunShift()">Unshift!</button><br />
+Where to add: <input id="in3">How many to delete:<input id="in4">What to add(format: "item", "item", "item"): <input id="in5"><button onclick="arraySplice()">Splice!</button><br />
+<hr />
+The array: 
+<p id="demo5.0"></p>
+arrayName.sort(function(a, b){return a - b});<p id="demo5"></p>
+Descending:<p id="demo6"></p>
+Concat(firstArray.concat(numbers)):<p id="demo7"></p>
 <p id="demo8"></p>
 
 <script>
   document.getElementById("run0").addEventListener("click", w3Arrays);
+  document.getElementById("run0").addEventListener("click", w3ArraySort);
   document.getElementById("run1").addEventListener("click", w3ArraysPush);
   
   var firstArray = ['dog', 'cat', 'rat', 'mouse', 'bird', 'zebra', 'octopus', 'alpaca', 'falcon'];
@@ -50,12 +60,54 @@ Output a list:<p id="demo3"></p>
     text += '</ul>';
     document.getElementById('demo3').innerHTML = text;
     //demo4
+    document.getElementById('demo4').innerHTML = firstArray.reverse();
+    //demo4.1 
+    document.getElementById('demo4.1').innerHTML = firstArray.join(' / ') + ' , see? no comas!';
   }
   function w3ArraysPush() {
     var pushThing = document.getElementById('pushThing').value;
     console.log(pushThing);
     firstArray.push(pushThing);
+    w3Arrays();
   }
+  function arrayPop() {
+    firstArray.pop();
+    w3Arrays();
+  }
+  function arrayShift() {
+    var x = firstArray.shift();
+    document.getElementById('demo4.2').innerHTML = x;
+    w3Arrays();
+  }
+  function arrayunShift() {
+    var x = document.getElementById('in2').value;
+    firstArray.unshift(x);
+    w3Arrays();
+  }
+  function arraySplice(){
+    var where = document.getElementById('in3').value;
+    var removeAmnt = document.getElementById('in4').value;
+    var toAdd = document.getElementById('in5').value;
+    firstArray.splice(where, removeAmnt, toAdd);
+    w3Arrays();
+  }
+    //-----------------------------------------------------Array sort 11 August 2020
+  var numbers = [1,39,65,36,3,3456,234,23456,23,2354,45,111, 'text?', 'a', 'A', 'b', 'B', '#'];
+  function w3ArraySort() {
+    console.log('Raw numeric array = ' + numbers);
+    document.getElementById('demo5.0').innerHTML = numbers;
+    //demo 5
+    numbers.sort(function(a, b){return a - b});
+    document.getElementById('demo5').innerHTML = numbers;
+    //demo 6
+    numbers.sort(function(a, b){return b - a});
+    document.getElementById('demo6').innerHTML = numbers;
+    //demo 7
+    var concatArray = firstArray.concat(numbers);
+    document.getElementById('demo7').innerHTML = concatArray.join(' | ');
+  }
+
+
   </script>
 </body>
 </html>
