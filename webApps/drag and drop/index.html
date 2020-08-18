@@ -23,7 +23,7 @@
     </style>
   </head>
   <body>
-    <div class="container" onmousemove="" onmouseout="clearHighlight()" id="container">
+    <div class="container" onmousemove="" onmouseout="clearHighlight()" id="container" on>
 
     </div>
 <span id="o1"></span>
@@ -59,8 +59,6 @@
     eleCount = eleArr.length;
   }
   function spliceElementsArray() {
-    //var from = document.getElementById('eleToMove').value;
-    //var to = document.getElementById('toPos').value;
     var from = moveFromPos;
     var to = dropPos;
     //copy the elemnt to move
@@ -75,16 +73,7 @@
   }
   var dropPos = 0;
   function getDropPos() {
-    eleNum = getElementNum();
-    console.log('getDropPos eleNum = '+eleNum);
-    //if the mouse is not over empty space
-    if(eleCount>eleNum) {
-      dropPos = eleNum;
-      console.log('dropPos = '+ dropPos);
-    } else {
-      dropPos = eleCount -1;
-      console.log('dropPos(final possible dropPos) = '+ dropPos);
-    }
+    console.log('getDropPos  = '+dropPos);
     spliceElementsArray()
   }
   var moveFromPos = 0;
@@ -130,6 +119,7 @@
     //calculata on top of which element the mouse is
     var eleNum = Math.floor(actualX / eleWidth);
     console.log(eleNum);
+    dropPos = eleNum;
     return(eleNum);
   }
 </script>
