@@ -17,7 +17,7 @@
         border-style: solid;
         border-width: 0px;
         border-right-width: 3px;
-        border-color: red;
+        border-color: cyan;
         margin-right: 6px;
       }
     </style>
@@ -31,14 +31,12 @@
 <span id="o3"></span>
 <span id="o4"></span>
 <span id="o5"></span>
-<span>Move the element </span><input id="eleToMove" type="number"><span>to the position</span><input id="toPos" type="number"><input type="button" value="Move!" onclick="spliceElementsArray()">
-<h1>Only the draging part left!!</h1>
 <script>
   var eleCount = 0;
   //The elements array stores the elements inside the container, and the updateElements function puts them according to the array.
   var eleArr = [];
   function spawnElements() {
-    var spawnCount = 5;
+    var spawnCount = 7;
     for(i=spawnCount; i>0; i--){
       num = (i - spawnCount) * -1;
       eleArr.push(num);
@@ -48,6 +46,7 @@
     updateElements();
     console.log('the array = ' + eleArr)
   }
+  //spawn elements as soon as page loads
   spawnElements();
   function updateElements(){
     document.getElementById('container').innerHTML = '';
@@ -55,13 +54,15 @@
       console.log('updateEle.i = '+i);
       num = (i - eleArr.length) * -1;
       console.log('updateEle.num = '+num);
-      document.getElementById('container').innerHTML += '<div class="element" ondragover="highlight()" draggable="true" id="e'+eleArr[num]+'">'+eleArr[num]+'</div>';
+      document.getElementById('container').innerHTML += '<div class="element" ondragover="highlight()" ondragend="getDropPos()" ondragstart="getMoveFromPos()" draggable="true" id="e'+eleArr[num]+'">'+eleArr[num]+'</div>';
     }
     eleCount = eleArr.length;
   }
   function spliceElementsArray() {
-    var from = document.getElementById('eleToMove').value;
-    var to = document.getElementById('toPos').value;
+    //var from = document.getElementById('eleToMove').value;
+    //var to = document.getElementById('toPos').value;
+    var from = moveFromPos;
+    var to = dropPos;
     //copy the elemnt to move
     var ele = eleArr[from];
     //delete the old element
@@ -71,6 +72,29 @@
     console.log(eleArr);
     //update the page
     updateElements();
+  }
+  var dropPos = 0;
+  function getDropPos() {
+    eleNum = getElementNum();
+    console.log('getDropPos eleNum = '+eleNum);
+    //if the mouse is not over empty space
+    if(eleCount>eleNum) {
+      dropPos = eleNum;
+      console.log('dropPos = '+ dropPos);
+    } else {
+      dropPos = eleCount -1;
+      console.log('dropPos(final possible dropPos) = '+ dropPos);
+    }
+    spliceElementsArray()
+  }
+  var moveFromPos = 0;
+  function getMoveFromPos() {
+    eleNum = getElementNum();
+    //if the mouse is not over empty space
+    if(eleCount>eleNum) {
+      moveFromPos = eleNum;
+      console.log('move from pos = '+ moveFromPos);
+    }
   }
   function clearHighlight() {
     var elements = document.getElementsByClassName('element');
@@ -82,6 +106,16 @@
     }
   }
   function highlight(){
+    eleNum = getElementNum();
+    //get the name of the element from the eleArr
+    var eleName = 'e'+eleArr[eleNum];
+    clearHighlight();
+    //if the mouse is not over empty space change the border color.
+    if(eleCount>eleNum) {
+      document.getElementById(eleName).style.borderColor = 'red';
+    }
+  }
+  function getElementNum() {
     //get the offset of the container relative to the browser screen top left corner
     var boxX = document.getElementById('container').offsetLeft;
     var boxY = document.getElementById('container').offsetTop;
@@ -96,13 +130,7 @@
     //calculata on top of which element the mouse is
     var eleNum = Math.floor(actualX / eleWidth);
     console.log(eleNum);
-    //get the name of the element from the eleArr
-    var eleName = 'e'+eleArr[eleNum];
-    clearHighlight();
-    //if the mouse is not over empty space change the border color.
-    if(eleCount>eleNum) {
-      document.getElementById(eleName).style.borderColor = 'red';
-    }
+    return(eleNum);
   }
 </script>
   </body>
