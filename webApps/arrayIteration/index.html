@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <title>arrayIteration</title>
+    </head>
+<body>
+
+<h3>array.forEach()</h3>
+<span id="o1"></span>
+<script>
+    function arrayForEach() {
+        var txt = "";
+        var arr = [32,12,453,12,566];
+        arr.forEach(myF);
+        document.getElementById('o1').innerHTML = txt;
+        function myF(value, index, array){
+            txt = txt + value + '<br />';
+        }
+    }
+    arrayForEach();
+</script>
+<hr/>
+</body>
+</html>
