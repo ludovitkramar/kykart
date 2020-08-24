@@ -7,7 +7,10 @@
     </head>
 <body>
 
+    <h1>Javascript Array Iteration</h1>
+
 <h3>array.forEach()</h3>
+<p>Runs a function for each element of the array</p>
 <span id="o1"></span>
 <script>
     function arrayForEach() {
@@ -16,11 +19,111 @@
         arr.forEach(myF);
         document.getElementById('o1').innerHTML = txt;
         function myF(value, index, array){
-            txt = txt + value + '<br />';
+            txt = txt + 'The value at index: '+ index + ' = ' + value + '<br />';
         }
     }
     arrayForEach();
 </script>
-<hr/>
+
+<h3>array.map()</h3>
+<p>Creates a new array by running a function on each element</p>
+<span id="o2"></span>
+<script>
+    function arrayMap() {
+        var arr = [23,345,12,3,5,56,2,34,45];
+        document.getElementById('o2').innerHTML = arr;
+        var newarr = arr.map(mapFunction); //map cannot modify existing arrays
+        function mapFunction(value, index, array) { //the order of value, index, array seems to matter
+            return value * 10;
+        }
+        document.getElementById('o2').innerHTML += '<br />'+newarr;
+    }
+    arrayMap();
+</script>
+
+<h3>array.filter()</h3>
+<p>The "filter" creates a new array with the elements that passes a test</p>
+<span id="o3"></span>
+<script>
+    function filter(){
+        var arr = [0,-2,5,3,-1,-7,4,-9,2];
+        document.getElementById('o3').innerHTML = arr;
+        var newArr = arr.filter(filterFun);
+        document.getElementById('o3').innerHTML += '<br />Numbers that are less or equal to 0: ' + newArr;
+        function filterFun(value, index, array) {
+            return value <= 0;
+        }
+    }
+    filter();
+</script>
+
+<h3>array.reduce()</h3>
+<p>"Reduce" runs a function on each element to produce "reduce" the array to a single value</p>
+<span id="o4"></span>
+<script>
+    function arrayReduce() {
+        var arr = [2,4,0,-5,-2,1,3,-2];
+        var result = arr.reduce(redu);
+        document.getElementById('o4').innerHTML = arr + '<br />The sum of positive values: ' + result;
+        function redu(total, value, index, array) {
+            if(value>0){
+                return total += value;
+            } else {
+                return total;
+            }
+        }
+    }
+    arrayReduce();
+</script>
+
+<h3>array.reduceRight()</h3>
+<p>This method does the same as the previous one but starting from the last element of an array.</p>
+<span id="o5"></span>
+<script>
+    function arrayReduceR() {
+        var arr = [2,4,0,-5,-2,1,3,-2];
+        var result = arr.reduce(reduR);
+        document.getElementById('o5').innerHTML = arr + '<br />The sum of positive values starting from the other side: ' + result;
+        function reduR(total, value, index, array) {
+            if(value>0){
+                return total += value;
+            } else {
+                return total;
+            }
+        }
+    }
+    arrayReduceR();
+</script>
+
+<h3>array.every()</h3>
+<p>This test if ALL array elements passes a test</p>
+<span id="o6"></span>
+<script>
+    function arrayEvery() {
+        var arr = [5 , 88 , 26 , 15 , 76 , 34 , 12 , 18]
+        var resutl = arr.every(myF);
+        document.getElementById('o6').innerHTML = arr + '<br />All are 18 or older is: ' + resutl;
+        function myF(value, index, array) {
+            return value >= 18;
+        }
+    }
+    arrayEvery();
+</script>
+
+<h3>array.some()</h3>
+<p>If SOME elements passes a test, returns true</p>
+<span id="o7"></span>
+<script>
+    function arrSome() {
+        var arr = [7,4,5,18,19,2,6,65];
+        var result = arr.some(test);
+        document.getElementById('o7').innerHTML = arr + '<br />Some are 18 or older is: ' + result;
+        function test(value, index, array) {
+            return value >= 18;
+        }
+    }
+    arrSome();
+</script>
+
 </body>
 </html>
