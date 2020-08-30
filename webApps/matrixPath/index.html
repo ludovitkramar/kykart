@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <title>matrixPath</title>
+        <style>
+            #matrixContainer {
+                border: 1px solid black;
+                display: inline-block;
+            }
+            .matrixCell {
+                border: 1px solid black;
+                height: 20px;
+                width: 20px;
+                float: left;
+            }
+        </style>
+    </head>
+    <body>
+        <label>Filas: <input id="filas" type="number" value="5"></label>
+        <label>Columnas : <input id="columnas" type="number" value="5"></label>
+        <button onclick="initializeMatrix();">initializeMatrix</button>
+        <button onclick="updateMatrix();">updateMatrix</button>
+        <button onclick="initializeMatrix(); updateMatrix();">para vagos</button>
+        <hr />
+        <div id="matrixContainer">
+
+            <div class="matrixCell" id="m_i_j" onmousedown="getCellNum()"></div>
+            <div id="matrixCell"></div>
+            <div id="matrixCell"></div>
+            <div id="matrixCell"></div>
+            <div id="matrixCell"></div>
+            <div id="matrixCell"></div>
+            <div id="matrixCell"></div>
+
+        </div><br />
+        <span id="matInfo"></span><br />
+        <span id="activeEle"></span>
+        <script>
+            var matFilas = 0, matColumnas = 0;
+            var matContenido = [];
+            var activeCell = 0
+            function initializeMatrix() {
+                matContenido = [];
+                matFilas = document.getElementById('filas').value;
+                matColumnas = document.getElementById('columnas').value;
+                var i = matFilas * matColumnas;
+                for(i; i>0; i--) {
+                    matContenido.push(0);
+                }
+                console.log(matContenido);
+                document.getElementById('matInfo').innerHTML = 'Esta es una matriz de '+matFilas+' x '+matColumnas+' , contiene ' + matFilas*matColumnas+ ' elementos.';
+            }
+            function updateMatrix() {
+                code = "";
+                i = matFilas * matColumnas;
+                for(i;i>0;i--){
+                    //calcular el numero del elemento actual
+                    actual = -1 * i + matFilas * matColumnas + 1;
+                    //calcular i y j del elemento actual
+                    ij = getCellijFromNum(actual);
+                    _i = ij[0];
+                    _j = ij[1];
+                    if(_j == matColumnas){
+                        code += '<div class="matrixCell" id="m' + _i +','+ _j + '" onmousedown="getCellFromCick()">' + getCellValue(_i,_j) + '</div>' + '<br />';
+                        //introducir un elemento y crear nueva linea
+                    } else {
+                        code += '<div class="matrixCell" id="m' + _i +','+ _j + '" onmousedown="getCellFromCick()">' + getCellValue(_i,_j) + '</div>';
+                        //introducir un elemento nuevo
+                    }
+                }
+                document.getElementById('matrixContainer').innerHTML = code;
+            }
+            function getCellFromCick() {
+                var mx = event.clientX;
+                var my = event.clientY;
+                var cellElement = document.elementFromPoint(mx, my);
+                //This code below is bullshit, doesn work.....
+                cellNum = getCellNumFromID(cellElement.id);
+                activeCell = cellNum;
+                document.getElementById('activeEle').innerHTML = 'Elemento activo: '+activeCell;
+            }
+            function getCellValue(_i,_j) {
+                return matContenido[getCellNum(_i,_j)];
+            }
+            function getCellNum(_i,_j) {
+                return _j + (_i - 1)*matColumnas - 1;
+            }
+            function getCellijFromNum(num) {
+                _i = Math.ceil(num/matColumnas);
+                _j = num - (_i-1)*matColumnas;
+                return [_i, _j];
+            }
+            function getCellNumFromID(id) {
+                comaP = id.indexOf(',');
+                _i = id.slice(1, comaP);
+                _j = id.slice(comaP+1, id.length);
+                console.log('i='+_i);
+                console.log('j='+_j);
+                return getCellNum(_i*1,_j*1);
+            }
+        </script>
+    </body>
+</html>
