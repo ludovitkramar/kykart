@@ -5,12 +5,16 @@
         <meta charset="utf-8">
         <title>matrixPath</title>
         <style>
+            *{
+                font-family: sans-serif;
+                cursor: default;
+            }
             #matrixContainer {
-                border: 1px solid black;
+                border: .5px solid black;
                 display: inline-block;
             }
             .matrixCell {
-                border: 1px solid black;
+                border: .5px solid black;
                 height: 20px;
                 width: 20px;
                 float: left;
@@ -22,7 +26,6 @@
         <label>Columnas : <input id="columnas" type="number" value="5"></label>
         <button onclick="initializeMatrix();">initializeMatrix</button>
         <button onclick="updateMatrix();">updateMatrix</button>
-        <button onclick="initializeMatrix(); updateMatrix();">para vagos</button>
         <hr />
         <div id="matrixContainer">
 
@@ -37,10 +40,20 @@
         </div><br />
         <span id="matInfo"></span><br />
         <span id="activeEle"></span>
+        <hr />
+        <label>Modo editar: <input id="editToggle" type="checkbox" onchange="toggleEdit()"></label><br />
+        <label><input type="radio" name="editType" value="0" onchange="toggleEditType()"> 0</label><br />
+        <label><input type="radio" name="editType" value="1" onchange="toggleEditType()"> 1</label><br />
+        <label><input type="radio" name="editType" value="2" onchange="toggleEditType()"> 2</label><br />
+        <label><input type="radio" name="editType" value="-1" onchange="toggleEditType()"> -1</label><br />
+        <span id="editInfo"></span>
+
         <script>
             var matFilas = 0, matColumnas = 0;
             var matContenido = [];
-            var activeCell = 0
+            var activeCell = 0;
+            var editMode = false;
+            var editType = 0;
             function initializeMatrix() {
                 matContenido = [];
                 matFilas = document.getElementById('filas').value;
@@ -63,43 +76,173 @@
                     _i = ij[0];
                     _j = ij[1];
                     if(_j == matColumnas){
-                        code += '<div class="matrixCell" id="m' + _i +','+ _j + '" onmousedown="getCellFromCick()">' + getCellValue(_i,_j) + '</div>' + '<br />';
+                        code += '<div class="matrixCell" id="m' + _i +','+ _j + '" onmousedown="cellCick()">' + getCellValue(_i,_j) + '</div>' + '<br />';
                         //introducir un elemento y crear nueva linea
                     } else {
-                        code += '<div class="matrixCell" id="m' + _i +','+ _j + '" onmousedown="getCellFromCick()">' + getCellValue(_i,_j) + '</div>';
+                        code += '<div class="matrixCell" id="m' + _i +','+ _j + '" onmousedown="cellCick()">' + getCellValue(_i,_j) + '</div>';
                         //introducir un elemento nuevo
                     }
                 }
                 document.getElementById('matrixContainer').innerHTML = code;
             }
-            function getCellFromCick() {
+            function cellCick() {
                 var mx = event.clientX;
                 var my = event.clientY;
                 var cellElement = document.elementFromPoint(mx, my);
-                //This code below is bullshit, doesn work.....
                 cellNum = getCellNumFromID(cellElement.id);
                 activeCell = cellNum;
-                document.getElementById('activeEle').innerHTML = 'Elemento activo: '+activeCell;
+                //the code above gets the number in the array, and assigns the number to the activeCell variable
+                document.getElementById('activeEle').innerHTML = 'Elemento activo: '+activeCell+', ID = ' + getCellIDFromNum(activeCell+1);
+                if(editMode == false) {
+                    //get surrounding cells and color them
+                    surroundingCells = getSurrounding(activeCell);
+                    surroundingCells = findOutOfBound(surroundingCells);
+                    drawCells(surroundingCells, 'red');
+                    //pathfind
+                } else {
+                    //editar
+                    matContenido[activeCell] = editType;
+                    updateMatrix();
+                }
+                //below is where new function needs to start:
+                // 1. know if it should change the value and perform the task if required
+                // 2. get the surrounding cells data and send them to a function that colors them
+                // 3. pathfinding algorithm.
+                //functions required: 1. edit mode toggle. 2. get surrounding cells 3. cells coloring function 4. pathfinding
+            }
+            function toggleEdit(){
+                if(document.getElementById('editToggle').checked == false){
+                    editMode = false;
+                } else {
+                    editMode = true;
+                }
+                toggleEditType();
+                //document.getElementById('editInfo').innerHTML = 'Modo editar = ' + editMode;
+            }
+            function toggleEditType(){
+                elements = document.getElementsByName('editType');
+                i = elements.length;
+                for(i; i>0; i--){
+                    if(elements[i-1].checked == true){
+                        editType = elements[i-1].value;
+                    }
+                }
             }
             function getCellValue(_i,_j) {
                 return matContenido[getCellNum(_i,_j)];
             }
+            function getCellIDFromNum(num) {
+                //not tested, may not work
+                ij = getCellijFromNum(num);
+                _i = ij[0];
+                _j = ij[1];
+                return "m" + _i +','+ _j;
+            }
             function getCellNum(_i,_j) {
                 return _j + (_i - 1)*matColumnas - 1;
+                // this probably returns the value starting from 0 instead of 1
             }
             function getCellijFromNum(num) {
+                // IMPORTAT, this "num" starts from 1 , not 0 !!!!!!
                 _i = Math.ceil(num/matColumnas);
-                _j = num - (_i-1)*matColumnas;
+                _j = num - ( _i - 1 ) * matColumnas;
                 return [_i, _j];
             }
             function getCellNumFromID(id) {
                 comaP = id.indexOf(',');
                 _i = id.slice(1, comaP);
                 _j = id.slice(comaP+1, id.length);
-                console.log('i='+_i);
-                console.log('j='+_j);
+                //console.log('i='+_i);
+                //console.log('j='+_j);
                 return getCellNum(_i*1,_j*1);
+                // this probably returns the value starting from 0 instead of 1
             }
+            function getSurrounding(num) {
+                ij = getCellijFromNum(num+1);
+                _i = ij[0];
+                _j = ij[1];
+                //console.log('i='+_i);
+                //console.log('j='+_j);
+                //a square around the center cell (num)
+                s1 = 'm'+ (_i-1) +','+ (_j-1);
+                s2 = 'm'+ (_i-1) +','+ (_j-0);
+                s3 = 'm'+ (_i-1) +','+ (_j+1);
+                s4 = 'm'+ (_i-0) +','+ (_j-1);
+                s5 = 'm'+ (_i-0) +','+ (_j+1);
+                s6 = 'm'+ (_i+1) +','+ (_j-1);
+                s7 = 'm'+ (_i+1) +','+ (_j-0);
+                s8 = 'm'+ (_i+1) +','+ (_j+1);
+                surrounding = [s1, s2, s3, s4, s5, s6, s7, s8];
+                return surrounding;
+            }
+            function findOutOfBound(IDarr) {
+                //IMPORTANT the input should be an array of IDs 
+                //console.log(IDarr);
+                for(i=IDarr.length-1; i>=0; i--){
+                    id = IDarr[i];
+                    //console.log('id='+id);
+                    comaP = id.indexOf(',');
+                    _i = id.slice(1, comaP);
+                    //console.log('i='+_i);
+                    _j = id.slice(comaP+1, id.length);
+                    //console.log('j='+_j);
+                    //console.log('filas = '+ matFilas);
+                    //console.log('columnas = '+matColumnas);
+                    var _iTooBig = _i -1 >= matFilas;
+                    var _jTooBig = _j -1 >= matColumnas;
+                    //console.log('i Too Big = '+_iTooBig);
+                    //console.log('j Too Big = '+_jTooBig);
+                    switch(_iTooBig) {
+                        case true:
+                            IDarr[i] = -1;
+                            break;
+                        default:
+                            break;
+                    };
+                    switch(_jTooBig) {
+                        case true:
+                            IDarr[i] = -1;
+                            break;
+                        default:
+                            break;
+                    };
+                    switch(_i) {
+                        case '0':
+                            //console.log('_i is NOT valid');
+                            IDarr[i] = -1;
+                            break;
+                        default:
+                            //console.log('_i is valid');
+                            break;
+                    };
+                    switch(_j) {
+                        case '0':
+                            //console.log('_j is NOT valid');
+                            IDarr[i] = -1;
+                            break;
+                        default:
+                            //console.log('_j is valid')
+                            break;
+                    };
+                };
+                //console.log('Out of bound function finished');
+                //console.log(IDarr);
+                //IMPORTANT the output is a different array where the invalid items = -1
+                return IDarr;
+            }
+            function drawCells(cellsArray, colorString) {
+                console.log('Drawing:');
+                console.log(cellsArray);
+                for(i=cellsArray.length-1; i>= 0; i--){
+                    if(cellsArray[i]!=-1){
+                        document.getElementById(cellsArray[i]).style.backgroundColor = colorString;
+                    }
+                };
+            }
+            // functions that run at start
+            toggleEdit();
+            initializeMatrix(); 
+            updateMatrix();
         </script>
     </body>
 </html>
