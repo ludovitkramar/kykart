@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+.w3-sidebar {
+  z-index: 3;
+  width: 250px;
+  top: 43px;
+  bottom: 0;
+  height: inherit;
+}
+.hl {
+color: red;
+}
+</style>
+<body style="background-color: #ECECEC;">
+
+<!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+<div class="w3-main">
+
+  <div class="w3-row w3-padding-64" >
+    <div class="w3-container w3-threequarter w3-card" style="margin-left:12.5%; background-color: #ffffff;">
+      <h1 class="w3-text-teal w3-center">Unidad 10 - El futuro</h1>
+      <div class="w3-container">
+      <p class="w3-large">
+
+
+</p>
+</div>
+
+
+
+
+<div class="w3-container" style="padding-bottom: 64px;">
+  <h2 class="w3-text-teal">Formas de futuro</h2>
+  
+  <table class="w3-table-all">
+    <thead>
+      <tr class="w3-teal">
+        <th></th>
+        <th>Pensar</th>
+        <th>Ver</th>
+        <th>Cumplir</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>(yo)</td>
+      <td>pensar-é</td>
+      <td>ver-é</td>
+      <td>cumplir-é</td>
+    </tr>
+    <tr>
+      <td>(tú)</td>
+      <td>pensar-ás</td>
+      <td>ver-ás</td>
+      <td>cumplir-ás</td>
+    </tr>
+    <tr>
+      <td>(él/ella)</td>
+      <td>pensar-á</td>
+      <td>ver-á</td>
+      <td>cumplir-á</td>
+    </tr>
+    <tr>
+      <td>(nosotros/as)</td>
+      <td>pensar-emos</td>
+      <td>ver-emos</td>
+      <td>cumplir-emos</td>
+    </tr>
+    <tr>
+      <td>(vosotros/as)</td>
+      <td>pensar-éis</td>
+      <td>ver-éis</td>
+      <td>cumplir-éis</td>
+    </tr>
+    <tr>
+      <td>(ellos/ellas)</td>
+      <td>pensar-án</td>
+      <td>ver-án</td>
+      <td>cumplir-án</td>
+    </tr>
+  </table>
+   <h2 class="w3-text-teal">Algunas formas irregulares del futuro</h2>
+  
+  <table class="w3-table-all">
+    <tr>
+      <td>Venir:</td>
+      <td>ven<span class="hl">dr</span>é, vendrás, vendrá...</td>
+    </tr>
+    <tr>
+      <td>Poder:</td>
+      <td>po<span class="hl">dr</span>é, podrás, podrá...</td>
+    </tr>
+    <tr>
+      <td>Tener:</td>
+      <td>ten<span class="hl">dr</span>é, tendrás, tendrá...</td>
+    </tr>
+    <tr>
+      <td>Querer:</td>
+      <td>que<span class="hl">rr</span>é, querrás, querrá...</td>
+    </tr>
+    <tr>
+      <td>Hacer:</td>
+      <td>Ha<span class="hl">r</span>é, harás, hará...</td>
+    </tr>
+    <tr>
+      <td>Saber:</td>
+      <td>Sa<span class="hl">br</span>é, sabrás, sabrá...</td>
+    </tr>
+  </table>
+  <h2 class="w3-text-teal">Otras maneras de referirse al futuro</h2>
+  <table class="w3-table">
+    <tr>
+      <td><ul><li>Ir a + Infinitivo: Voy a decir la verdad.</li></ul></td>
+    </tr>
+    <tr>
+      <td><ul><li>Mañana / el mes que viene / la semana próxima     acabo las clases. / acabaré las clases.  </li></ul></td>
+    </tr>
+    <tr>
+      <td><ul><li>Pienso ver a mi amiga en febrero.</li></ul></td>
+    </tr>
+  </table>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

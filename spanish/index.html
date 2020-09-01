@@ -3,6 +3,9 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
   <title>Spanish Material</title>
   <style>
     * {
@@ -21,31 +24,32 @@
     }
     body {
       height: 100%;
-      background-color: rgba(200, 200, 200, 1);
+      background-color: rgba(200, 200, 200, 0.3);
     }
     .index {
-      width: 800px;
+      width: 1000px;
       background-color: rgba(250, 250, 250, 1);
-      box-shadow: 0px 0px 26px -7px rgba(0,0,0,1);
+      box-shadow: 0px 0px 5px 0px rgba(0,0,0,.6);
+      padding: 10px;
+      border-radius: 20px;
       animation-name: swipeUp;
       animation-duration: 1s;
       animation-play-state: paused;
     }
     .header {
       text-align: center;
-      padding: 40px;
+      padding-top: 20px;
     }
     div.grid {
       display: grid;
       grid-template-columns: auto auto auto;
       grid-gap: 20px;
       padding: 30px;
-      background-color: grey;
     }
     .grid > .griditem {
       background-color: #cccccc;
       cursor: pointer;
-      line-height: 50px;
+      line-height: 70px;
       text-align: center;
       transition: .2s;
       border-radius: 10px;
@@ -69,6 +73,7 @@
         transform: scale(.8);
         opacity: 0;
       }
+      }
     }
   </style>
 </head>
@@ -81,20 +86,27 @@
       <h4>2020</h4>
     </div>
       <div class="grid">
-        <div class="griditem" onclick="showContent()">Vocabulario</div>
-        <div class="griditem" onclick="showContent()">Vocabulario</div>
-        <div class="griditem" onclick="showContent()">Vocabulario</div>
-        <div class="griditem" onclick="showContent()">Vocabulario</div>
-        <div class="griditem" onclick="showContent()">Vocabulario</div>
-        <div class="griditem" onclick="showContent()">Vocabulario</div>
-        <div class="griditem" onclick="showContent()">Vocabulario</div>
-        <div class="griditem" onclick="showContent()">Vocabulario</div>
+        <div class="griditem" onclick="showContent('./material/Vocabulario%20redaccion.html')">Vocabulario</div>
+        <div class="griditem" onclick="showContent('./material/Un%20cuento%20para%20cada%20dia%20del%20ano.html')">Texto en pretérito</div>
+        <div class="griditem" onclick="showContent('./material/Tarea%20redaccion.html')">Redacción</div>
+        <div class="griditem" onclick="showContent('./material/Prueba.html')">Introducción a la Gitanilla</div>
+        <div class="griditem" onclick="showContent('./material/Gitanilla1.pdf')">Gitanilla 1</div>
+        <div class="griditem" onclick="showContent('./material/Gitanilla2.pdf')">Gitanilla 2</div>
+        <div class="griditem" onclick="showContent('./material/Conversacion/como%20aprender%20palabras%20nuevas.html')">Cómo aprendemos nuevas palabras</div>
+        <div class="griditem" onclick="showContent('./material/Conversacion/Futuro.html')">El futuro</div>
+        <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/La%20familia%20Garcia.html')">La familia García</div>
+        <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/Transcripción.html')">Fiesta de San Valentín</div>
+        <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/Vocabulario%201.html')">Vocabulario - Familia</div>
+        <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/Vocabulario%202.html')">Vocabulario - Fiestas</div>
       </div>
   </div>
 </div>
 <script type="text/javascript">
-  function showContent() {
+  function showContent(contURL) {
     document.getElementById('index').style.animationPlayState = 'running';
+    setTimeout(function () {
+      //location.href = contURL;
+    }, 1100, contURL);
   }
 </script>
 </body>
