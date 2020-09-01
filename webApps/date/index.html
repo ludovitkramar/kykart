@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <title>Date</title>
+    </head>
+    <body>
+<h3>Date Object</h3>
+<span id="o0"></span>
+<script>
+    function dateObject() {
+    var dateTime = new Date();
+    var type = typeof dateTime;
+    document.getElementById('o0').innerHTML = "Date() is of the type: "+type+'.<br />'+dateTime;
+    }
+    dateObject();
+</script>
+    </body>
+</html>
