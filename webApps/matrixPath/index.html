@@ -19,15 +19,29 @@
                 width: 20px;
                 float: left;
             }
+            .drawModeBox {
+                border: 2px solid gray;
+                border-radius: 20px;
+                background-color: #f3f3f3;
+                padding: 15px;
+                display: block;
+                box-shadow: 0px 0px 48px -5px rgba(0,0,0,0.51);
+                margin: 20px;
+                float: right;
+            }
+            .drawModeBox > h3 {
+                margin-top: 0px;
+                margin-bottom: 5px;
+            }
         </style>
     </head>
     <body>
-        <label>Filas: <input id="filas" type="number" value="5"></label>
-        <label>Columnas : <input id="columnas" type="number" value="5"></label>
+        <label>Filas: <input id="filas" type="number" value="15"></label>
+        <label>Columnas : <input id="columnas" type="number" value="15"></label>
         <button onclick="initializeMatrix();">initializeMatrix</button>
         <button onclick="updateMatrix();">updateMatrix</button>
         <hr />
-        <div style="display: flex;">
+        
         <div id="matrixContainer">
 
             <div class="matrixCell" id="m_i_j" onmousedown="getCellNum()"></div>
@@ -39,10 +53,19 @@
             <div id="matrixCell"></div>
 
         </div>
+        
+        <div class="drawModeBox" id="drawModeBox">
+            <h3>What to draw?</h3>
+            <label><input type="checkbox" id="surCellsCheck" checked>Surrounding cells</label><br />
+            <label><input type="checkbox" id="diagonalsCheck">Diagonals</label><br />
+            <label><input type="checkbox" id="placeholderCheck">-placeholder-</label><br />
+            <label><input type="checkbox" id="placeholderCheck">-placeholder-</label><br />
+            <label><input type="checkbox" id="placeholderCheck">-placeholder-</label>
         </div>
 
+        <br />
         <span id="matInfo"></span><br />
-        <span id="activeEle"></span>
+        <span id="activeEle">Elemento activo:</span>
         <hr />
         <label>Modo editar: <input id="editToggle" type="checkbox" onchange="toggleEdit()"></label><br />
         <label><input type="radio" name="editType" value="0" onchange="toggleEditType()"> 0</label><br />
@@ -58,6 +81,8 @@
             var activeCell = 0;
             var editMode = false;
             var editType = 0;
+            var drawSurBox = true;
+            var drawDiagonals = true;
             function initializeMatrix() {
                 matContenido = [];
                 matFilas = document.getElementById('filas').value;
@@ -98,19 +123,25 @@
                 //the code above gets the number in the array, and assigns the number to the activeCell variable
                 document.getElementById('activeEle').innerHTML = 'Elemento activo: '+activeCell+', ID = ' + getCellIDFromNum(activeCell+1);
                 if(editMode == false) {
-                    //get surrounding cells and color them
-                    //------------------------------------------------temporarily deactivated
-                    surroundingCells = getSurrounding(activeCell);
-                    surroundingCells = findOutOfBound(surroundingCells);
-                    color = 'rgb('+ Math.random() * 255 +','+Math.random() * 255+','+Math.random() * 255+')'
-                    console.log(color);
-                    drawCells(surroundingCells, color);
-                    //------------------------------------------------temporarily deactivated
-                    //diagonal cells start bellow
-                    diagonalCells = getDiagonals(activeCell);
-                    diagonalCells = findOutOfBound(diagonalCells);
-                    color2 = document.getElementById('colorChoser').value;
-                    drawCells(diagonalCells, color2);
+                    //if it isn't edit mode, it is draw mode.
+                    //what to draw? check what is checked 
+                    var surBoxChecked = document.getElementById('surCellsCheck').checked;
+                    var diagonalsChecked = document.getElementById('diagonalsCheck').checked;
+                    if(surBoxChecked == true){
+                        //get surrounding cells and color them
+                        surroundingCells = getSurrounding(activeCell);
+                        surroundingCells = findOutOfBound(surroundingCells);
+                        color = 'rgb('+ Math.random() * 255 +','+Math.random() * 255+','+Math.random() * 255+')'
+                        //console.log(color);
+                        drawCells(surroundingCells, color);
+                    };
+                    if(diagonalsChecked == true) {
+                        //diagonal cells start bellow
+                        diagonalCells = getDiagonals(activeCell);
+                        diagonalCells = findOutOfBound(diagonalCells);
+                        color2 = document.getElementById('colorChoser').value;
+                        drawCells(diagonalCells, color2);
+                    };                    
                     //pathfind
                 } else {
                     //editar
