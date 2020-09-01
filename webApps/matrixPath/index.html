@@ -41,7 +41,7 @@
         <button onclick="initializeMatrix();">initializeMatrix</button>
         <button onclick="updateMatrix();">updateMatrix</button>
         <hr />
-        
+
         <div id="matrixContainer">
 
             <div class="matrixCell" id="m_i_j" onmousedown="getCellNum()"></div>
@@ -53,7 +53,7 @@
             <div id="matrixCell"></div>
 
         </div>
-        
+
         <div class="drawModeBox" id="drawModeBox">
             <h3>What to draw?</h3><hr />
             <label><input type="checkbox" id="surCellsCheck" checked>Surrounding cells</label><hr />
@@ -74,7 +74,7 @@
         <label><input type="radio" name="editType" value="2" onchange="toggleEditType()"> 2</label><br />
         <label><input type="radio" name="editType" value="-1" onchange="toggleEditType()"> -1</label><br />
         <span id="editInfo"></span><br />
-        
+
 
         <script>
             var matFilas = 0, matColumnas = 0;
@@ -125,7 +125,7 @@
                 document.getElementById('activeEle').innerHTML = 'Elemento activo: '+activeCell+', ID = ' + getCellIDFromNum(activeCell+1);
                 if(editMode == false) {
                     //if it isn't edit mode, it is draw mode.
-                    //what to draw? check what is checked 
+                    //what to draw? check what is checked
                     var surBoxChecked = document.getElementById('surCellsCheck').checked;
                     var diagonalsChecked = document.getElementById('diagonalsCheck').checked;
                     if(surBoxChecked == true){
@@ -142,7 +142,7 @@
                         diagonalCells = findOutOfBound(diagonalCells);
                         color2 = document.getElementById('colorChoser').value;
                         drawCells(diagonalCells, color2);
-                    };                    
+                    };
                     //pathfind
                 } else {
                     //editar
@@ -221,7 +221,7 @@
                 return surrounding;
             }
             function findOutOfBound(IDarr) {
-                //IMPORTANT the input should be an array of IDs 
+                //IMPORTANT the input should be an array of IDs
                 //console.log(IDarr);
                 for(i=IDarr.length-1; i>=0; i--){
                     id = IDarr[i];
@@ -314,10 +314,11 @@
                 //console.log(diagonal_1);
                 diagonals = diagonal_1.concat(diagonal_2);
                 return diagonals;
+                //hello
             }
             // functions that run at start
             toggleEdit();
-            initializeMatrix(); 
+            initializeMatrix();
             updateMatrix();
         </script>
     </body>
