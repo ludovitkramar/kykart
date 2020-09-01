@@ -58,6 +58,7 @@
             <h3>What to draw?</h3>
             <label><input type="checkbox" id="surCellsCheck" checked>Surrounding cells</label><br />
             <label><input type="checkbox" id="diagonalsCheck">Diagonals</label><br />
+            <label>Diagonals color: <input type="color" id="colorChoser"><br /></label>
             <label><input type="checkbox" id="placeholderCheck">-placeholder-</label><br />
             <label><input type="checkbox" id="placeholderCheck">-placeholder-</label><br />
             <label><input type="checkbox" id="placeholderCheck">-placeholder-</label>
@@ -73,7 +74,7 @@
         <label><input type="radio" name="editType" value="2" onchange="toggleEditType()"> 2</label><br />
         <label><input type="radio" name="editType" value="-1" onchange="toggleEditType()"> -1</label><br />
         <span id="editInfo"></span><br />
-        <input type="color" id="colorChoser">
+        
 
         <script>
             var matFilas = 0, matColumnas = 0;
