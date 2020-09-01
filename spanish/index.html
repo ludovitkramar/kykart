@@ -3,51 +3,46 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-  <meta http-equiv="Pragma" content="no-cache"/>
-  <meta http-equiv="Expires" content="0"/>
+  <script src="https://kit.fontawesome.com/92d91430be.js" crossorigin="anonymous"></script>
   <title>Spanish Material</title>
   <style>
     * {
       padding: 0;
       margin: 0;
+      font-family: serif;
     }
     div.page {
       width: 100%;
       height: 100%;
       display: flex;
       justify-content: center;
-      align-items: center;
     }
     html {
       height: 100%;
     }
     body {
       height: 100%;
-      background-color: rgba(200, 200, 200, 0.3);
+      background-color: rgba(250, 250, 250, 1);
     }
     .index {
       width: 1000px;
       background-color: rgba(250, 250, 250, 1);
-      box-shadow: 0px 0px 5px 0px rgba(0,0,0,.6);
-      padding: 10px;
-      border-radius: 20px;
-      animation-name: swipeUp;
-      animation-duration: 1s;
-      animation-play-state: paused;
+      padding: 20px;
+      transition: 1s;
     }
     .header {
       text-align: center;
-      padding-top: 20px;
+      padding-top: 10px;
     }
     div.grid {
       display: grid;
       grid-template-columns: auto auto auto;
       grid-gap: 20px;
-      padding: 30px;
+      padding-top: 30px;
     }
     .grid > .griditem {
-      background-color: #cccccc;
+      background-color: rgba(150, 150, 150, 0.3);
+      color: #000;
       cursor: pointer;
       line-height: 70px;
       text-align: center;
@@ -55,30 +50,67 @@
       border-radius: 10px;
     }
     .grid > .griditem:hover {
-      background-color: #dddddd;
+      background-color: rgba(150, 150, 150, 0.1);
       box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
     }
     .grid > .griditem:active {
-      background-color: #999999;
+      background-color: #878787;
       margin-top: 5px;
       margin-bottom: -5px;
       box-shadow: 0px 0px 5px -2px rgba(0,0,0,0.5);
     }
-    @keyframes swipeUp {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(.8);
-        opacity: 0;
-      }
-      }
+    #iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-width: 0px;
+    }
+    #iframeBox {
+      overflow: hidden;
+      top: 0px;
+      left: 0px;
+      display: none;
+      z-index: 10;
+      height: 100%;
+      width: 100%;
+      transition: .7s;
+    }
+    .closeButton {
+      transition: .1s;
+      height: 60px;
+      width: 60px;
+      line-height: 60px;
+      border-radius: 30px;
+      background-color: #18bb7b;
+      color: white;
+      position: absolute;
+      z-index: 11;
+      top: 20px;
+      left: 20px;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0px 0px 5px -2px rgba(0,0,0,0.5);
+      font-size: 26px;
+    }
+    .closeButton:hover {
+      background-color: #87DEBB;
+    }
+    .closeButton:active {
+      top: 25px;
+      background-color: #009688
     }
   </style>
 </head>
 <body>
 <div class="page">
+  <div id="iframeBox">
+    <div class="closeButton" onclick="hideContent()">
+      <i class="fas fa-arrow-left"></i>
+    </div>
+    <iframe src="" id="iframe"></iframe>
+  </div>
   <div class="index" id="index">
     <div class="header">
       <h1>Material de español</h1>
@@ -103,10 +135,27 @@
 </div>
 <script type="text/javascript">
   function showContent(contURL) {
-    document.getElementById('index').style.animationPlayState = 'running';
+    const indexBox = document.getElementById('index');
+    indexBox.style.transform = 'scale(.8)';
+    indexBox.style.opacity = '0';
+    document.getElementById('iframe').src = contURL;
     setTimeout(function () {
+      document.getElementById('iframeBox').style.opacity = '1';
+      document.getElementById('index').style.display = 'none';
+      document.getElementById('iframeBox').style.display = 'block';
       //location.href = contURL;
-    }, 1100, contURL);
+    }, 700, contURL);
+  }
+  function hideContent() {
+    document.getElementById('iframeBox').style.opacity = '0';
+    setTimeout(function(){
+      document.getElementById('iframeBox').style.display = 'none';
+      document.getElementById('iframe').src = '';
+      const indexBox = document.getElementById('index');
+      indexBox.style.display = 'block';
+      indexBox.style.transform = 'scale(1)';
+      indexBox.style.opacity = '1';
+    }, 700)
   }
 </script>
 </body>
