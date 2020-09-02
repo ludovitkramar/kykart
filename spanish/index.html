@@ -4,14 +4,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
   <script src="https://kit.fontawesome.com/92d91430be.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&family=Raleway&display=swap" rel="stylesheet">
   <title>Spanish Material</title>
   <style>
+  .serif {
+    font-family: 'Crimson Pro', serif;
+  }
+  .sans {
+    font-family: 'Raleway', sans-serif;
+  }
     * {
       padding: 0;
       margin: 0;
-      font-family: serif;
     }
-    div.page {
+    .page {
       width: 100%;
       height: 100%;
       display: flex;
@@ -28,15 +34,15 @@
       width: 1000px;
       background-color: rgba(250, 250, 250, 1);
       padding: 20px;
-      transition: 1s;
+      transition: .5s;
     }
     .header {
       text-align: center;
       padding-top: 10px;
     }
-    div.grid {
+    .grid {
       display: grid;
-      grid-template-columns: auto auto auto;
+      grid-template-columns: 1fr 1fr 1fr;
       grid-gap: 20px;
       padding-top: 30px;
     }
@@ -75,7 +81,7 @@
       z-index: 10;
       height: 100%;
       width: 100%;
-      transition: .7s;
+      transition: .5s;
     }
     .closeButton {
       transition: .1s;
@@ -101,8 +107,8 @@
       top: 25px;
       background-color: #009688
     }
-    @media only screen and (max-width: 600px) {
-      div.grid {
+    @media only screen and (max-width: 1000px) {
+      .grid {
         grid-template-columns: auto;
       }
     }
@@ -116,7 +122,7 @@
     a:active {
       color: #009688;
     }
-    div.paragraph {
+    .paragraph {
       margin: 20px;
     }
     .center-text {
@@ -133,12 +139,12 @@
     <iframe src="" id="iframe"></iframe>
   </div>
   <div class="index" id="index">
-    <div class="header">
+    <header class="header serif">
       <h1>Material de español</h1>
       <h3>Elena García Herrero</h3>
       <h4>2020</h4>
-    </div>
-      <div class="grid">
+    </header>
+      <div class="grid sans" >
         <div class="griditem" onclick="showContent('./material/Vocabulario%20redaccion.html')">Vocabulario</div>
         <div class="griditem" onclick="showContent('./material/Un%20cuento%20para%20cada%20dia%20del%20ano.html')">Texto en pretérito</div>
         <div class="griditem" onclick="showContent('./material/Tarea%20redaccion.html')">Redacción</div>
@@ -152,9 +158,9 @@
         <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/Vocabulario%201.html')">Vocabulario - Familia</div>
         <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/Vocabulario%202.html')">Vocabulario - Fiestas</div>
       </div>
-      <div class="paragraph center-text">
+      <footer class="paragraph center-text serif">
         <a href="/">kykvit</a>
-      </div>
+      </footer>
   </div>
 </div>
 <script type="text/javascript">
@@ -168,7 +174,7 @@
       document.getElementById('index').style.display = 'none';
       document.getElementById('iframeBox').style.display = 'block';
       //location.href = contURL;
-    }, 700, contURL);
+    }, 600, contURL);
   }
   function hideContent() {
     document.getElementById('iframeBox').style.opacity = '0';
@@ -179,7 +185,7 @@
       indexBox.style.display = 'block';
       indexBox.style.transform = 'scale(1)';
       indexBox.style.opacity = '1';
-    }, 700)
+    }, 600)
   }
 </script>
 </body>
