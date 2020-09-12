@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+    <title>Cards</title>
+  </head>
+  <body onresizeXXX="adjustCards()">
+    <div class="cards-deck">
+      <div class="m-card">
+          <h3>Title</h3>
+          <div class="card-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inc</p>
+          </div>
+      </div>
+      <div class="m-card">
+          <h3>Long Title to see the gradient</h3>
+          <div class="card-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inc</p>
+          </div>
+      </div>
+      <div class="m-card">
+          <h3>Title</h3>
+          <div class="card-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inc</p>
+          </div>
+      </div>
+      <div class="m-card">
+          <h3>Title</h3>
+          <div class="card-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inc</p>
+          </div>
+      </div>
+      <div class="m-card">
+          <h3>Title</h3>
+          <div class="card-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inc</p>
+          </div>
+      </div>
+      <div class="m-card">
+          <h3>Title</h3>
+          <div class="card-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inc</p>
+          </div>
+      </div>
+      <div class="m-card">
+          <h3>Title</h3>
+          <div class="card-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inc</p>
+          </div>
+      </div>
+    </div>
+    <hr /><button onclick="adjustCards()">Adjusct Cards</button>
+    <script type="text/javascript">
+      function adjustCards() {
+        var w = window.innerWidth;
+        console.log(w);
+        var cards = document.getElementsByClassName('m-card');
+        console.log(cards);
+        var n = cards.length;
+        console.log(n);
+        // x + (n-1)/3x = w , siendo x el width de m-cards.
+        x = w / (1+(n-1)/3);
+        console.log(x);
+        cwidth = "--cWidth: "+Math.floor(x)+"px";
+        console.log(cwidth);
+        rmargin = "--cRmargin: "+Math.floor((-2/3)*x)+"px";
+        console.log(rmargin);
+        hoverlmargin = "--cHoverLmargin:"+ Math.floor(((-2/3)*x) + 30) +"px";
+        console.log(hoverlmargin);
+        //document.documentElement.style.cssText = cwidth;
+        document.documentElement.style.setProperty("--cWidth", Math.floor(x)+"px");
+        document.documentElement.style.cssText = rmargin;
+        document.documentElement.style.cssText = hoverlmargin;
+      }
+      //adjustCards();
+    </script>
+  </body>
+</html>

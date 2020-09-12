@@ -1,0 +1,50 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: sans-serif;
+}
+:root{
+  --cWidth: 300px;
+  --cRmargin: -200px;
+  --cHoverLmargin: -170px;
+}
+body {
+  background-color: #4B3F46;
+  overflow-x: hidden;
+}
+.m-card {
+    margin-right: var(--cRmargin);
+    margin-left: 10px;
+    transition: 1s;
+    border-radius: 1rem;
+    background: -webkit-linear-gradient(45deg, #180C24, #3F3646);
+    padding: 1rem;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    width: var(--cWidth);
+    height: 200px;
+    float: left;
+    color: white;
+    cursor: pointer;
+}
+.m-card:hover {
+  margin-right: -20px;
+  background: -webkit-linear-gradient(45deg, #180C24, #8746C3);
+  margin-top: 50px;
+  margin-left: var(--cHoverLmargin);
+}
+.m-card:active {
+  background: -webkit-linear-gradient(45deg, #000000, #180C24);
+}
+.m-card:hover > h3 {
+  -webkit-text-fill-color: transparent;
+  background: -webkit-linear-gradient(180deg, #9357C9, #F9D350);
+  -webkit-background-clip: text;
+}
+.cards-deck {
+  margin: 1rem;
+  display: block;
+  height: 270px;
+}
+.m-card:first-child {
+  margin: 0px;
+}
