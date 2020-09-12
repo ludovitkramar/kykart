@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./style.css">
     <title>Cards</title>
   </head>
-  <body onresizeXXX="adjustCards()">
+  <body onresize="adjustCards()">
     <div class="cards-deck">
       <div class="m-card">
           <h3>Title</h3>
@@ -51,7 +51,7 @@
           </div>
       </div>
     </div>
-    <hr /><button onclick="adjustCards()">Adjusct Cards</button>
+    <hr /><button onclick="adjustCards()">Adjusct Cards</button><span>&nbsp;&nbsp;&nbsp;&nbsp;It is automatic!</span>
     <script type="text/javascript">
       function adjustCards() {
         var w = window.innerWidth;
@@ -61,20 +61,19 @@
         var n = cards.length;
         console.log(n);
         // x + (n-1)/3x = w , siendo x el width de m-cards.
-        x = w / (1+(n-1)/3);
+        x = ((w-50)/2) / (1+(n-1)/3);
         console.log(x);
-        cwidth = "--cWidth: "+Math.floor(x)+"px";
+        cwidth = Math.floor(x)+"px";
         console.log(cwidth);
-        rmargin = "--cRmargin: "+Math.floor((-2/3)*x)+"px";
+        rmargin = Math.floor((-2/3)*x)+"px";
         console.log(rmargin);
-        hoverlmargin = "--cHoverLmargin:"+ Math.floor(((-2/3)*x) + 30) +"px";
+        hoverlmargin = Math.floor(((-2/3)*x) + 30) +"px";
         console.log(hoverlmargin);
-        //document.documentElement.style.cssText = cwidth;
-        document.documentElement.style.setProperty("--cWidth", Math.floor(x)+"px");
-        document.documentElement.style.cssText = rmargin;
-        document.documentElement.style.cssText = hoverlmargin;
+        document.documentElement.style.setProperty('--cRmargin', rmargin);
+        document.documentElement.style.setProperty('--cWidth', cwidth);
+        document.documentElement.style.setProperty('--cHoverLmargin', hoverlmargin);
       }
-      //adjustCards();
+      adjustCards();
     </script>
   </body>
 </html>

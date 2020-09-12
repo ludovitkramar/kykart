@@ -2,6 +2,7 @@
   margin: 0px;
   padding: 0px;
   font-family: sans-serif;
+  color: white;
 }
 :root{
   --cWidth: 300px;
@@ -47,4 +48,22 @@ body {
 }
 .m-card:first-child {
   margin: 0px;
+}
+hr {
+  border-color: white;
+  border-width: 1px;
+}
+button {
+  border-radius: 1rem;
+  background: -webkit-linear-gradient(90deg, #180C24, #3F3646);
+  color: white;
+  padding: 1rem;
+  border-width: 0px;
+  font-size: 1em;
+}
+button:hover {
+  background: -webkit-linear-gradient(90deg, #180C24, #8746C3);
+}
+button:active {
+  background: -webkit-linear-gradient(90deg, #180C24, #000000);
 }
