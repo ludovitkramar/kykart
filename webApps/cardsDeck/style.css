@@ -30,7 +30,7 @@ body {
 .m-card:hover {
   margin-right: -20px;
   background: -webkit-linear-gradient(45deg, #180C24, #8746C3);
-  margin-top: 50px;
+  /*margin-top: 50px;*/
   margin-left: var(--cHoverLmargin);
 }
 .m-card:active {
@@ -48,6 +48,10 @@ body {
 }
 .m-card:first-child {
   margin: 0px;
+}
+.m-card:last-child:hover {
+  margin-left: 10px;
+  margin-right: var(--cRmargin);
 }
 hr {
   border-color: white;
