@@ -134,14 +134,14 @@
     <div class="inputBlock">
       <div>
         <span>Input:</span>
-        <input id="num">
+        <input id="num" onkeydown="keyHandler(event)" ondrop="dropHandler(this, event)" placeholder="Number to convert" value="">
       </div>
       <div>
-        <span>Max number: </span>
-        <input type="number" id="maxNum" value="100">
+        <span>Maximum number: </span>
+        <input type="number" id="maxNum" value="100" onkeydown="keyHandler(event)">
       </div>
       <div class="buttonCell">
-        <button onclick="fractionize()">Compute</button>
+        <button onclick="fractionize()">Convert</button>
       </div>
     </div>
     
@@ -163,10 +163,14 @@
 </div>
 <script>
   function fractionize() {
-    num = document.getElementById('num').value * 1;
+    num = document.getElementById('num').value;
+    //Convertir coma(',') en punto ('.')
+    num = num.replace(',','.');
+    num *= 1;
     maxNum = document.getElementById('maxNum').value * 1;
     isNeg = false;
     message = document.getElementById('message');
+    //Comprobar si es un número válido.
     if(num%1==0){
       message.innerHTML = 'Not a float.';
       message.style.backgroundColor = 'var(--errorBG)';
@@ -266,6 +270,15 @@
       };      
     }
     console.log('Done');
+  };
+  function keyHandler(e) {
+    if (event.which == 13 || event.keyCode == 13) {
+        //code to execute here
+        fractionize();
+    };
+  };
+  function dropHandler(el, e) {
+    document.getElementById('num').value = '';
   }
 </script>
   </body>
