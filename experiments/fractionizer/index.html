@@ -234,9 +234,6 @@
           if(cdividendo > maxNum || cdivisor > maxNum){
             if (minDividendo == 0 || minDivisor == 0){
               console.log('Please raise the maximum number.');
-              /*message.innerHTML = 'Please raise the maximum number.';
-              message.style.backgroundColor = 'var(--errorBG)';
-              message.style.borderColor = 'var(--errorBorder)';*/
               break;
             }
             break;
@@ -256,9 +253,15 @@
         dividendo = Math.round(minDividendo);
         divisor = Math.round(minDivisor);
         //console.log('Not exact result, exceeds specified maximun number: '+maxNum);
-        message.innerHTML = 'Done. This is an approximated result.';
-        message.style.backgroundColor = 'var(--warningBG)';
-        message.style.borderColor = 'var(--warningBorder)';
+        if (divisor == 0) {
+          message.innerHTML = 'Please raise the maximum number to be higher than the input.';
+          message.style.backgroundColor = 'var(--errorBG)';
+          message.style.borderColor = 'var(--errorBorder)';
+        }else{
+          message.innerHTML = 'Exceeds specified maximum number, approximated result. <br />'+dividendo+'/'+divisor+' ≈ '+(dividendo / divisor).toPrecision(7);
+          message.style.backgroundColor = 'var(--warningBG)';
+          message.style.borderColor = 'var(--warningBorder)';
+        }
       };
       //Comprobar si el número es un número negativo
       if(isNeg){
