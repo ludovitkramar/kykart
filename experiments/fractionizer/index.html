@@ -221,12 +221,22 @@
         minDiff = 100;
         minDividendo = 0;
         minDivisor = 0;
-        while(cdividendo < maxNum && cdivisor < maxNum) {
+        while(cdividendo <= maxNum && cdivisor <= maxNum) {
           cdividendo = Math.round(cdivisor * num);
           cdiff = Math.abs(num - (cdividendo / cdivisor));
           //console.log('cdividendo: '+cdividendo);
           //console.log('cdivisor: '+cdivisor);
           //console.log('cdiff: '+cdiff);
+          if(cdividendo > maxNum || cdivisor > maxNum){
+            if (minDividendo == 0 || minDivisor == 0){
+              console.log('Please raise the maximum number.');
+              /*message.innerHTML = 'Please raise the maximum number.';
+              message.style.backgroundColor = 'var(--errorBG)';
+              message.style.borderColor = 'var(--errorBorder)';*/
+              break;
+            }
+            break;
+          }
           if(cdiff<minDiff){
             minDiff = cdiff;
             minDivisor = cdivisor;
