@@ -138,7 +138,7 @@
       </div>
       <div>
         <span>Maximum number: </span>
-        <input type="number" id="maxNum" value="100" onkeydown="keyHandler(event)">
+        <input type="number" id="maxNum" value="100" onkeydown="keyHandler(event)" min="1">
       </div>
       <div class="buttonCell">
         <button onclick="fractionize()">Convert</button>
@@ -218,6 +218,12 @@
       message.style.borderColor = 'var(--correctBorder)';
       //Comprobar si se excede el número máximo
       if(dividendo>maxNum || divisor>maxNum){
+        if(maxNum>999999999){
+          message.innerHTML = 'Maximum number is too big.';
+          message.style.backgroundColor = 'var(--errorBG)';
+          message.style.borderColor = 'var(--errorBorder)';
+          throw new Error("Maximum number is too big");
+        };
         console.log('Computing approximation...');
         cdiff = 1;
         cdividendo = 0;
