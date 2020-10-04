@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="vieport" content="width=device-width, initial-scale=1">
+     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <title>Fractionizer</title>
+    <style>
+      * {
+        font-family: 'Quicksand', sans-serif;
+        margin: 0px;
+        padding: 0px;
+      }
+      body {
+        background-color: gray;
+      }
+      .page {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .content {
+        padding: 30px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 1);
+        border-radius: 20px;
+        max-width: 800px;
+        background-color: lightgray;
+      }
+      .inputBlock > *{
+        font-size: 20px;
+      }
+      .resultBlock {
+        justify-content: center;
+        font-size: 80px;
+        background-color: white;
+        border-radius: 10px;
+      }
+      .ansTitle {
+        font-size: 30px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+<div class="page">
+  <div class="content">
+    <h1>Fractionizer</h1>
+    <h3>Enter a float and this will convert it to an approximated fraction.</h3>
+    <hr />
+    <br />
+    <div class="inputBlock">
+    <span>Input:</span><input id="num"><br />
+    <span>Max number: </span><input type="number" id="maxNum" value="100"><br />
+    <button onclick="fractionize()">Compute</button>
+    <br /><br />
+    </div>
+    <div class="resultBlock">
+      <h3 class="ansTitle">Result:</h3>
+      <div style="display: flex; justify-content: center;">
+      <math>
+         <mfrac>
+          <mi id="dividendo">1</mi>
+          <mi id="divisor">2</mi>
+         </mfrac>
+       </math>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function fractionize() {
+    num = document.getElementById('num').value * 1;
+    maxNum = document.getElementById('maxNum').value * 1;
+    isNeg = false;
+    if(num%1==0){
+      alert('Not a float.');
+    } else if(isNaN(num)){
+      alert('Not a valid number.');
+    } else {
+      console.log('Computing...');
+      if(num<0){
+        isNeg = true
+      };
+      num = Math.abs(num);
+      numStr = num.toString();
+      //Contar la cantidad de decimales que tiene
+      decimals = numStr.length - numStr.indexOf('.') - 1;
+      dividendo = num;
+      divisor = 1;
+      //Multipicar por 10 el dividendo y el divisor tantas veces como el número tenga decimales.
+      for(i=0; i<decimals; i++){
+        dividendo *= 10;
+        divisor *= 10;
+      }
+      //Simplificar con 2 y 5, porque el divisor no puede ser múltiplo de otros números.
+      dividendo = Math.round(dividendo);
+      divisor = Math.round(divisor);
+      while(dividendo%2==0 && divisor%2==0){
+        dividendo /= 2;
+        divisor /= 2;
+      }
+      dividendo = Math.round(dividendo);
+      divisor = Math.round(divisor);
+      while(dividendo%5==0 && divisor%5==0){
+        dividendo /= 5;
+        divisor /= 5;
+      }
+      dividendo = Math.round(dividendo);
+      divisor = Math.round(divisor);
+      //Comprobar si se excede el número máximo
+      if(dividendo>maxNum || divisor>maxNum){
+        cdiff = 1;
+        cdividendo = 0;
+        cdivisor = 1;
+        minDiff = 100;
+        minDividendo = 0;
+        minDivisor = 0;
+        while(cdividendo < maxNum && cdivisor < maxNum) {
+          cdividendo = Math.round(cdivisor * num);
+          cdiff = Math.abs(num - (cdividendo / cdivisor));
+          //console.log('cdividendo: '+cdividendo);
+          //console.log('cdivisor: '+cdivisor);
+          //console.log('cdiff: '+cdiff);
+          if(cdiff<minDiff){
+            minDiff = cdiff;
+            minDivisor = cdivisor;
+            minDividendo = cdividendo;
+            //console.log('cdiff < minDiff: True')
+            //console.log('mindividendo: '+minDividendo);
+            //console.log('mindivisor: '+minDivisor);
+            //console.log('mindiff: '+minDiff);
+          };
+          cdivisor += 1;
+        }
+
+        dividendo = Math.round(minDividendo);
+        divisor = Math.round(minDivisor);
+        console.log('Not exact result, exceeds specified maximun number: '+maxNum);
+      };
+      //Comprobar si el número es un número negativo
+      if(isNeg){
+        document.getElementById('dividendo').innerHTML = '-'+dividendo;
+        document.getElementById('divisor').innerHTML = divisor;
+      } else {
+        document.getElementById('dividendo').innerHTML = dividendo;
+        document.getElementById('divisor').innerHTML = divisor;
+      };      
+    }
+  }
+</script>
+  </body>
+</html>
