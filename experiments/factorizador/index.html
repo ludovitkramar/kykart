@@ -382,7 +382,7 @@
     }
     a = num;
     a = a * 1;
-    if (a%1 == 0 && a >= 0){
+    if (a%1 == 0 && a > 0){
       factors = findPrime(0,Math.ceil(a/2+1),0,true);
       //console.log('Factores posibles = '+factors);
       ans = [];
@@ -393,12 +393,17 @@
         }
       }
       ans.sort(function(a, b){return a - b});
-      //console.log('Factorizado: '+ans);
       if (noOutput==false) {
+        //console.log('Factorizado: '+ans);
+        //console.log(a, num);
         if (num == a) {
           output.innerHTML = num + ' es un número primo.';
         } else {
-          output.innerHTML = ans.join(' × ') + ' = ' + num;
+          if (num==2) {
+            output.innerHTML = 2 + ' es un número primo.';
+          } else {
+            output.innerHTML = ans.join(' × ') + ' = ' + num;
+          }
         }
         message.innerHTML = 'Done';
         message.style.backgroundColor = 'var(--correctBG)';
