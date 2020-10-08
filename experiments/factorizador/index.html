@@ -333,7 +333,7 @@
       //send b
       //receive primes[], output string
       primeWorker = new Worker('./primeWorker.js');
-      myWorker.postMessage(b);
+      primeWorker.postMessage(b);
       /*for(sus = 3;sus<=b-1;sus++){
         isPrime = true;
         for(i = 0;i<primes.length;i++){
