@@ -315,6 +315,9 @@
     }
     a *= 1;
     b *= 1;
+    //TEMPORAL CODE<<<<<<
+    count = 0;
+    //TEMPORAL CODE>>>>>>
     if (a%1 == 0 && b%1 == 0 && a >= 0 && b > 0 && b > a){
       //Comienza el programa
       if (noOutput == false) {
@@ -325,10 +328,18 @@
           output.innerHTML += "<li>"+ 2 +"</li>";
         }
       }
-      primes = [2];
-      for(sus = 3;sus<=b-1;sus++){
+      var primeWorker;
+      primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,];
+      //send b
+      //receive primes[], output string
+      primeWorker = new Worker('./primeWorker.js');
+      myWorker.postMessage(b);
+      /*for(sus = 3;sus<=b-1;sus++){
         isPrime = true;
         for(i = 0;i<primes.length;i++){
+          //TEMPORAL CODE<<<<<<
+          count += 1;
+          //TEMPORAL CODE>>>>>>
           if(sus/primes[i]%1==0){
             isPrime = false;
             break;
@@ -340,7 +351,15 @@
             output.innerHTML += "<li>"+ sus +"</li>";
           }
         }
+      }*/
+      primeWorker.onmessage = function(e) {
+        console.log(e.data);
       }
+      primeWorker.terminate();
+      primeWorker = undefined;
+      //TEMPORAL CODE<<<<<<
+      //console.log('computations='+count);
+      //TEMPORAL CODE>>>>>>
       if (noOutput == false) {
         message.innerHTML = 'Done';
         message.style.backgroundColor = 'var(--correctBG)';
@@ -384,9 +403,9 @@
     a = a * 1;
     if (a%1 == 0 && a > 0){
       factors = findPrime(0,Math.ceil(a/2+1),0,true);
-      //console.log('Factores posibles = '+factors);
+      //console.log(factors);
       ans = [];
-      for (i=factors.length-1;i>=0;i--){
+      for (i=0;i<factors.length;i++){
         while (a%factors[i]==0) {
           a = a / factors[i];
           ans.push(factors[i]);
