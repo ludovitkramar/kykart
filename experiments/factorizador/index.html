@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&family=Raleway&display=swap" rel="stylesheet">
-    <title>El Buscaprimos</title>
+    <title>El Factorizador</title>
     <style>
       * {
         font-family: 'Quicksand', sans-serif;
@@ -139,24 +139,16 @@
   <body>
 <div class="page">
   <div class="content">
-    <h1>El Buscaprimos</h1>
-    <h3>Comprobar si un número es primo o buscar primos en un determinado rango.</h3>
+    <h1>El Factorizador</h1>
+    <h3>Descompone un número en los números primes que lo compone.</h3>
     <hr />
     <div class="inputBlock">
       <div class="inputCell">
-        <span>¿Es un primo?</span>
-        <input id="checkPrime" onkeydown="keyHandler(event, this)" ondrop="dropHandler(this, event)" placeholder="Sospechoso de primo" value="">
+        <span>Número a factorizar:</span>
+        <input id="toFactorize" onkeydown="keyHandler(event, this)" ondrop="dropHandler(this, event)" placeholder="Introduzca un número entero positivo" value="">
       </div>
       <div class="buttonCell">
-        <button onclick="checkPrime()">Comprobar</button>
-      </div>
-      <div class="inputCell">
-        <span>Todos los primos entre: </span>
-        <input id="primeFrom"  type="number" id="maxNum" value="0" onkeydown="keyHandler(event, this)" min="0">
-        <input id="primeTo"  type="number" id="maxNum" value="100" onkeydown="keyHandler(event, this)" min="1">
-      </div>
-      <div class="buttonCell">
-        <button onclick="findPrime()">Calcular</button>
+        <button onclick="factorize()">Factorizar</button>
       </div>
     </div>
     <div class="messageBlock">
@@ -165,8 +157,9 @@
     <div class="resultBlock">
       <h3 class="ansTitle">Resultado:</h3>
       <div style="display: flex; justify-content: center;">
-        <ul id="primeList">
-        </ul>
+        <div id="factorizeAns">
+
+        </div>
       </div>
     </div>
 
@@ -296,6 +289,9 @@
           case 'primeTo':
             findPrime();
             break;
+          case 'toFactorize':
+            factorize();
+            break;
           default:
             alert('error');
         }
@@ -376,6 +372,47 @@
       }
     }
     return primes;
+  }
+  function factorize(num = document.getElementById('toFactorize').value, noOutput = false) {
+    //num is the number to factorize, this functio requires the funtcion findPrime(0,b,0,true) to find the primes up to 'b'.
+    //This function returns an array with the factors
+    if (noOutput==false) {
+      message = document.getElementById('message');
+      output = document.getElementById('factorizeAns');
+    }
+    a = num;
+    a = a * 1;
+    if (a%1 == 0 && a >= 0){
+      factors = findPrime(0,Math.ceil(a/2+1),0,true);
+      //console.log('Factores posibles = '+factors);
+      ans = [];
+      for (i=factors.length-1;i>=0;i--){
+        while (a%factors[i]==0) {
+          a = a / factors[i];
+          ans.push(factors[i]);
+        }
+      }
+      ans.sort(function(a, b){return a - b});
+      //console.log('Factorizado: '+ans);
+      if (noOutput==false) {
+        if (num == a) {
+          output.innerHTML = num + ' es un número primo.';
+        } else {
+          output.innerHTML = ans.join(' × ') + ' = ' + num;
+        }
+        message.innerHTML = 'Done';
+        message.style.backgroundColor = 'var(--correctBG)';
+        message.style.borderColor = 'var(--correctBorder)';
+      }
+      return factors;
+    } else {
+      if (noOutput==false) {
+        message.innerHTML = 'Por favor introduzca un número válido';
+        message.style.backgroundColor = 'var(--errorBG)';
+        message.style.borderColor = 'var(--errorBorder)';
+        return -1;
+      }
+    }
   }
 </script>
   </body>
