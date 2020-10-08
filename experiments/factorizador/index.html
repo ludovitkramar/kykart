@@ -128,12 +128,6 @@
         margin-top: 2px;
         border: 1px solid grey;
       }
-      #primeList > li{
-        /*display: inline;*/
-      }
-      #primeList > li::before{
-        /*content: "-";*/
-      }
     </style>
   </head>
   <body>
@@ -303,6 +297,7 @@
   function checkPrime(num = document.getElementById('checkPrime').value*1){
     findPrime(0,num+1,num);
   }
+  primes = [];
   function findPrime(a = document.getElementById('primeFrom').value, b = document.getElementById('primeTo').value, toCheck = 0, noOutput = false) {
     //This function finds all prime number from a to b, it expects integers, the default values are from the input fields.
     //toCheck stores the number that'll be checked if it is a prime or not, the output is to an element or to the console, the function does not return setInterval(function () {
@@ -315,9 +310,6 @@
     }
     a *= 1;
     b *= 1;
-    //TEMPORAL CODE<<<<<<
-    count = 0;
-    //TEMPORAL CODE>>>>>>
     if (a%1 == 0 && b%1 == 0 && a >= 0 && b > 0 && b > a){
       //Comienza el programa
       if (noOutput == false) {
@@ -341,8 +333,11 @@
             };
           };
         };
-        return primes;
+        localStorage.setItem('primes', JSON.stringify(primes));
       };
+      //primes = localStorage.getItem('primes');
+      //primes = JSON.parse(primes);
+      //console.log(primes);
       if (noOutput == false) {
         message.innerHTML = 'Done';
         message.style.backgroundColor = 'var(--correctBG)';
@@ -366,6 +361,7 @@
           }
         }
       }
+      return primes;
     } else {
       if (noOutput == false) {
         message.innerHTML = 'Por favor introduzca números válidos';
@@ -373,7 +369,6 @@
         message.style.borderColor = 'var(--errorBorder)';
       }
     }
-    return primes;
   }
   function factorize(num = document.getElementById('toFactorize').value, noOutput = false) {
     //num is the number to factorize, this functio requires the funtcion findPrime(0,b,0,true) to find the primes up to 'b'.
