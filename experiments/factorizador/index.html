@@ -324,42 +324,24 @@
         if (1 > a) {
           output.innerHTML += "<li>"+ 1 +"</li>";
         }
-        if (2 > a) {
-          output.innerHTML += "<li>"+ 2 +"</li>";
-        }
       }
       var primeWorker;
-      primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,];
-      //send b
-      //receive primes[], output string
       primeWorker = new Worker('./primeWorker.js');
       primeWorker.postMessage(b);
-      /*for(sus = 3;sus<=b-1;sus++){
-        isPrime = true;
-        for(i = 0;i<primes.length;i++){
-          //TEMPORAL CODE<<<<<<
-          count += 1;
-          //TEMPORAL CODE>>>>>>
-          if(sus/primes[i]%1==0){
-            isPrime = false;
-            break;
-          }
-        }
-        if(isPrime == true){
-          primes.push(sus);
-          if (noOutput == false && sus > a) {
-            output.innerHTML += "<li>"+ sus +"</li>";
-          }
-        }
-      }*/
       primeWorker.onmessage = function(e) {
+        //receive primes[], output string
+        console.log('Received from worker:');
         console.log(e.data);
+        primes = e.data;
+        //the below if has not been tested
+        if (noOutput == false) {
+          for(i=0;i<primes.length;i++){
+            if (primes[i]>b) {
+              output.innerHTML += "<li>"+ primes[i] +"</li>";
+            };
+          };
+        };
       };
-      //primeWorker.terminate();
-      //primeWorker = undefined;
-      //TEMPORAL CODE<<<<<<
-      //console.log('computations='+count);
-      //TEMPORAL CODE>>>>>>
       if (noOutput == false) {
         message.innerHTML = 'Done';
         message.style.backgroundColor = 'var(--correctBG)';
