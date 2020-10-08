@@ -1,4 +1,5 @@
 onmessage = function(e) {
+  console.log('Worker received:'+e.data);
   primes = [2];
   //b should be received from the main page
   b = e.data;
