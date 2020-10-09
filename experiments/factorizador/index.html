@@ -192,7 +192,7 @@
       primeWorker = new Worker('./primeWorker.js');
       primeWorker.postMessage(Math.ceil(a/2+1));
       if (noOutput==false) {
-        message.innerHTML = 'Running...';
+        message.innerHTML = 'Factorizando...';
         message.style.backgroundColor = 'var(--neutralBG)';
         message.style.borderColor = 'var(--neutralBorder)';
       }
@@ -219,10 +219,10 @@
               output.innerHTML = ans.join(' × ') + ' = ' + num;
             }
           }
-          message.innerHTML = 'Done';
+          message.innerHTML = 'Hecho';
           message.style.backgroundColor = 'var(--correctBG)';
           message.style.borderColor = 'var(--correctBorder)';
-        }
+        };
       };
     } else {
       if (noOutput==false) {

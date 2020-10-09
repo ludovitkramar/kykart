@@ -16,4 +16,6 @@ onmessage = function(e) {
     }
   }
   postMessage(primes);
+  console.log('Done with: '+b);
+  console.log(primes);
 }
