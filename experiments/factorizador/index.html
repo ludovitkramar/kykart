@@ -160,117 +160,6 @@
   </div>
 </div>
 <script>
-  function fractionize() {
-    //num is the number that'll be turn into a fraction.
-    num = document.getElementById('num').value;
-    //Convertir coma(',') en punto ('.')
-    num = num.replace(',','.');
-    num *= 1;
-    maxNum = document.getElementById('maxNum').value * 1;
-    isNeg = false;
-    message = document.getElementById('message');
-    //Comprobar si es un número válido.
-    if(num%1==0){
-      message.innerHTML = 'Not a float.';
-      message.style.backgroundColor = 'var(--errorBG)';
-      message.style.borderColor = 'var(--errorBorder)';
-    } else if(isNaN(num)){
-      message.innerHTML = 'Not a valid number.';
-      message.style.backgroundColor = 'var(--errorBG)';
-      message.style.borderColor = 'var(--errorBorder)';
-    } else {
-      console.log('Computing...');
-      message.innerHTML = 'Computing...';
-      message.style.backgroundColor = 'var(--neutralBG)';
-      message.style.borderColor = 'var(--neutralBorder)';
-      if(num<0){
-        isNeg = true
-      };
-      num = Math.abs(num);
-      numStr = num.toString();
-      //Contar la cantidad de decimales que tiene
-      decimals = numStr.length - numStr.indexOf('.') - 1;
-      dividendo = num;
-      divisor = 1;
-      //Multipicar por 10 el dividendo y el divisor tantas veces como el número tenga decimales.
-      for(i=0; i<decimals; i++){
-        dividendo *= 10;
-        divisor *= 10;
-      }
-      //Simplificar con 2 y 5, porque el divisor no puede ser múltiplo de otros números.
-      dividendo = Math.round(dividendo);
-      divisor = Math.round(divisor);
-      while(dividendo%2==0 && divisor%2==0){
-        dividendo /= 2;
-        divisor /= 2;
-      }
-      dividendo = Math.round(dividendo);
-      divisor = Math.round(divisor);
-      while(dividendo%5==0 && divisor%5==0){
-        dividendo /= 5;
-        divisor /= 5;
-      }
-      dividendo = Math.round(dividendo);
-      divisor = Math.round(divisor);
-      message.innerHTML = 'Done';
-      message.style.backgroundColor = 'var(--correctBG)';
-      message.style.borderColor = 'var(--correctBorder)';
-      //Comprobar si se excede el número máximo
-      if(dividendo>maxNum || divisor>maxNum){
-        if(maxNum>999999999){
-          message.innerHTML = 'Maximum number is too big.';
-          message.style.backgroundColor = 'var(--errorBG)';
-          message.style.borderColor = 'var(--errorBorder)';
-          throw new Error("Maximum number is too big");
-        };
-        console.log('Computing approximation...');
-        cdiff = 1;
-        cdividendo = 0;
-        cdivisor = 1;
-        minDiff = 100;
-        minDividendo = 0;
-        minDivisor = 0;
-        while(cdividendo <= maxNum && cdivisor <= maxNum) {
-          cdividendo = Math.round(cdivisor * num);
-          cdiff = Math.abs(num - (cdividendo / cdivisor));
-          if(cdividendo > maxNum || cdivisor > maxNum){
-            if (minDividendo == 0 || minDivisor == 0){
-              console.log('Please raise the maximum number.');
-              break;
-            }
-            break;
-          }
-          if(cdiff<minDiff){
-            minDiff = cdiff;
-            minDivisor = cdivisor;
-            minDividendo = cdividendo;
-          };
-          cdivisor += 1;
-        }
-
-        dividendo = Math.round(minDividendo);
-        divisor = Math.round(minDivisor);
-        if (divisor == 0) {
-          message.innerHTML = 'Please raise the maximum number to be higher than the input.';
-          message.style.backgroundColor = 'var(--errorBG)';
-          message.style.borderColor = 'var(--errorBorder)';
-        }else{
-          message.innerHTML = 'Exceeds specified maximum number, approximated result. <br />'+dividendo+'/'+divisor+' ≈ '+(dividendo / divisor).toPrecision(7);
-          message.style.backgroundColor = 'var(--warningBG)';
-          message.style.borderColor = 'var(--warningBorder)';
-        }
-      };
-      //Comprobar si el número es un número negativo
-      if(isNeg){
-        document.getElementById('dividendo').innerHTML = '-'+dividendo;
-        document.getElementById('divisor').innerHTML = divisor;
-      } else {
-        document.getElementById('dividendo').innerHTML = dividendo;
-        document.getElementById('divisor').innerHTML = divisor;
-      };
-    }
-    console.log('Done');
-  };
   function keyHandler(e, el) {
     if (event.which == 13 || event.keyCode == 13) {
         switch(el.id){
@@ -291,88 +180,7 @@
         }
     };
   };
-  function dropHandler(el, e) {
-    document.getElementById('num').value = '';
-  }
-  function checkPrime(num = document.getElementById('checkPrime').value*1){
-    findPrime(0,num+1,num);
-  }
-  primes = [];
-  function findPrime(a = document.getElementById('primeFrom').value, b = document.getElementById('primeTo').value, toCheck = 0, noOutput = false) {
-    //This function finds all prime number from a to b, it expects integers, the default values are from the input fields.
-    //toCheck stores the number that'll be checked if it is a prime or not, the output is to an element or to the console, the function does not return setInterval(function () {
-    //noOutput, when it is true it will not try to use any elements, should be set to true when this function is used to create an array of primes
-    //WHAT DOES THIS FUNCTION RETURNS? an array with all prime number up to but not including the variable 'b'. The variable 'a' is ignored.
-    if (noOutput == false) {
-      message = document.getElementById('message');
-      output = document.getElementById('primeList');
-      output.innerHTML = "";
-    }
-    a *= 1;
-    b *= 1;
-    if (a%1 == 0 && b%1 == 0 && a >= 0 && b > 0 && b > a){
-      //Comienza el programa
-      if (noOutput == false) {
-        if (1 > a) {
-          output.innerHTML += "<li>"+ 1 +"</li>";
-        }
-      }
-      var primeWorker;
-      primeWorker = new Worker('./primeWorker.js');
-      primeWorker.postMessage(b);
-      primeWorker.onmessage = function(e) {
-        //receive primes[], output string
-        console.log('Received from worker:');
-        primes = e.data;
-        console.log(primes);
-        //the below if has not been tested
-        if (noOutput == false) {
-          for(i=0;i<primes.length;i++){
-            if (primes[i]>b) {
-              output.innerHTML += "<li>"+ primes[i] +"</li>";
-            };
-          };
-        };
-        localStorage.setItem('primes', JSON.stringify(primes));
-      };
-      //primes = localStorage.getItem('primes');
-      //primes = JSON.parse(primes);
-      //console.log(primes);
-      if (noOutput == false) {
-        message.innerHTML = 'Done';
-        message.style.backgroundColor = 'var(--correctBG)';
-        message.style.borderColor = 'var(--correctBorder)';
-      }
-      //toCheck indicates if it should check if the specified number (in toCheck itself) appears in the primes array.
-      if (toCheck != 0){
-        if(primes.indexOf(toCheck)==-1){
-          console.log('not a prime')
-          if (noOutput == false) {
-            message.innerHTML = 'No es un primo';
-            message.style.backgroundColor = 'var(--warningBG)';
-            message.style.borderColor = 'var(--warningBorder)';
-          }
-        }else{
-          console.log('is a prime')
-          if (noOutput == false) {
-            message.innerHTML = 'Sí es un primo';
-            message.style.backgroundColor = 'var(--correctBG)';
-            message.style.borderColor = 'var(--correctBorder)';
-          }
-        }
-      }
-      return primes;
-    } else {
-      if (noOutput == false) {
-        message.innerHTML = 'Por favor introduzca números válidos';
-        message.style.backgroundColor = 'var(--errorBG)';
-        message.style.borderColor = 'var(--errorBorder)';
-      }
-    }
-  }
   function factorize(num = document.getElementById('toFactorize').value, noOutput = false) {
-    //num is the number to factorize, this functio requires the funtcion findPrime(0,b,0,true) to find the primes up to 'b'.
-    //This function returns an array with the factors
     if (noOutput==false) {
       message = document.getElementById('message');
       output = document.getElementById('factorizeAns');
@@ -380,39 +188,47 @@
     a = num;
     a = a * 1;
     if (a%1 == 0 && a > 0){
-      factors = findPrime(0,Math.ceil(a/2+1),0,true);
-      //console.log(factors);
-      ans = [];
-      for (i=0;i<factors.length;i++){
-        while (a%factors[i]==0) {
-          a = a / factors[i];
-          ans.push(factors[i]);
-        }
-      }
-      ans.sort(function(a, b){return a - b});
+      var primeWorker;
+      primeWorker = new Worker('./primeWorker.js');
+      primeWorker.postMessage(Math.ceil(a/2+1));
       if (noOutput==false) {
-        //console.log('Factorizado: '+ans);
-        //console.log(a, num);
-        if (num == a) {
-          output.innerHTML = num + ' es un número primo.';
-        } else {
-          if (num==2) {
-            output.innerHTML = 2 + ' es un número primo.';
-          } else {
-            output.innerHTML = ans.join(' × ') + ' = ' + num;
+        message.innerHTML = 'Running...';
+        message.style.backgroundColor = 'var(--neutralBG)';
+        message.style.borderColor = 'var(--neutralBorder)';
+      }
+      primeWorker.onmessage = function(e) {
+        factors = e.data;
+        //console.log(factors);
+        ans = [];
+        for (i=0;i<factors.length;i++){
+          while (a%factors[i]==0) {
+            a = a / factors[i];
+            ans.push(factors[i]);
           }
         }
-        message.innerHTML = 'Done';
-        message.style.backgroundColor = 'var(--correctBG)';
-        message.style.borderColor = 'var(--correctBorder)';
-      }
-      return factors;
+        ans.sort(function(a, b){return a - b});
+        if (noOutput==false) {
+          //console.log('Factorizado: '+ans);
+          //console.log(a, num);
+          if (num == a) {
+            output.innerHTML = num + ' es un número primo.';
+          } else {
+            if (num==2) {
+              output.innerHTML = 2 + ' es un número primo.';
+            } else {
+              output.innerHTML = ans.join(' × ') + ' = ' + num;
+            }
+          }
+          message.innerHTML = 'Done';
+          message.style.backgroundColor = 'var(--correctBG)';
+          message.style.borderColor = 'var(--correctBorder)';
+        }
+      };
     } else {
       if (noOutput==false) {
         message.innerHTML = 'Por favor introduzca un número válido';
         message.style.backgroundColor = 'var(--errorBG)';
         message.style.borderColor = 'var(--errorBorder)';
-        return -1;
       }
     }
   }
