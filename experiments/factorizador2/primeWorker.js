@@ -1,3 +1,4 @@
+//This worker receives a number and returns an array with its factors, except for 1, the calling code should handle 1 and 0.
 onmessage = function(e) {
   console.log('Worker received:'+e.data);
   primes = [2];
@@ -14,7 +15,10 @@ onmessage = function(e) {
       if(sus/primes[i]%1==0){
         isPrime = false;
         break;
-      }
+      };
+      if(sus*2>b){
+        break;
+      };
     }
     if(isPrime == true){
       primes.push(sus);
@@ -25,6 +29,8 @@ onmessage = function(e) {
     }
   }
   postMessage(factors);
-  console.log('Done with: '+b);
+  console.log('Factor:');
+  console.log(factors);
+  console.log('Primes calculated: ')
   console.log(primes);
 }

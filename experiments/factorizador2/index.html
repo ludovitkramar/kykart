@@ -128,6 +128,24 @@
         margin-top: 2px;
         border: 1px solid grey;
       }
+      .loader {
+        border: 4px solid var(--neutralBG);
+        border-top: 4px solid var(--neutralBorder);
+        border-bottom: 4px solid var(--neutralBorder);
+        border-radius: 50%;
+        width:  16px;
+        height: 16px;
+        animation: spin 1.4s linear infinite;
+        float: left;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .loaderText {
+        line-height: 20px;
+        margin-left: 6px;
+      }
     </style>
   </head>
   <body>
@@ -187,20 +205,24 @@
     }
     a = num;
     a = a * 1;
+    //time = 0;
     if (a%1 == 0 && a > 0){
       var primeWorker;
       primeWorker = new Worker('./primeWorker.js');
       primeWorker.postMessage(a);
+      /*function timer() {
+        time += 10;
+      };*/
+      //setInterval(timer, 10);
       if (noOutput==false) {
-        message.innerHTML = 'Factorizando...';
+        message.innerHTML = '<div class="loader"></div><span class="loaderText">Factorizando...</span>';
         message.style.backgroundColor = 'var(--neutralBG)';
         message.style.borderColor = 'var(--neutralBorder)';
       }
       primeWorker.onmessage = function(e) {
         factors = e.data;
         //console.log(factors);
-        
-        //factors.sort(function(a, b){return a - b});
+        //clearInterval(timer);
         if (noOutput==false) {
           //console.log('Factorizado: '+ans);
           //console.log(a, num);
@@ -218,7 +240,8 @@
               };
               output.innerHTML = factors.join(' × ') + ' = ' + check;
           }
-          message.innerHTML = 'Hecho';
+          //message.innerHTML = 'Duración: ' + time + 'ms';
+          message.innerHTML = 'Acabado';
           message.style.backgroundColor = 'var(--correctBG)';
           message.style.borderColor = 'var(--correctBorder)';
         };
