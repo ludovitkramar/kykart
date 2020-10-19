@@ -9,14 +9,17 @@ onmessage = function(e) {
     b /= 2;
     factors.push(2);
   };
-  for(sus = 3;sus<=b;sus++){
+  for(sus = 3;sus<=b;sus+=2){
     isPrime = true;
     for(i = 0;i<primes.length;i++){
       if(sus/primes[i]%1==0){
         isPrime = false;
         break;
       };
-      if(sus*2>b){
+      if(sus*(sus-1)>b){
+        break;
+      };
+      if(sus<primes[-1]*3){
         break;
       };
     }
