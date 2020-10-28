@@ -28,6 +28,11 @@ var intervalID;
       clearInterval(intervalID);
     }
   }
+  function play() {
+    var musicbox = document.getElementById('music');
+    musicbox.play();
+    playing == 1;
+  }
   function musicended() {
     clearInterval(intervalID);
     playing = 0;
