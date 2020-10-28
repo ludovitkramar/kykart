@@ -7,31 +7,36 @@ var intervalID;
     var totaldur = musicbox.duration;
     var totalmin = Math.floor(totaldur / 60);
     var totals = Math.round(totaldur % 60);
-    document.getElementById('totalduration').innerHTML = totalmin + ':' + totals;
-    document.getElementById('playingNow').innerHTML = musicbox.src;
-    document.getElementById('playingNowLink').href = musicbox.src;
     if (playing == 0) {
-      musicbox.play();
-      playing = 1;
-      playBTN.innerHTML = "<i class='fas fa-pause'></i>";
-      intervalID = setInterval(movebar, 100);
-      var currentTimeLabel = document.getElementById('current');
-      function movebar() {
-        currentTimeLabel.innerHTML = Math.floor(musicbox.currentTime / 60) + ':' + Math.round(musicbox.currentTime % 60);
-        var currentpercent = musicbox.currentTime / totaldur;
-        document.getElementById('ProgressBar').style.width = currentpercent * 100 + '%';
-      }
+      playAudio()
     } else {
       document.getElementById('music').pause();
       playing = 0;
       playBTN.innerHTML = "<i class='fas fa-play'></i>";
       clearInterval(intervalID);
     }
-  }
-  function play() {
+  };
+  function playAudio() {
+    var playBTN = document.getElementById('playbutton');
     var musicbox = document.getElementById('music');
+    var totaldur = musicbox.duration;
+    var totalmin = Math.floor(totaldur / 60);
+    var totals = Math.round(totaldur % 60);
+    document.getElementById('totalduration').innerHTML = `${totalmin}:${totals}`;
+    document.getElementById('playingNow').innerHTML = musicbox.src;
+    document.getElementById('playingNowLink').href = musicbox.src;
     musicbox.play();
-    playing == 1;
+    playing = 1;
+    playBTN.innerHTML = "<i class='fas fa-pause'></i>";
+    intervalID = setInterval(movebar, 100);
+  }
+  function movebar() {
+    var musicbox = document.getElementById('music');
+    var totaldur = musicbox.duration;
+    var currentTimeLabel = document.getElementById('current');
+    currentTimeLabel.innerHTML = Math.floor(musicbox.currentTime / 60) + ':' + Math.round(musicbox.currentTime % 60);
+    var currentpercent = musicbox.currentTime / totaldur;
+    document.getElementById('ProgressBar').style.width = currentpercent * 100 + '%';
   }
   function musicended() {
     clearInterval(intervalID);
@@ -44,16 +49,11 @@ var intervalID;
   function seekto() {
     var musicbox = document.getElementById('music');
     var totaldur = musicbox.duration;
-    /*document.getElementById('test1').innerHTML = totaldur;*/
     var barext = document.getElementById('ProgressBarExt');
     var barlength = barext.clientWidth;
-    /*document.getElementById('test2').innerHTML = barlength;*/
     var leftdistance = 46 + document.getElementById('mr').offsetLeft;
-    /*document.getElementById('test3').innerHTML = leftdistance;*/
     var mousepos = window.event.pageX - leftdistance;
-    /*document.getElementById('test4').innerHTML = mousepos;*/
     var targetPercent = mousepos / barlength;
-    /*document.getElementById('test5').innerHTML = targetPercent;*/
     document.getElementById('ProgressBar').style.width = targetPercent * 100 + '%';
     musicbox.currentTime = totaldur * targetPercent;
   }

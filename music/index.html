@@ -108,12 +108,12 @@
 <span class="ui">mousepos: </span><span id="test4">test4</span><br />
 <span class="ui">targetPercent: </span><span id="test5">test5</span><br />-->
 <div class="mr-container" id="mr">
-  <audio src="" id="music" preload="metadata" onended="musicended()" oncanplay="play()"></audio>
+  <audio src="" id="music" preload="metadata" onended="musicended()" oncanplay="playAudio()"></audio>
   <div class="mr-playbutton" onclick="playpause()" id="playbutton">
     <i class="fas fa-play"></i>
   </div>
-  <div class="mr-bar" id="ProgressBarExt" onclick="seekto()">
-    <div class="mr-progress" id="ProgressBar" onclick="seekto()">
+  <div class="mr-bar" id="ProgressBarExt" onmousedown="seekto()">
+    <div class="mr-progress" id="ProgressBar" onmousedown="seekto()">
     </div>
   </div>
   <div class="mr-time">
