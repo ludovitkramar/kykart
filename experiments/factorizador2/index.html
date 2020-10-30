@@ -228,35 +228,19 @@
         }
     };
   };
-  function factorize(num = document.getElementById('toFactorize').value, noOutput = false) {
-    if (noOutput==false) {
-      message = document.getElementById('message');
-    }
+  function factorize(num = document.getElementById('toFactorize').value) {
+    message = document.getElementById('message');
     a = num;
     a = a * 1;
-    //time = 0;
     if (a%1 == 0 && a > 0){
       var primeWorker;
       primeWorker = new Worker('./primeWorker.js');
       primeWorker.postMessage(a);
-      /*function timer() {
-        time += 10;
-      };*/
-      //setInterval(timer, 10);
-      if (noOutput==false) {
-        message.innerHTML = '<div class="loader"></div><span class="loaderText">Factorizando...</span>';
-        message.style.backgroundColor = 'var(--neutralBG)';
-        message.style.borderColor = 'var(--neutralBorder)';
-      }
+      message.innerHTML = '<div class="loader"></div><span class="loaderText">Factorizando...</span>';
+      message.style.backgroundColor = 'var(--neutralBG)';
+      message.style.borderColor = 'var(--neutralBorder)';
       primeWorker.onmessage = function(e) {
-        console.log('Received:');
-        console.log(e);
         factors = e.data;
-        //console.log(factors);
-        //clearInterval(timer);
-        if (noOutput==false) {
-          //console.log('Factorizado: '+ans);
-          //console.log(a, num);
           if (factors.length==1 || factors.length==0) {
             createRecord(num + ' es un número primo.');
           } else {
@@ -269,20 +253,36 @@
                   check *= value;
                 };
               };
-              createRecord(factors.join(' × ') + ' = ' + check);
+              //Transform the factors array into an dictionary that stores how many time each number is repeated.
+              expFactors = {};
+              for(i=0; i<factors.length; i++) {
+                if(factors[i] in expFactors){
+                  expFactors[factors[i]] += 1
+                } else {
+                  expFactors[factors[i]] = 1
+                }
+              };
+              //Get the data from the dictionary and build a string of html code for display
+              expRepresentation = "";
+              for(i=0; i<Object.keys(expFactors).length; i++){
+                currentNum = Object.keys(expFactors)[i]
+                if(expFactors[currentNum] == 1 ){
+                  expRepresentation += currentNum + ' × ';
+                } else {
+                  expRepresentation += currentNum + '<sup>' + expFactors[currentNum] + '</sup> × ';
+                }
+              }
+              expRepresentation = expRepresentation.slice(0, -3);
+              createRecord(expRepresentation + ' = ' + check);
           }
-          //message.innerHTML = 'Duración: ' + time + 'ms';
           message.innerHTML = 'Calculado';
           message.style.backgroundColor = 'var(--correctBG)';
           message.style.borderColor = 'var(--correctBorder)';
-        };
       };
     } else {
-      if (noOutput==false) {
-        message.innerHTML = 'Por favor introduzca un número válido';
-        message.style.backgroundColor = 'var(--errorBG)';
-        message.style.borderColor = 'var(--errorBorder)';
-      }
+      message.innerHTML = 'Por favor introduzca un número válido';
+      message.style.backgroundColor = 'var(--errorBG)';
+      message.style.borderColor = 'var(--errorBorder)';
     }
   }
   recordId = 0
