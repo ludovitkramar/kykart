@@ -213,7 +213,6 @@
         <!--Here elements will be created as new answears are calculated.-->
       </div>
     </div>
-
   </div>
 </div>
 <script>
@@ -238,10 +237,14 @@
     };
   };
   function factorize(num = document.getElementById('toFactorize').value) {
+    //num is the number that will be factorized
     message = document.getElementById('message');
+    //message is the element where the function outputs messages
     a = num;
     a = a * 1;
     if (a%1 == 0 && a > 0){
+      //If a is a natural number larger than 0
+      //This worker takes in a number and returns an array with all the factors. Except for 1, that is handled separatelly.
       var primeWorker;
       primeWorker = new Worker('./primeWorker.js');
       primeWorker.postMessage(a);
@@ -249,10 +252,13 @@
       message.style.backgroundColor = 'var(--neutralBG)';
       message.style.borderColor = 'var(--neutralBorder)';
       primeWorker.onmessage = function(e) {
+        //Receives the array of factors
         factors = e.data;
           if (factors.length==1 || factors.length==0) {
+            //if the factors length is one means it can only be divided by itself, if it's zero it means that the input was one
             createRecord(num + ' es un número primo.');
           } else {
+              //multiply the numbers of the array, this way the user and the programmer can be sure that the factorization was correct
               check = 0;
               factors.forEach(multiply);
               function multiply(value, index, array) {
@@ -262,7 +268,7 @@
                   check *= value;
                 };
               };
-              //Transform the factors array into an dictionary that stores how many time each number is repeated.
+              //Transform the factors array into a dictionary that stores how many times each number is repeated.
               expFactors = {};
               for(i=0; i<factors.length; i++) {
                 if(factors[i] in expFactors){
@@ -282,24 +288,28 @@
                 }
               }
               expRepresentation = expRepresentation.slice(0, -3);
+              //call the function to output the resulting string
               createRecord(expRepresentation + ' = ' + check);
           }
+          //finished succesfully
           message.innerHTML = 'Calculado';
           message.style.backgroundColor = 'var(--correctBG)';
           message.style.borderColor = 'var(--correctBorder)';
       };
     } else {
+      //invalid input
       message.innerHTML = 'Por favor introduzca un número válido';
       message.style.backgroundColor = 'var(--errorBG)';
       message.style.borderColor = 'var(--errorBorder)';
     }
   }
+  //recordId stores the total amount of results
   recordId = 0
   function createRecord(txt) {
     //Text -> Add element with the text in the page
     //Takes in the result and creates an element to store it, creating a history kind of effect
     hisEl = document.getElementById('historyBlock');
-    code = "<div class=\"ansEl\" id=\"record"+recordId+"\">"+txt+"<div class=\"deleteRecordButton\" onclick=\"deleteRecord("+recordId+")\"><i class=\"fas fa-trash-alt\"></i></div>"+"</div>";
+    code = `<div class="ansEl" id="record${recordId}">${txt}<div class="deleteRecordButton" onclick="deleteRecord(${recordId})"><i class="fas fa-trash-alt"></i></div></div>`;
     hisEl.innerHTML = code + hisEl.innerHTML;
     recordId += 1;
   };
