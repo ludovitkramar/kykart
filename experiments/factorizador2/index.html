@@ -146,13 +146,45 @@
         line-height: 20px;
         margin-left: 6px;
       }
+      .historyBlock {
+        display: flex; 
+        justify-content: center;
+        margin: 10px;
+        margin-top: 0px;
+        border-radius: 5px;
+      }
+      .ansEl {
+        margin: 4px;
+        padding: 5px;
+        border: lightgray solid 1px;
+        border-radius: 10px;
+      }
+      .deleteRecordButton {
+        width: 37.5px;
+        height: 37.5px;
+        float: right;
+        border-radius: 50%;
+        background-color: #e78f8f;
+        cursor: pointer;
+        text-align: center;
+        color: white;
+        transition: .1s;
+        user-select: none;
+      }
+      .deleteRecordButton:hover {
+        background-color: #e4b3b3;
+      }
+      .deleteRecordButton:active {
+        background-color: #9e5c5c;
+        color: black;
+      }
     </style>
   </head>
   <body>
 <div class="page">
   <div class="content">
     <h1>El Factorizador</h1>
-    <h3>Descompone un número en los números primes que lo compone.</h3>
+    <h3>Descompone un número en los números primos que lo compone.</h3>
     <hr />
     <div class="inputBlock">
       <div class="inputCell">
@@ -167,11 +199,9 @@
       <div class="message" id="message">Dé a algún botón para empezar</div>
     </div>
     <div class="resultBlock">
-      <h3 class="ansTitle">Resultado:</h3>
-      <div style="display: flex; justify-content: center;">
-        <div id="factorizeAns">
-
-        </div>
+      <h3 class="ansTitle">Resultados:</h3>
+      <div XXXclass="historyBlock" id="historyBlock">
+        <!--Here elements will be created as new answears are calculated.-->
       </div>
     </div>
 
@@ -201,7 +231,6 @@
   function factorize(num = document.getElementById('toFactorize').value, noOutput = false) {
     if (noOutput==false) {
       message = document.getElementById('message');
-      output = document.getElementById('factorizeAns');
     }
     a = num;
     a = a * 1;
@@ -220,6 +249,8 @@
         message.style.borderColor = 'var(--neutralBorder)';
       }
       primeWorker.onmessage = function(e) {
+        console.log('Received:');
+        console.log(e);
         factors = e.data;
         //console.log(factors);
         //clearInterval(timer);
@@ -227,7 +258,7 @@
           //console.log('Factorizado: '+ans);
           //console.log(a, num);
           if (factors.length==1 || factors.length==0) {
-            output.innerHTML = num + ' es un número primo.';
+            createRecord(num + ' es un número primo.');
           } else {
               check = 0;
               factors.forEach(multiply);
@@ -238,7 +269,7 @@
                   check *= value;
                 };
               };
-              output.innerHTML = factors.join(' × ') + ' = ' + check;
+              createRecord(factors.join(' × ') + ' = ' + check);
           }
           //message.innerHTML = 'Duración: ' + time + 'ms';
           message.innerHTML = 'Calculado';
@@ -253,6 +284,20 @@
         message.style.borderColor = 'var(--errorBorder)';
       }
     }
+  }
+  recordId = 0
+  function createRecord(txt) {
+    //Text -> Add element with the text in the page
+    //Takes in the result and creates an element to store it, creating a history kind of effect
+    hisEl = document.getElementById('historyBlock');
+    code = "<div class=\"ansEl\" id=\"record"+recordId+"\">"+txt+"<div class=\"deleteRecordButton\" onclick=\"deleteRecord("+recordId+")\">−</div>"+"</div>";
+    hisEl.innerHTML = code + hisEl.innerHTML;
+    recordId += 1;
+  };
+  function deleteRecord(id) {
+    id = "record" + id
+    toDel = document.getElementById(id)
+    toDel.remove();
   }
 </script>
   </body>
