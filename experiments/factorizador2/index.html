@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/92d91430be.js" crossorigin="anonymous"></script>
      <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&family=Raleway&display=swap" rel="stylesheet">
     <title>El Factorizador</title>
@@ -147,7 +148,7 @@
         margin-left: 6px;
       }
       .historyBlock {
-        display: flex; 
+        display: flex;
         justify-content: center;
         margin: 10px;
         margin-top: 0px;
@@ -159,6 +160,12 @@
         border: lightgray solid 1px;
         border-radius: 10px;
       }
+      .ansEl > .deleteRecordButton {
+        background-color: #ffffff;
+      }
+      .ansEl:hover > .deleteRecordButton {
+        background-color: #e78f8f;
+      }
       .deleteRecordButton {
         width: 37.5px;
         height: 37.5px;
@@ -168,15 +175,17 @@
         cursor: pointer;
         text-align: center;
         color: white;
-        transition: .1s;
         user-select: none;
+        font-size: 20px;
+        line-height: 37.5px;
+        margin-left: 4px;
       }
       .deleteRecordButton:hover {
         background-color: #e4b3b3;
       }
       .deleteRecordButton:active {
         background-color: #9e5c5c;
-        color: black;
+        color: #e78f8f;
       }
     </style>
   </head>
@@ -290,7 +299,7 @@
     //Text -> Add element with the text in the page
     //Takes in the result and creates an element to store it, creating a history kind of effect
     hisEl = document.getElementById('historyBlock');
-    code = "<div class=\"ansEl\" id=\"record"+recordId+"\">"+txt+"<div class=\"deleteRecordButton\" onclick=\"deleteRecord("+recordId+")\">−</div>"+"</div>";
+    code = "<div class=\"ansEl\" id=\"record"+recordId+"\">"+txt+"<div class=\"deleteRecordButton\" onclick=\"deleteRecord("+recordId+")\"><i class=\"fas fa-trash-alt\"></i></div>"+"</div>";
     hisEl.innerHTML = code + hisEl.innerHTML;
     recordId += 1;
   };
