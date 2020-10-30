@@ -11,6 +11,7 @@ onmessage = function(e) {
   };
   for(sus = 3;sus<=b;sus+=2){
     isPrime = true;
+    max = primes[-1]**2;
     for(i = 0;i<primes.length;i++){
       if(sus/primes[i]%1==0){
         isPrime = false;
@@ -19,7 +20,7 @@ onmessage = function(e) {
       if(sus*(sus-1)>b){
         break;
       };
-      if(sus<primes[-1]*3){
+      if(sus<max){
         break;
       };
     }
