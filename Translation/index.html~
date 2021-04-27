@@ -19,7 +19,7 @@
 <div class="coverall" onclick="hideCoverAll()" id="coverall">
   <script src="/Translation/trLangConf.js"></script>
  <div class="langSelect" id="langSelect">
-   <H1>Please select your preferred language</H1><br />
+   <H1>Please select your prefered language</H1><br />
    <div class="langSelectList">
      <a href="javascript:setLang('en');" class="">English</a>
      <a href="javascript:setLang('es');" class="">Español</a>
