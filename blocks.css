@@ -81,6 +81,7 @@
       padding: .3em;
       border-radius: 1em;
       min-height: 3em;
+      color: var(--text);
   }
 
   div.footer {
@@ -193,3 +194,19 @@ li > a:active {
       display: inline;
       margin: .1em;
   }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1b1b1b;
+        --text: #ececec;
+        --titletext: #ffffff;
+        --textalt: #e6e6e6;
+        --blockbg: #363636;
+        --blockbgalt: #4d4d4d;
+        --textAccent: #2dc7ee;
+        --accentA: #1a5463;
+        --accentB: #205a20;
+        --gradientA1: #0079D6;
+        --gradientA2: #00C9FE;
+    }
+}
