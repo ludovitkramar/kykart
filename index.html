@@ -9,15 +9,15 @@
   <meta name="description" content="Place the meta description text here.">
   <title>kykvit Portal</title>
   <link rel="stylesheet" href="/blocks.css">
+  <link rel="stylesheet" href="./grid.css">
 </head>
 <body>
 <div class="page">
   <div class="grid">
-    <div class="block logo"><a href="/"><h1 class="brand">kykvit</h1></a></div>
-    <div class="block">
+    <div class="block logo" id="b-logo"><a href="/"><h1 class="brand">kykvit</h1></a></div>
+    <div class="block" id="b-index">
       <h3 class="block">Index</h3>
       <ul class="normal">
-        
         <li><a href="/experiments/">Code experiments</a></li>
         <li><a href="/music">Music experiments</a></li>
         <li><a href="/photos/">Photo gallery</a></li>
@@ -27,7 +27,7 @@
         <li><a href="/template/">Template</a></li>
       </ul>
     </div>
-    <div class="block alt altt">
+    <div class="block alt altt" id="b-links">
       <h3 class="block">Links</h3>
       <ul class="altt normal">
         <li><a href="https://art.kykvit.com">art.kykvit.com</a></li>
@@ -35,11 +35,11 @@
         <li><a href="https://kykvit.netlify.app">kykvit.netlify.app</a></li>
       </ul>
     </div>
-    <div class="block"></div>
-    <div class="block clk blue"><h3 class="tcenter block">About and news</h3></div>
-    <div class="block clk green"><a href="/translation/"><h2 class="tcenter block">Translation</h2></a></div>
-    <div class="block clk blue"><a href="https://nc.kykvit.com"><h1 class="tcenter block">Nextcloud</h1></a></div>
-    <div class="block">
+    <div class="block" id="b-spacer"></div>
+    <div class="block clk blue" id="b-news"><h3 class="tcenter block">About and news</h3></div>
+    <div class="block clk green" id="b-trans"><a href="/translation/"><h2 class="tcenter block">Translation</h2></a></div>
+    <div class="block clk blue" id="b-nc"><a href="https://nc.kykvit.com"><h1 class="tcenter block">Nextcloud</h1></a></div>
+    <div class="block" id="b-contact">
       <h4 class="block">Contact</h4>
       <ul class="horizontal">
         <li><a href="mailto:ludovit.34@gmail.com">Email</a></li>
@@ -47,7 +47,7 @@
         <li><a href="/comments/">Public comment</a></li>
       </ul>
     </div>
-    <div class="block">
+    <div class="block" id="b-archive">
       <h4 class="block">Archive</h4>
       <ul class="horizontal">
         <li><a href="/v1">v1</a></li>
@@ -56,7 +56,7 @@
         <li><a href="/v4">v4</a></li>
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" id="b-footer">
       <ul class="horizontal">
         <li><a href="/copyright">Copyright</a></li>
         <li><a href="/privacy">Privacy Policy</a></li>

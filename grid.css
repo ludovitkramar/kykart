@@ -1,0 +1,51 @@
+#b-logo {
+    grid-area: logo;
+}
+
+#b-index {
+    grid-area: index;
+}
+
+#b-links {
+    grid-area: links;
+}
+
+#b-spacer {
+    grid-area: spacer;
+}
+
+#b-news {
+    grid-area: news;
+}
+
+#b-trans {
+    grid-area: trans;
+}
+
+#b-nc {
+    grid-area: nc;
+}
+
+#b-contact {
+    grid-area: contact;
+}
+
+#b-archive {
+    grid-area: archive;
+}
+
+#b-footer {
+    grid-area: footer;
+}
+
+div.grid {
+    grid-template-areas: 
+    'logo logo'
+    'index news'
+    'index links'
+    'index spacer'
+    'nc trans'
+    'contact archive'
+    'footer footer'
+    ;
+}

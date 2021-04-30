@@ -75,7 +75,7 @@
   }
 
   div.block {
-      margin: .6em;
+      margin: .35em;
       background-color: #eee;
       background-color: var(--blockbg);
       padding: .3em;
@@ -107,6 +107,7 @@
   div.grid {
     max-width: 50em;
     margin: 0 auto;
+    display: grid;
   }
 
   div.logo {
@@ -114,6 +115,7 @@
       background: linear-gradient(to right, var(--gradientA1), var(--gradientA2));
       color: white;
       color: var(--titletext);
+      user-select: none;
   }
 
   div.alt {
@@ -130,6 +132,9 @@
       background-color: var(--accentB);
       color: white;
       color: var(--titletext);
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
   div.green > * {
       color: white;
@@ -140,6 +145,9 @@
       background-color: var(--accentA);
       color: white;
       color: var(--titletext);
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
   div.blue > * {
     color: #fff;
