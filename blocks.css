@@ -75,8 +75,7 @@
   }
 
   div.block {
-      margin-top: .6em;
-      margin-bottom: .6em;
+      margin: .6em;
       background-color: #eee;
       background-color: var(--blockbg);
       padding: .3em;
@@ -85,6 +84,7 @@
   }
 
   div.footer {
+      margin: .6em;
       margin-top: 4em;
       margin-bottom: 2em;
       background-color: #eee;
