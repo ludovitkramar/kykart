@@ -28,21 +28,21 @@ function hideCoverAll() {
         console.log('Language is set to English');
         //If the url have es or have zh, redirect to english page
         if(url.indexOf('es') != -1 || url.indexOf('zh') != -1) {
-        window.location.replace('/Translation/');
+        window.location.replace('/translation/');
         }
         break;
       case 'es':
         console.log('La lengua configurada es español');
         //If the url doesn't has es, redirect to es.
         if(url.indexOf('es') == -1) {
-        window.location.replace('/Translation/es/');
+        window.location.replace('/translation/es/');
         }
         break;
       case 'zh':
         console.log('設定的語言是中文');
         //If the url doesn't have zh, redirect ro zh.
         if(url.indexOf('zh') == -1) {
-        window.location.replace('/Translation/zh/');
+        window.location.replace('/translation/zh/');
         }
         break;
       default:
