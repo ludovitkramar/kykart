@@ -164,11 +164,6 @@
       /*box-shadow: inset 0em 1em 5em 0em rgba(255, 255, 255, .5), inset 0em -1em 5em 0em rgba(0, 0, 0, .3);*/
   }
 
-  div.clk:active {
-    /*box-shadow: inset 0em .4em 5em 0em rgba(255, 255, 255, .3), inset 0em -1.4em 6em 0em rgba(0, 0, 0, .6);
-    border:black solid .3em;*/
-  }
-
   ul.normal {
       font-size: 1.2em;
       margin: .3em;
