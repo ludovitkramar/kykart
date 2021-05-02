@@ -69,7 +69,18 @@
       margin-top: .2em;
       margin-left: .6em;
   }
-
+  p {
+      margin: .8em;
+  }
+  ul.p {
+      margin: 1em;
+      margin-left: 2em;
+  }
+  div.p {
+    padding: .3em;
+      padding-left: 1em;
+      padding-right: 1em;
+  }
   .tcenter {
       text-align: center;
       margin: .4em;
