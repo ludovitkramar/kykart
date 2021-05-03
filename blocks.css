@@ -175,7 +175,14 @@
       opacity: .8;
       /*box-shadow: inset 0em 1em 5em 0em rgba(255, 255, 255, .5), inset 0em -1em 5em 0em rgba(0, 0, 0, .3);*/
   }
-
+  ul.b-p {
+    font-size: 1em;
+    margin: .2em;
+    margin-left: 1.5em;
+  }
+  ul.b-p > li {
+    margin: .5em;
+  }
   ul.normal {
       font-size: 1.2em;
       margin: .3em;
