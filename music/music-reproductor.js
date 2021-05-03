@@ -51,7 +51,7 @@ var intervalID;
     var totaldur = musicbox.duration;
     var barext = document.getElementById('ProgressBarExt');
     var barlength = barext.clientWidth;
-    var leftdistance = 46 + document.getElementById('mr').offsetLeft;
+    var leftdistance = barext.offsetLeft + document.getElementById('mr').offsetLeft;
     var mousepos = window.event.pageX - leftdistance;
     var targetPercent = mousepos / barlength;
     document.getElementById('ProgressBar').style.width = targetPercent * 100 + '%';
@@ -60,7 +60,6 @@ var intervalID;
   function addZero(n) {
     if(n<10){
       n = "0" + n;
-      console.log("now its:"+n)
     }
     return n
   }
