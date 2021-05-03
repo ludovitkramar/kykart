@@ -192,6 +192,7 @@
     padding: .2em;
     padding-right: .4em;
     padding-left: .4em;
+    cursor: pointer;
 }
 li > a:hover {
   background-color: rgba(0, 0, 0, 0.15);

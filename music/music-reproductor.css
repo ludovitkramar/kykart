@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://use.fontawesome.com/releases/v5.8.1/css/all.css');
+
+div.mr-container {
+  align-items: center;
+  top:1em;
+  position: sticky;
+  width: 98%;
+  margin-left: 1%;
+  height: 2.6em;
+  display: flex;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-radius: .5em;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+div.mr-playbutton {
+  font-size: 1em;
+  background-color: #f9f9f9;
+  color: #404040;
+  width: 4em;
+  height: 2.2em;
+  line-height: 2.2em;
+  margin: .2em;
+  border-radius: .5em;
+  cursor: pointer;
+  text-align: center;
+}
+div.mr-playbutton:hover {
+  background-color: #d9d9d9;
+}
+div.mr-playbutton:active {
+  background-color: #999;
+}
+div.mr-bar{
+  margin-left: .2em;
+  margin-right: .8em;
+  flex-grow: 1;
+  border:1px solid #ccc;
+  background-color: #f2f2f2;
+  height:.8em;
+  border-radius:.4em;
+  cursor: pointer;
+}
+div.mr-progress{
+  background-color:#00ccff;
+  height:.6em;
+  margin: .1em;
+  width:0%;
+  border-radius: .3em;
+  cursor: pointer;
+}
+div.mr-bar:hover div.mr-progress{
+  background-color:#8cdef2;
+}
+div.mr-bar:active div.mr-progress{
+  background-color:#42a5d7;
+}
+div.mr-time{
+  width: 6.2em;
+  margin-right: 1em;
+  text-align: center;
+}
+div.mr-time > * {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1em;
+  user-select: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  div.mr-container {
+    border: 1px solid rgb(77, 77, 77);
+    background-color: #3d3d3d;
+  }
+  div.mr-playbutton {
+    background-color: #3d3d3d;
+    color: #ffffff;
+  }
+  div.mr-playbutton:hover {
+    background-color: #4e4e4e;
+  }
+  div.mr-playbutton:active {
+    background-color: rgb(36, 36, 36);
+  }
+  div.mr-bar{
+    border:1px solid rgb(126, 126, 126);
+    background-color: #5c5c5c;
+  }
+  div.mr-progress{
+    background-color:#287d92;
+  }
+  div.mr-bar:hover div.mr-progress{
+    background-color:#3499b3;
+  }
+  div.mr-bar:active div.mr-progress{
+    background-color:#21556e;
+  }
+}

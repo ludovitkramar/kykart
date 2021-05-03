@@ -20,8 +20,8 @@ var intervalID;
     var playBTN = document.getElementById('playbutton');
     var musicbox = document.getElementById('music');
     var totaldur = musicbox.duration;
-    var totalmin = Math.floor(totaldur / 60);
-    var totals = Math.round(totaldur % 60);
+    var totalmin = addZero(Math.floor(totaldur / 60));
+    var totals = addZero(Math.round(totaldur % 60));
     document.getElementById('totalduration').innerHTML = `${totalmin}:${totals}`;
     document.getElementById('playingNow').innerHTML = musicbox.src;
     document.getElementById('playingNowLink').href = musicbox.src;
@@ -34,7 +34,7 @@ var intervalID;
     var musicbox = document.getElementById('music');
     var totaldur = musicbox.duration;
     var currentTimeLabel = document.getElementById('current');
-    currentTimeLabel.innerHTML = Math.floor(musicbox.currentTime / 60) + ':' + Math.round(musicbox.currentTime % 60);
+    currentTimeLabel.innerHTML = addZero(Math.floor(musicbox.currentTime / 60)) + ':' + addZero(Math.round(musicbox.currentTime % 60));
     var currentpercent = musicbox.currentTime / totaldur;
     document.getElementById('ProgressBar').style.width = currentpercent * 100 + '%';
   }
@@ -56,4 +56,11 @@ var intervalID;
     var targetPercent = mousepos / barlength;
     document.getElementById('ProgressBar').style.width = targetPercent * 100 + '%';
     musicbox.currentTime = totaldur * targetPercent;
+  }
+  function addZero(n) {
+    if(n<10){
+      n = "0" + n;
+      console.log("now its:"+n)
+    }
+    return n
   }
