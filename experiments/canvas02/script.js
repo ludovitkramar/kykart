@@ -38,8 +38,8 @@ function r() {
     ctx.canvas.height = innerHeight;
 }
 
-canvas.oncontextmenu = function() {
-    
+canvas.oncontextmenu = function () {
+
 };
 
 var mx = 0
@@ -48,7 +48,7 @@ window.onmousemove = function (e) {
     mx = e.clientX;
     my = e.clientY;
 }
-window.ontouchmove = function(e) {
+window.ontouchmove = function (e) {
     mx = e.touches[0].clientX;
     my = e.touches[0].clientY;
 }
@@ -61,6 +61,11 @@ setInterval(function () {
     frames = 0;
 }, 1000);
 
+
+var showDebug = false;
+document.getElementById('debug').oninput = function () {
+    showDebug = document.getElementById('debug').checked;
+}
 function draw() {
     frames += 1
 
@@ -79,8 +84,8 @@ function draw() {
     ctx.fillStyle = '#E6AD3B';
     ctx.strokeStyle = '#E67C4B'
     var th = new Path2D();
-    th.moveTo(player.x, player.y - size/3);
-    th.lineTo(player.x, player.y + size/3);
+    th.moveTo(player.x, player.y - size / 3);
+    th.lineTo(player.x, player.y + size / 3);
     th.lineTo(player.x - player.a * 3, player.y);
     ctx.fill(th);
     ctx.stroke(th);
@@ -100,24 +105,25 @@ function draw() {
     ctx.fillStyle = '#fff'
     ctx.fillText(`FPS: ${fps}`, 20, 40, 200)
 
-    /*
-    //acceleration red line
-    var al = new Path2D();
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 2;
-    al.moveTo(player.x, player.y);
-    al.lineTo(player.x + player.xa * 3, player.y - player.ya * 3);
-    ctx.stroke(al);
 
-    //velocity blue line
-    var vl = new Path2D();
-    ctx.strokeStyle = "#00CCFF";
-    ctx.lineWidth = 3;
-    vl.moveTo(player.x, player.y);
-    vl.lineTo(player.x + player.xv * 3, player.y + player.yv * 3);
-    ctx.stroke(vl);
-    ctx.lineWidth = 1;
-    */
+    //acceleration red line
+    if (showDebug) {
+        var al = new Path2D();
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 2;
+        al.moveTo(player.x, player.y);
+        al.lineTo(player.x + player.xa * 3, player.y - player.ya * 3);
+        ctx.stroke(al);
+
+        //velocity blue line
+        var vl = new Path2D();
+        ctx.strokeStyle = "#00CCFF";
+        ctx.lineWidth = 3;
+        vl.moveTo(player.x, player.y);
+        vl.lineTo(player.x + player.xv * 3, player.y + player.yv * 3);
+        ctx.stroke(vl);
+        ctx.lineWidth = 1;
+    };
 }
 
 function physics(t) {
@@ -149,7 +155,7 @@ function physics(t) {
     player.yv = -(player.ya * t - player.yv);
 
     player.v = Math.sqrt(player.xv * player.xv + player.yv * player.yv);
-    player.a = Math.sqrt(player.xa * player.xa + player.ya + player.ya); 
+    player.a = Math.sqrt(player.xa * player.xa + player.ya * player.ya);
     //console.log(player.v)
 }
 

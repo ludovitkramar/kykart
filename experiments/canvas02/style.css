@@ -12,9 +12,16 @@ canvas#c {
     background-color: #333;
 }
 
-button#fullscreen {
+div.config {
     position: absolute;
     top: 2em;
     right: 2em;
-    font-size: 2em;
+    background-color: whitesmoke;
+    border: 1px solid grey;
+    padding: .5em;
+}
+
+div.config > * {
+    user-select: none;
+    font-size: 1em;
 }
