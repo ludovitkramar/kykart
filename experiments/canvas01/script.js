@@ -5,7 +5,7 @@ balls = [];
 
 window.onload = function () {
     c.save();
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
         x = Math.floor(Math.random() * innerWidth);
         y = Math.floor(Math.random() * innerHeight);
         w = 30;
@@ -22,7 +22,7 @@ window.onload = function () {
 function genColor() {
     chars = "0123456789ABCDEF"
     out = "#"
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < 6; i++) {
         char = chars[Math.floor(Math.random() * 16)]
         out += char;
     }
