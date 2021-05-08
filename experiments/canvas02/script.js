@@ -22,9 +22,9 @@ window.onload = function () {
     player.v = Math.sqrt(player.xv * player.xv + player.yv * player.yv);
     player.a = Math.sqrt(player.xa * player.xa + player.ya + player.ya);
     console.log(player);
-    setInterval(function () {
+    /*setInterval(function () {
         physics(16.66);
-    }, 16.66);
+    }, 16.66);*/
     r();
     anim();
 };
@@ -159,9 +159,13 @@ function physics(t) {
     //console.log(player.v)
 }
 
-function anim() {
-    requestAnimationFrame(anim)
-    draw()
+lastt = 0
+function anim(t) {
+    //console.log(t-lastt);
+    requestAnimationFrame(anim);
+    physics(16.666);
+    draw();
+    lastt = t;
 }
 
 document.getElementById('fullscreen').onclick = function () {
