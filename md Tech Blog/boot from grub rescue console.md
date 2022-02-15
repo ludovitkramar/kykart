@@ -1,3 +1,5 @@
+## Boot from grub rescue console
+
 `insmod linux`
 
 `ls`

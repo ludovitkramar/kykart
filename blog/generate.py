@@ -4,7 +4,7 @@ import subprocess
 #script that uses pandoc to generate a single html file from markdown files in a directory
 
 #to go around the generated html of each article
-b1 = '<div class="block" id="b-index">' 
+b1 = '<div class="block md-blog">' 
 b2 = '</div>'
 
 path = "../md Tech Blog/" #path of articles

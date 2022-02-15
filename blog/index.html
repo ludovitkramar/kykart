@@ -18,7 +18,7 @@
             <div class="block logo" id="b-logo"><a href="/">
                     <h1 class="brand">kykvit</h1>
                 </a></div>
-            <div class="block" id="b-index"><h1 id="resize-root-partition-on-a-running-system">Resize root partition on a running system</h1>
+            <div class="block md-blog"><h1 id="resize-root-partition-on-a-running-system">Resize root partition on a running system</h1>
 <p>This has been done on a default install of Ubuntu Server 20.04 running in a virtual machine.</p>
 <ol type="1">
 <li><p>Run <code>sudo fdisk /dev/vda</code> case,</p></li>
@@ -44,7 +44,7 @@ Device     Start      End  Sectors Size Type
 <li><p>Now you can confirm the successful operation with <code>df -h | grep /dev/vda2</code>.</p>
 <p><code>/dev/vda2        30G   19G  9.5G  67% /</code>, now we have free space again!</p></li>
 </ol>
-</div><div class="block" id="b-index"><h1 id="how-to-set-up-coturn-and-synapse2">How to set up coturn and Synapse<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h1>
+</div><div class="block md-blog"><h1 id="how-to-set-up-coturn-and-synapse2">How to set up coturn and Synapse<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h1>
 <p>This configuration is provided AS-IS and as an example/reference for those who do not find a working configuration for themselves. It is not always kept up to date and no support is provided.</p>
 <p>Assuming: - Your Matrix domain: <code>example.org</code> - Your TURN domain (arbitrary): <code>turn.example.org</code> - Your Public IP: <code>1.2.3.4</code> - Your Private IP for the box hosing the services: <code>10.11.12.13</code> - A shared secret between synapse and coturn: <code>ThisIsASharedSecret-ChangeMe</code> - You want Firefox compatiblity (TURNS only is not supported)</p>
 <h2 id="synapse">synapse</h2>
@@ -89,7 +89,7 @@ max-port=65535</code></pre>
 <li id="fn1" role="doc-endnote"><p>https://gist.github.com/maxidorius/2b0acc2e707ae9a2d6d0267026a1024f<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div><div class="block" id="b-index"><h1 id="macos-big-sur-vm-with-gpu-pass-through-on-debian-host.">macOS Big Sur vm with GPU pass-through on debian host.</h1>
+</div><div class="block md-blog"><h1 id="macos-big-sur-vm-with-gpu-pass-through-on-debian-host.">macOS Big Sur vm with GPU pass-through on debian host.</h1>
 <p>This is done on Debian Bullseye. See other posts for context on GPU pass-through and network setup.</p>
 <h2 id="virtual-machine-installation">Virtual machine installation</h2>
 <p>I used this project: https://github.com/kholia/OSX-KVM</p>
@@ -177,13 +177,13 @@ max-port=65535</code></pre>
 <p>Trying to upgrade proves to be rather unstable and restarting can cause issues, after shutting down the mac vm I tried to start a linux vm with the same pci devices pass-through settings, the debian host crashed completely, and other random issues can also be present.</p>
 <p>XCode seems to work fine.</p>
 <p>I have passed the host usb controller from the motherboard to the vm, this allows the vm to use all the usb ports, by doing so I can plug my dragonfly red usb audio device and have audio without any hassle. The issue with this is that often there is cracking noises, I observe them in linux when under high load, but on macOS these glitches are much more prevalent.</p>
-</div><div class="block" id="b-index"><h2 id="systemd-gpt-auto-generator-and-disabling-swap">systemd-gpt-auto-generator and disabling swap</h2>
+</div><div class="block md-blog"><h2 id="systemd-gpt-auto-generator-and-disabling-swap">systemd-gpt-auto-generator and disabling swap</h2>
 <p>when <code>/</code> is on a gpt formatted drive, and on that same drive there’s a partition of type <code>swap</code>, <code>systemd-gpt-auto-generator</code> will automatically use that swap partition. This is irrelevant of the settings in <code>fstab</code>.</p>
 <p>I’ve learned about this when trying to disable swap space, but wasn’t able to do so.</p>
 <p>In order to disable swap, (besides removing it from fstab), run <code>systemctl --type swap</code> to find out the name of the partition, then mask like this: <code>systemctl mask dev-nvme0n1p3.swap</code>.</p>
 <p><sup><sub>Written on 10-Feb-2022 by Ludovit Kramar</sub></sup></p>
 <p><sup><sub>Thanks to heftig from the Arch Linux matrix chat room</sub></sup></p>
-</div><div class="block" id="b-index"><h1 id="bridged-network-for-virtual-machines-in-debian-bullseye">Bridged network for virtual machines in debian bullseye</h1>
+</div><div class="block md-blog"><h1 id="bridged-network-for-virtual-machines-in-debian-bullseye">Bridged network for virtual machines in debian bullseye</h1>
 <h2 id="creating-the-bridge">Creating the bridge</h2>
 <p>First the <code>/etc/network/interfaces</code> file:</p>
 <pre><code># This file describes the network interfaces available on your system
@@ -211,10 +211,11 @@ iface br0 inet dhcp
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">bridge</span><span class="ot"> name=</span><span class="st">&#39;br0&#39;</span>/&gt;</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">network</span>&gt;</span></code></pre></div>
 <p>Then import it with the command: <code>virsh net-define br-net.xml</code></p>
-</div><div class="block" id="b-index"><p><code>insmod linux</code></p>
+</div><div class="block md-blog"><h2 id="boot-from-grub-rescue-console">Boot from grub rescue console</h2>
+<p><code>insmod linux</code></p>
 <p><code>ls</code> Find your boot partition, if it is a separate partition, don’t include <code>/boot</code>. <code>ls (hd0,msdos1)/boot</code> Find the file names for your linux and initrd. <code>set root=(hd0,msdos1)</code> <code>linux /boot/vmlinuz-linux-zen root=/dev/vda1</code> Specify correct root partition or uuid. <code>initrd /boot/initramfs-linux-zen.img</code> <code>boot</code></p>
 <p><sup><sub>Written on 29-Dec-2021 by Ludovit Kramar</sub></sup></p>
-</div><div class="block" id="b-index"><h1 id="my-tweaks">My tweaks</h1>
+</div><div class="block md-blog"><h1 id="my-tweaks">My tweaks</h1>
 <h2 id="gnome-superalt-right-click-resize-anywhere">Gnome Super(Alt) + Right Click Resize anywhere:</h2>
 <p><code>gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true</code></p>
 <h2 id="get-number-of-cpu-cores-in-linux">Get number of CPU cores in Linux:</h2>
@@ -415,7 +416,7 @@ win8preview.img2      718848 125827071 125108224 59.7G  7 HPFS/NTFS/exFAT</code>
 <li id="fn7" role="doc-endnote"><p>https://stackoverflow.com/questions/36080756/archive-repository-for-debian-squeeze<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div><div class="block" id="b-index"><h1 id="install-the-synapse-matrix-server-in-an-arch-linux-virtual-machine.">Install the synapse matrix server in an Arch Linux virtual machine.</h1>
+</div><div class="block md-blog"><h1 id="install-the-synapse-matrix-server-in-an-arch-linux-virtual-machine.">Install the synapse matrix server in an Arch Linux virtual machine.</h1>
 <ol type="1">
 <li><p>Create zvol: <code>zfs create -V 15G z2mx/archsrvr-matrix</code></p></li>
 <li><p>See <em>Bridged network for virtual machines in debian bullseye</em> for information about this network setup.</p></li>
@@ -520,7 +521,7 @@ $ sudo -u synapse python -m synapse.app.homeserver \
 </ol></li>
 <li><p>Now you should have a working matrix homeserver!</p></li>
 </ol>
-</div><div class="block" id="b-index"><h2 id="rsync-commands-and-scripts">Rsync commands and scripts</h2>
+</div><div class="block md-blog"><h2 id="rsync-commands-and-scripts">Rsync commands and scripts</h2>
 <ul>
 <li>Standard copy from current directory:</li>
 </ul>
@@ -599,7 +600,7 @@ rsync -avztbP \
   --suffix=&quot;.&quot;${DATETIME} \
   --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r \
   ${SOURCE_DIR} ${HOST}:${BACKUP_PATH} \</code></pre>
-</div><div class="block" id="b-index"><h1 id="setting-up-an-arch-linux-virtual-machine-with-vga-pass-through-in-debian-bullseye">Setting up an Arch Linux virtual machine with VGA pass-through in Debian Bullseye</h1>
+</div><div class="block md-blog"><h1 id="setting-up-an-arch-linux-virtual-machine-with-vga-pass-through-in-debian-bullseye">Setting up an Arch Linux virtual machine with VGA pass-through in Debian Bullseye</h1>
 <h2 id="install-needed-packages">Install needed packages</h2>
 <p>The command below from the debian wiki installs the basic packages, if using a host with a DE remove <code>--no-install-recommends</code> to get additional tools.</p>
 <pre><code>apt-get install --no-install-recommends qemu-system libvirt-clients libvirt-daemon-system</code></pre>
@@ -744,7 +745,7 @@ done;</code></pre>
 <p>While it wasn’t defined in <code>/etc/initramfs-tools/modules</code>, it uses the vfio-pci driver automatically when the vm is launched, restarting the vm also causes no issues.</p>
 <h2 id="happy-computing">Happy computing!</h2>
 <p>Enjoy the virtual machine! The steps to have a Windows vm “should” be identical. Thanks for reading.</p>
-</div><div class="block" id="b-index"><h1 id="dynamic-wallpapers-for-kde-plasma">Dynamic wallpapers for KDE plasma</h1>
+</div><div class="block md-blog"><h1 id="dynamic-wallpapers-for-kde-plasma">Dynamic wallpapers for KDE plasma</h1>
 <p>How to use wallpapers that change throughout the day in KDE plasma 5?</p>
 <p>In Arch Linux the aur package <code>plasma5-wallpapers-dynamic</code> can be used to achieve this. The project’s github is: https://github.com/zzag/plasma5-wallpapers-dynamic</p>
 <p>Once installed the wallpaper type <code>Dynamic</code> will be available in plasma’s desktop configuration.</p>
@@ -786,7 +787,7 @@ done;</code></pre>
 <p>Instructions for that can be found here: https://github.com/zzag/plasma5-wallpapers-dynamic/blob/main/src/tools/builder/README.md</p></li>
 <li><p>Now simply run <code>kdynamicwallpaperbuilder description.json</code> to create the <code>wallpaper.heic</code> file.</p></li>
 </ol>
-</div><div class="block" id="b-index"><h1 id="bhyve-wireless-nat-vm-setup1">bhyve wireless NAT vm setup<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h1>
+</div><div class="block md-blog"><h1 id="bhyve-wireless-nat-vm-setup1">bhyve wireless NAT vm setup<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h1>
 <p>Chapter 21 of the FreeBSD handbook on bhyve (https://www.freebsd.org/doc/handbook/virtualization-host-bhyve.html) explains how to set up bridged network for your vm. This will work on an ethernet network card, but it won’t work on wlan (wlan cannot have more than one MAC address).</p>
 <p>I use bhyve on my FreeBSD 12.1 laptop to fire up Linux VM. So typically I’m connected to a wireless network and would like to have internet working on my Linux VM. In what follows I share my setup to get a simple NAT. First let’s create the required network interfaces.</p>
 <pre><code># ifconfig bridge create name natif up
@@ -821,7 +822,7 @@ pass log all</code></pre>
 <li id="fn1" role="doc-endnote"><p>https://aliov.org/index.php/2020/03/22/bhyve-nat-vm-setup/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div><div class="block" id="b-index"><h2 id="make-qt-software-integrate-visually-with-gnome-adwaita">Make QT software integrate visually with gnome adwaita</h2>
+</div><div class="block md-blog"><h2 id="make-qt-software-integrate-visually-with-gnome-adwaita">Make QT software integrate visually with gnome adwaita</h2>
 <ol type="1">
 <li><p>First step is to install <code>kvantum</code>.</p></li>
 <li><p>Then open the application “Kvantum Manager” and under “Change/Delete Theme” select <code>KvGnome</code>, <code>KvGnomeDark</code> or <code>kvYaru</code> if on ubuntu.</p></li>
@@ -832,7 +833,7 @@ pass log all</code></pre>
 <p><img src="./qt-default.png" title="Barrier, a Qt application with the default theming." alt="Default Qt theme" /> <img src="./qt-kvantum.png" title="The same application with the kvantum KvGnomeDark theme." alt="Kvantum KvGnomeDark theme" /></p>
 <p>Some applications have their own theme or settings, musescore for example doesn’t follow the system theme, in krita we can go to <code>Settings</code> &gt; <code>Styles</code> and sellect <code>kvantum</code>.</p>
 <p><sup><sub>Written on 11-Feb-2022 by Ludovit Kramar</sub></sup></p>
-</div><div class="block" id="b-index"><h1 id="setting-up-nextcloud-in-an-ubuntu-server-20.04-vm-with-snap-and-nginx-as-proxy.">Setting up Nextcloud in an Ubuntu Server 20.04 VM with snap and NGINX as proxy.</h1>
+</div><div class="block md-blog"><h1 id="setting-up-nextcloud-in-an-ubuntu-server-20.04-vm-with-snap-and-nginx-as-proxy.">Setting up Nextcloud in an Ubuntu Server 20.04 VM with snap and NGINX as proxy.</h1>
 <h2 id="installing-ubuntu-server-vm">Installing Ubuntu Server VM</h2>
 <p>First download the ISO, then I used <code>virt-install</code> to create the virtual machine:</p>
 <pre><code>virt-install \
@@ -930,7 +931,7 @@ server {
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;overwrite.cli.url&#39;</span> =&gt; <span class="st">&#39;http://nc.kykvit.com&#39;</span><span class="ot">,</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;default_phone_region&#39;</span> =&gt; <span class="st">&#39;TW&#39;</span><span class="ot">,</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>)<span class="ot">;</span></span></code></pre></div>
-</div><div class="block" id="b-index"><h2 id="script-de-bash-en-el-programador-de-tareas-en-windows">Script de bash en el programador de tareas en windows</h2>
+</div><div class="block md-blog"><h2 id="script-de-bash-en-el-programador-de-tareas-en-windows">Script de bash en el programador de tareas en windows</h2>
 <p>Crear tarea, navegar a propiedades, acciones, editar acción:</p>
 <ul>
 <li>Programa o script: <code>C:\cygwin64\bin\run.exe</code></li>
