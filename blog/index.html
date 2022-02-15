@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="google-site-verification" content="AGs4m-1A4pyMsQJgdfGm3aaYU6Hga2zpioFeMtN-KFU" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="author" content="Ludovit Kramar" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Blog recording adventures, findings and tips in Linux and more.">
+    <title>Blog - kykvit</title>
+    <link rel="stylesheet" href="/blocks.css">
+</head>
+
+<body>
+    <div class="page">
+        <div class="grid">
+            <div class="block logo" id="b-logo"><a href="/">
+                    <h1 class="brand">kykvit</h1>
+                </a></div>
+            <div class="block" id="b-index"><h1 id="resize-root-partition-on-a-running-system">Resize root partition on a running system</h1>
+<p>This has been done on a default install of Ubuntu Server 20.04 running in a virtual machine.</p>
+<ol type="1">
+<li><p>Run <code>sudo fdisk /dev/vda</code> case,</p></li>
+<li><p>Type <code>p</code> to print the current partitions.</p>
+<pre><code>Command (m for help): p
+Disk /dev/vda: 30 GiB, 32212254720 bytes, 62914560 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 48D2A697-981C-4382-AFDA-28F899958902
+
+Device     Start      End  Sectors Size Type
+/dev/vda1   2048     4095     2048   1M BIOS boot
+/dev/vda2   4096 41940991 41936896  20G Linux filesystem</code></pre>
+<p>In this case, our root partition is the last one with a size of 20G, and we want to grow it to fill the rest of the drive.</p></li>
+<li><p>Type <code>d</code> to delete the 2nd partition.</p></li>
+<li><p>Type <code>n</code> to create a new partition (you may need to specify the start, if it is not the same as the pre-expansion partition start), by default the new partition will fill the whole drive, as long as we don’t reformat, no data will be lost.</p></li>
+<li><p>When asked <code>Do you want to remove the signature? [Y]es/[N]o:</code> type <code>n</code>.</p></li>
+<li><p>Type <code>w</code> to write the changes to the disk.</p></li>
+<li><p>Run <code>sudo partprobe</code>, so that linux is happy.</p></li>
+<li><p>Run <code>sudo resize2fs /dev/vda2</code> to actually resize the file system.</p></li>
+<li><p>Now you can confirm the successful operation with <code>df -h | grep /dev/vda2</code>.</p>
+<p><code>/dev/vda2        30G   19G  9.5G  67% /</code>, now we have free space again!</p></li>
+</ol>
+</div><div class="block" id="b-index"><h1 id="how-to-set-up-coturn-and-synapse2">How to set up coturn and Synapse<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h1>
+<p>This configuration is provided AS-IS and as an example/reference for those who do not find a working configuration for themselves. It is not always kept up to date and no support is provided.</p>
+<p>Assuming: - Your Matrix domain: <code>example.org</code> - Your TURN domain (arbitrary): <code>turn.example.org</code> - Your Public IP: <code>1.2.3.4</code> - Your Private IP for the box hosing the services: <code>10.11.12.13</code> - A shared secret between synapse and coturn: <code>ThisIsASharedSecret-ChangeMe</code> - You want Firefox compatiblity (TURNS only is not supported)</p>
+<h2 id="synapse">synapse</h2>
+<p><code>homeserver.yaml</code>:</p>
+<pre><code>## Turn ##
+
+# The public URIs of the TURN server to give to clients
+turn_uris:
+  - &quot;turns:turn.example.org?transport=udp&quot;
+  - &quot;turns:turn.example.org?transport=tcp&quot;
+  - &quot;turn:turn.example.org?transport=udp&quot;
+  - &quot;turn:turn.example.org?transport=tcp&quot;
+
+# The shared secret used to compute passwords for the TURN server
+turn_shared_secret: &quot;ThisIsASharedSecret-ChangeMe&quot;
+
+# How long generated TURN credentials last
+turn_user_lifetime: &quot;1h&quot;
+</code></pre>
+<h2 id="coturn">coturn</h2>
+<p><code>turnserver.conf</code>:</p>
+<pre><code>syslog
+
+lt-cred-mech
+use-auth-secret
+static-auth-secret=ThisIsASharedSecret-ChangeMe
+realm=example.org
+
+cert=/etc/letsencrypt/live/turn.example.org/fullchain.pem
+pkey=/etc/letsencrypt/live/turn.example.org/privkey.pem
+
+no-udp
+external-ip=1.2.3.4
+min-port=64000
+max-port=65535</code></pre>
+<h2 id="firewall">Firewall</h2>
+<p>Allow ports: - TCP 3478 - UDP 3478 - TCP 3479 - UDP 3479 - TCP 5349 - UDP 5349 - UDP 64000 to 65535</p>
+<p><sup><sub>Written on 22-Jan-2022 by Ludovit Kramar</sub></sup></p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>https://gist.github.com/maxidorius/2b0acc2e707ae9a2d6d0267026a1024f<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div><div class="block" id="b-index"><h1 id="macos-big-sur-vm-with-gpu-pass-through-on-debian-host.">macOS Big Sur vm with GPU pass-through on debian host.</h1>
+<p>This is done on Debian Bullseye. See other posts for context on GPU pass-through and network setup.</p>
+<h2 id="virtual-machine-installation">Virtual machine installation</h2>
+<p>I used this project: https://github.com/kholia/OSX-KVM</p>
+<p>In a directory where you want to store the vm (and the virtual disk) run:</p>
+<ol type="1">
+<li><p><code>git clone --depth 1 --recursive https://github.com/kholia/OSX-KVM.git</code></p></li>
+<li><p><code>./fetch-macOS-v2.py</code></p></li>
+<li><p>Choose <code>4. Big Sur (11.6) - RECOMMENDED</code></p></li>
+<li><p><code>apt install --no-install-recommends libguestfs-tools</code></p></li>
+<li><p><code>qemu-img convert BaseSystem.dmg -O raw BaseSystem.img</code></p></li>
+<li><p><code>qemu-img create -f qcow2 mac_hdd_ng.img 128G</code></p></li>
+<li><p>The following command is presented as mandatory, but without it, I do not observe any differences.</p>
+<p><code>echo 1 &gt; /sys/module/kvm/parameters/ignore_msrs</code></p></li>
+<li><p><code>./OpenCore-Boot.sh</code></p></li>
+</ol>
+<h2 id="install-macos">Install macOS</h2>
+<ul>
+<li><p>Connect to VNC with ssh tunnel.</p></li>
+<li><p>Choose Disk Utility</p></li>
+<li><p>Click Erase, name the partition and chose Mac OS Extended (Journaled).</p></li>
+<li><p>Close Disk Utility and Click reinstall Big Sur.</p></li>
+<li><p>Follow the installation steps and wait until the first stage finishes.</p></li>
+</ul>
+<p>On the host run <code>sed "s/CHANGEME/$USER/g" macOS-libvirt-Catalina.xml &gt; macOS.xml</code>.</p>
+<pre><code>    &lt;interface type=&#39;network&#39;&gt;
+      &lt;mac address=&#39;52:54:00:10:35:7a&#39;/&gt;
+      &lt;source network=&#39;br-net&#39;/&gt;
+      &lt;model type=&#39;virtio&#39;/&gt;
+      &lt;address type=&#39;pci&#39; domain=&#39;0x0000&#39; bus=&#39;0x00&#39; slot=&#39;0x08&#39; function=&#39;0x0&#39;/&gt;
+    &lt;/interface&gt;</code></pre>
+<p>Change directory of files, and set up network.</p>
+<p><code>&lt;address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/&gt;</code> confirm network card’s bus must be on <code>0x00</code>.</p>
+<p>Install <code>virt-viewer</code> to connect remotely through spice. (Or change the settings to use VNC).</p>
+<p><code>ssh user@host -L 5900:localhost:5900 5901:localhost:5901 5902:localhost:5902</code></p>
+<ul>
+<li>virsh-edit</li>
+</ul>
+<p>change top line to <code>&lt;domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'&gt;</code></p>
+<pre><code>  &lt;qemu:commandline&gt;
+    &lt;qemu:arg value=&#39;-device&#39;/&gt;
+    &lt;qemu:arg value=&#39;isa-applesmc,osk=ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc&#39;/&gt;
+    &lt;qemu:arg value=&#39;-smbios&#39;/&gt;
+    &lt;qemu:arg value=&#39;type=2&#39;/&gt;
+    &lt;qemu:arg value=&#39;-device&#39;/&gt;
+    &lt;qemu:arg value=&#39;usb-tablet&#39;/&gt;
+    &lt;qemu:arg value=&#39;-device&#39;/&gt;
+    &lt;qemu:arg value=&#39;usb-kbd&#39;/&gt;
+    &lt;qemu:arg value=&#39;-cpu&#39;/&gt;
+    &lt;qemu:arg value=&#39;Penryn,kvm=on,vendor=GenuineIntel,+invtsc,vmware-cpuid-freq=on,+ssse3,+sse4.2,+popcnt,+avx,+aes,+xsave,+xsaveopt,check&#39;&gt;
+  &lt;/qemu:commandline&gt;</code></pre>
+<p>Don’t let multiple VMs have the same mac address.</p>
+<p>Choose Installer when booting</p>
+<p>Finish the setup process and shutdown.</p>
+<pre><code>    &lt;graphics type=&#39;spice&#39; autoport=&#39;yes&#39;&gt;
+      &lt;listen type=&#39;address&#39;/&gt;
+    &lt;/graphics&gt;
+    &lt;video&gt;
+      &lt;model type=&#39;vga&#39; vram=&#39;65536&#39; heads=&#39;1&#39; primary=&#39;yes&#39;/&gt;
+      &lt;address type=&#39;pci&#39; domain=&#39;0x0000&#39; bus=&#39;0x09&#39; slot=&#39;0x01&#39; function=&#39;0x0&#39;/&gt;
+    &lt;/video&gt;</code></pre>
+<p>Replace the above graphics stuff with pci pass-through.</p>
+<pre><code>    &lt;hostdev mode=&#39;subsystem&#39; type=&#39;pci&#39; managed=&#39;yes&#39;&gt;
+      &lt;source&gt;
+        &lt;address domain=&#39;0x0000&#39; bus=&#39;0x01&#39; slot=&#39;0x00&#39; function=&#39;0x0&#39;/&gt;
+      &lt;/source&gt;
+      &lt;address type=&#39;pci&#39; domain=&#39;0x0000&#39; bus=&#39;0x07&#39; slot=&#39;0x00&#39; function=&#39;0x0&#39; multifunction=&#39;on&#39;/&gt;
+    &lt;/hostdev&gt;
+    &lt;hostdev mode=&#39;subsystem&#39; type=&#39;pci&#39; managed=&#39;yes&#39;&gt;
+      &lt;source&gt;
+        &lt;address domain=&#39;0x0000&#39; bus=&#39;0x01&#39; slot=&#39;0x00&#39; function=&#39;0x1&#39;/&gt;
+      &lt;/source&gt;
+      &lt;address type=&#39;pci&#39; domain=&#39;0x0000&#39; bus=&#39;0x07&#39; slot=&#39;0x00&#39; function=&#39;0x1&#39;/&gt;
+    &lt;/hostdev&gt;
+    &lt;hostdev mode=&#39;subsystem&#39; type=&#39;pci&#39; managed=&#39;yes&#39;&gt;
+      &lt;source&gt;
+        &lt;address domain=&#39;0x0000&#39; bus=&#39;0x00&#39; slot=&#39;0x14&#39; function=&#39;0x0&#39;/&gt;
+      &lt;/source&gt;
+      &lt;address type=&#39;pci&#39; domain=&#39;0x0000&#39; bus=&#39;0x08&#39; slot=&#39;0x00&#39; function=&#39;0x0&#39;/&gt;
+    &lt;/hostdev&gt;</code></pre>
+<p>Give it more memory and cpu</p>
+<pre><code>  &lt;memory unit=&#39;KiB&#39;&gt;12582912&lt;/memory&gt;
+  &lt;currentMemory unit=&#39;KiB&#39;&gt;12582912&lt;/currentMemory&gt;
+  &lt;vcpu placement=&#39;static&#39;&gt;8&lt;/vcpu&gt;</code></pre>
+<h2 id="notes">Notes</h2>
+<p>Trying to upgrade proves to be rather unstable and restarting can cause issues, after shutting down the mac vm I tried to start a linux vm with the same pci devices pass-through settings, the debian host crashed completely, and other random issues can also be present.</p>
+<p>XCode seems to work fine.</p>
+<p>I have passed the host usb controller from the motherboard to the vm, this allows the vm to use all the usb ports, by doing so I can plug my dragonfly red usb audio device and have audio without any hassle. The issue with this is that often there is cracking noises, I observe them in linux when under high load, but on macOS these glitches are much more prevalent.</p>
+</div><div class="block" id="b-index"><h2 id="systemd-gpt-auto-generator-and-disabling-swap">systemd-gpt-auto-generator and disabling swap</h2>
+<p>when <code>/</code> is on a gpt formatted drive, and on that same drive there’s a partition of type <code>swap</code>, <code>systemd-gpt-auto-generator</code> will automatically use that swap partition. This is irrelevant of the settings in <code>fstab</code>.</p>
+<p>I’ve learned about this when trying to disable swap space, but wasn’t able to do so.</p>
+<p>In order to disable swap, (besides removing it from fstab), run <code>systemctl --type swap</code> to find out the name of the partition, then mask like this: <code>systemctl mask dev-nvme0n1p3.swap</code>.</p>
+<p><sup><sub>Written on 10-Feb-2022 by Ludovit Kramar</sub></sup></p>
+<p><sup><sub>Thanks to heftig from the Arch Linux matrix chat room</sub></sup></p>
+</div><div class="block" id="b-index"><h1 id="bridged-network-for-virtual-machines-in-debian-bullseye">Bridged network for virtual machines in debian bullseye</h1>
+<h2 id="creating-the-bridge">Creating the bridge</h2>
+<p>First the <code>/etc/network/interfaces</code> file:</p>
+<pre><code># This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug enp0s25
+iface enp0s25 inet manual
+
+auto br0
+iface br0 inet dhcp
+    bridge_ports enp0s25</code></pre>
+<p>This is great for me as I don’t need to set up any addresses and the virtual machines automatically get their addresses and dns from the router.</p>
+<h2 id="making-the-network-available-to-the-virtual-machines">Making the network available to the virtual machines</h2>
+<p>Create an XML file named <code>br-net.xml</code> anywhere with the following contents:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">network</span>&gt;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">name</span>&gt;br-net&lt;/<span class="kw">name</span>&gt;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">forward</span><span class="ot"> mode=</span><span class="st">&#39;bridge&#39;</span>/&gt;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">bridge</span><span class="ot"> name=</span><span class="st">&#39;br0&#39;</span>/&gt;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">network</span>&gt;</span></code></pre></div>
+<p>Then import it with the command: <code>virsh net-define br-net.xml</code></p>
+</div><div class="block" id="b-index"><p><code>insmod linux</code></p>
+<p><code>ls</code> Find your boot partition, if it is a separate partition, don’t include <code>/boot</code>. <code>ls (hd0,msdos1)/boot</code> Find the file names for your linux and initrd. <code>set root=(hd0,msdos1)</code> <code>linux /boot/vmlinuz-linux-zen root=/dev/vda1</code> Specify correct root partition or uuid. <code>initrd /boot/initramfs-linux-zen.img</code> <code>boot</code></p>
+<p><sup><sub>Written on 29-Dec-2021 by Ludovit Kramar</sub></sup></p>
+</div><div class="block" id="b-index"><h1 id="my-tweaks">My tweaks</h1>
+<h2 id="gnome-superalt-right-click-resize-anywhere">Gnome Super(Alt) + Right Click Resize anywhere:</h2>
+<p><code>gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true</code></p>
+<h2 id="get-number-of-cpu-cores-in-linux">Get number of CPU cores in Linux:</h2>
+<p><code>nproc --all</code>, this can be used as an argument putting in within <code>$()</code>.</p>
+<h2 id="zfs-nfs-share">ZFS NFS share:</h2>
+<p>Someone says it is recommended to set <code>zfs set xattr=sa dnodesize=auto pool/dataset</code>. Then the share can simply be created with <code>zfs set sharenfs="ro=@192.168.1.0/24" pool/dataset</code></p>
+<h2 id="fix-incorrect-path-environment-variable">Fix incorrect PATH environment variable:</h2>
+<p>The software is installed, but it says command not found!?</p>
+<p>Add <code>export PATH=/sbin/:/usr/bin/:$PATH</code> to .bashrc or .zshrc.</p>
+<h2 id="my-zsh-config-0">My zsh config: <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h2>
+<pre><code>#Custom prompt is optional
+PS1=&#39;[%F{green}%n%f@%m %d]# &#39;
+
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+setopt beep extendedglob
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename &#39;/home/ludovitkramar/.zshrc&#39;
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+#Start of key bindings
+# create a zkbd compatible hash;
+# to add other keys to this hash, see: man 5 terminfo
+typeset -g -A key
+
+key[Home]=&quot;${terminfo[khome]}&quot;
+key[End]=&quot;${terminfo[kend]}&quot;
+key[Insert]=&quot;${terminfo[kich1]}&quot;
+key[Backspace]=&quot;${terminfo[kbs]}&quot;
+key[Delete]=&quot;${terminfo[kdch1]}&quot;
+key[Up]=&quot;${terminfo[kcuu1]}&quot;
+key[Down]=&quot;${terminfo[kcud1]}&quot;
+key[Left]=&quot;${terminfo[kcub1]}&quot;
+key[Right]=&quot;${terminfo[kcuf1]}&quot;
+key[PageUp]=&quot;${terminfo[kpp]}&quot;
+key[PageDown]=&quot;${terminfo[knp]}&quot;
+key[Shift-Tab]=&quot;${terminfo[kcbt]}&quot;
+
+# setup key accordingly
+[[ -n &quot;${key[Home]}&quot;      ]] &amp;&amp; bindkey -- &quot;${key[Home]}&quot;       beginning-of-line
+[[ -n &quot;${key[End]}&quot;       ]] &amp;&amp; bindkey -- &quot;${key[End]}&quot;        end-of-line
+[[ -n &quot;${key[Insert]}&quot;    ]] &amp;&amp; bindkey -- &quot;${key[Insert]}&quot;     overwrite-mode
+[[ -n &quot;${key[Backspace]}&quot; ]] &amp;&amp; bindkey -- &quot;${key[Backspace]}&quot;  backward-delete-char
+[[ -n &quot;${key[Delete]}&quot;    ]] &amp;&amp; bindkey -- &quot;${key[Delete]}&quot;     delete-char
+[[ -n &quot;${key[Up]}&quot;        ]] &amp;&amp; bindkey -- &quot;${key[Up]}&quot;         up-line-or-history
+[[ -n &quot;${key[Down]}&quot;      ]] &amp;&amp; bindkey -- &quot;${key[Down]}&quot;       down-line-or-history
+[[ -n &quot;${key[Left]}&quot;      ]] &amp;&amp; bindkey -- &quot;${key[Left]}&quot;       backward-char
+[[ -n &quot;${key[Right]}&quot;     ]] &amp;&amp; bindkey -- &quot;${key[Right]}&quot;      forward-char
+[[ -n &quot;${key[PageUp]}&quot;    ]] &amp;&amp; bindkey -- &quot;${key[PageUp]}&quot;     beginning-of-buffer-or-history
+[[ -n &quot;${key[PageDown]}&quot;  ]] &amp;&amp; bindkey -- &quot;${key[PageDown]}&quot;   end-of-buffer-or-history
+[[ -n &quot;${key[Shift-Tab]}&quot; ]] &amp;&amp; bindkey -- &quot;${key[Shift-Tab]}&quot;  reverse-menu-complete
+
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} &amp;&amp; ${+terminfo[rmkx]} )); then
+    autoload -Uz add-zle-hook-widget
+    function zle_application_mode_start { echoti smkx }
+    function zle_application_mode_stop { echoti rmkx }
+    add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+    add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+fi
+
+#end of key bindings
+
+zstyle &#39;:completion:*&#39; menu select
+
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n &quot;${key[Up]}&quot;   ]] &amp;&amp; bindkey -- &quot;${key[Up]}&quot;   up-line-or-beginning-search
+[[ -n &quot;${key[Down]}&quot; ]] &amp;&amp; bindkey -- &quot;${key[Down]}&quot; down-line-or-beginning-search
+
+#Arch:
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+#Debian:
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh</code></pre>
+<h2 id="fallout-4-on-linux-steam-1">Fallout 4 on Linux Steam: <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></h2>
+<p>Fixed audio by running <code>protontricks 377160 xact</code>.</p>
+<p>Modify the following files to disable VSync:</p>
+<pre><code>steamapps/common/Fallout 4/Fallout4_Default.ini
+steamapps/common/Fallout 4/Fallout4/Fallout4Prefs.ini
+compdata/377160/pfx/drive_c/users/steamuser/Documents/MyGame/Fallout4/Fallout4.ini
+compdata/377160/pfx/drive_c/users/steamuser/Documents/MyGames/Fallout4/Fallout4Prefs.ini</code></pre>
+<p>In all of them, changed the value <code>iPresentInterval</code> from 1 to 0</p>
+<p>Limit FPS with mangohud, set launch option to: <code>MANGOHUD_CONFIG="fps_limit=73" mangohud  %command%</code></p>
+<h2 id="ibus-tray-icon-color-2">IBus tray icon color: <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></h2>
+<p>How to change ibus tray icon color?</p>
+<p>Use the command <code>$ gsettings set org.freedesktop.ibus.panel xkb-icon-rgba 'COLOR'</code>.</p>
+<p>A hex value like <code>#rrggbb</code> works just fine, rgba can also be used. <code>dconf-editor</code> is another option.</p>
+<h2 id="create-swapfile-3">Create swapfile: <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></h2>
+<p>How to create a swapfile?</p>
+<p><code>dd if=/dev/zero of=/swapfile bs=1M count=512 status=progress</code> for a 512M swap file.</p>
+<p>Set the right permissions (a world-readable swap file is a huge local vulnerability):</p>
+<p><code>chmod 600 /swapfile</code></p>
+<p>After creating the correctly sized file, format it to swap:</p>
+<p><code>mkswap /swapfile</code></p>
+<p>Activate the swap file:</p>
+<p><code>swapon /swapfile</code></p>
+<p>Finally, edit the fstab configuration to add an entry for the swap file:</p>
+<p><code>/swapfile none swap defaults 0 0</code></p>
+<h2 id="make-files-inmutable-undeleteable">Make file(s) inmutable / undeleteable:</h2>
+<p>How to make files impossible to delete in linux?</p>
+<p><code>chattr</code> is used to achieve this, <code>+i</code> to make it immutable and <code>-i</code> to make it “normal”.</p>
+<p><code>-R</code> to make it recursive.</p>
+<h2 id="firefox-native-in-gnome-wayland-seems-to-not-work">Firefox native in gnome wayland (seems to not work)</h2>
+<p>In <code>~/.config/environment.d/envvars.conf</code> add <code>export MOZ_ENABLE_WAYLAND=1</code>. Can be verified by running <code>xprop</code> and clicking on the firefox window.</p>
+<p>According to the Arch wiki, setting <code>gfx.webrender.compositor.force-enabled</code> to <code>true</code> in <code>about:config</code> will greatly improve performance.</p>
+<h2 id="zfs-snapshots">ZFS snapshots</h2>
+<p><code>zfs snapshot pool/dataset@snapshotName</code> to create.</p>
+<p><code>zfs list -t snapshot</code> to view snapshots.</p>
+<h2 id="amd-freesync-on-arch-linux-xorg">AMD Freesync on arch linux (xorg)</h2>
+<p>File: <code>/etc/X11/xorg.conf.d/20-amdgpu.conf</code>.</p>
+<p>Contents:</p>
+<pre><code>Section &quot;Device&quot;
+     Identifier &quot;AMD&quot;
+     Driver &quot;amdgpu&quot;
+     Option &quot;VariableRefresh&quot; &quot;true&quot;
+EndSection</code></pre>
+<h2 id="monitor-writeback-see-when-data-is-actually-written-to-the-storage-medium.">Monitor writeback, see when data is actually written to the storage medium.</h2>
+<p>Run: <code>watch -d grep -e Dirty: -e Writeback: /proc/meminfo</code>.</p>
+<h2 id="pacman-mirrorlist-sort-by-speed-command.">Pacman mirrorlist sort by speed command.</h2>
+<ul>
+<li><p>Install <code>reflector</code>.</p></li>
+<li><p>And run: <code>sudo reflector --latest 70 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist --verbose</code>.</p></li>
+<li><p><code>sudo reflector --protocol http --protocol https --sort rate --verbose</code>.</p></li>
+</ul>
+<h2 id="reboot-to-uefi-firmware-setup-with-linux-systemd-boot-only">Reboot to UEFI firmware setup with linux (systemd-boot only)</h2>
+<p><code>systemctl reboot --firmware-setup</code></p>
+<h2 id="convert-vm-images">Convert vm images</h2>
+<ul>
+<li><p><code>qemu-img info ./file</code> to view info,</p></li>
+<li><p>and <code>qemu-img convert ./in -O raw ./out.img</code> to convert to raw.</p></li>
+</ul>
+<h2 id="mount-a-raw-.img-file-with-multiple-partitions-inside-f">Mount a raw .img file with multiple partitions inside <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></h2>
+<ul>
+<li><p><code>fdisk ./disk.img</code> and note down the sector size, 512 and 4092 is common.</p></li>
+<li><p>See where our partition starts. In this case it starts at <code>718848</code>.</p>
+<pre><code>Device           Boot  Start       End   Sectors  Size Id Type
+win8preview.img1 *      2048    718847    716800  350M  7 HPFS/NTFS/exFAT
+win8preview.img2      718848 125827071 125108224 59.7G  7 HPFS/NTFS/exFAT</code></pre></li>
+<li><p><code>mount -o loop,offset=$((718848*512)) win8preview.img /mnt2</code>.</p></li>
+</ul>
+<h2 id="install-windows-11-on-unsupported-hardware-from-the-iso.-ex">Install Windows 11 on unsupported hardware from the ISO. <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></h2>
+<p>Not upgrade, clean installation from the ISO. Useful for virtual machines.</p>
+<ul>
+<li><p>Select the Windows 11 version and see the error message.</p></li>
+<li><p>Go back a couple of steps.</p></li>
+<li><p>Press <code>Shift-F10</code> to bring up CMD.</p></li>
+<li><p>Run <code>regedit</code>.</p></li>
+<li><p>In <code>HKEY_LOCAL_MACHINE\SYSTEM\Setup</code> create new key <code>LabConfig</code>.</p></li>
+<li><p>Add a DWORD (32-bit) <code>BypassTPMCheck</code> and set value to 1.</p></li>
+<li><p>Another named <code>BypassSecureBootCheck</code> and also give it a value of 1.</p></li>
+</ul>
+<h2 id="download-music-from-youtube-in-linux-with-yt-dlp-easily">Download music from youtube in linux with yt-dlp easily</h2>
+<ul>
+<li><p>Install <code>yt-dlp</code>.</p></li>
+<li><p>In <code>.bashrc</code> or <code>.zshrc</code> add: <code>yt() { yt-dlp "$@" --format "(bestaudio[acodec^=opus]/bestaudio)/best" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --no-continue --no-overwrites --download-archive archive.log --add-metadata --extract-audio --output "%(uploader)s - %(upload_date)s - %(title)s [%(id)s].%(ext)s" --extractor-args youtube:player_client=android --throttled-rate 100K  2&gt;&amp;1 | tee output.log; }</code>.</p></li>
+<li><p>Simply run <code>yt "http://link"</code>, and it will download the music only in the highest quality.</p></li>
+</ul>
+<h2 id="remove-folders-from-nautilus-gnome-file-manager-side-bar.">Remove folders from nautilus’ (gnome file manager) side bar.</h2>
+<p>In <code>~/.config/user-dirs.dirs</code> change the directory you want gone to just <code>$HOME</code>.</p>
+<p>Example for videos: <code>XDG_VIDEOS_DIR="$HOME"</code>.</p>
+<p>Additional settings are present in <code>/etc/xdg/user-dirs.conf</code>, there’s also a <code>.default</code> file in the same directory.</p>
+<h2 id="list-packages-with-fixed-vulnerabilities-that-should-be-updated-in-debian">List packages with fixed vulnerabilities that should be updated in debian</h2>
+<p><code>debsecan --suite bullseye --format packages --only-fixed</code></p>
+<h2 id="mount-nfs-with-fstab">Mount NFS with fstab</h2>
+<p><code>hostname.local:/path/to/share   /mount/point/of/share   nfs   defaults,timeo=900,retrans=5,_netdev 0 0</code></p>
+<h2 id="debian-squeeze-archive-repository-and-ignoredeb">Debian Squeeze archive repository and ignore<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></h2>
+<p>In /etc/apt/sources.list: <code>deb http://archive.debian.org/debian-archive/debian/ squeeze main contrib non-free</code></p>
+<p>As root run: <code>echo 'Acquire::Check-Valid-Until "false";' &gt;/etc/apt/apt.conf.d/90ignore-release-date</code></p>
+<h2 id="change-zvol-size">Change zvol size</h2>
+<p>It is as simple as running <code>zfs set volsize=25G name/zvol-name</code>. One can run something like <code>zfs get all | grep vol</code> to find out the name.</p>
+<h2 id="gnome-alttab-between-windows-of-the-same-application-prevent-grouping">Gnome Alt+Tab between windows of the same application (prevent grouping)</h2>
+<ul>
+<li><p>Open <code>dconf-editor</code></p></li>
+<li><p>Go to <code>org/gnome/desktop/wm/keybindings</code></p></li>
+<li><p>Switch the values of <code>switch-applications</code> and <code>switch-windows</code></p></li>
+</ul>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Sadly I do not know who was the original author of the key bindings part.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Thanks to Ivo from the Fallout 4 protondb page: https://www.protondb.com/app/377160<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Source: https://wiki.archlinux.org/title/IBus#Tray_icon_color<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>https://wiki.archlinux.org/title/swap#Manually<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>https://linuxfreelancer.com/how-to-mount-a-raw-disk-image<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>https://www.youtube.com/watch?v=ifUJt1tqP_Q&amp;t=937s<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>https://stackoverflow.com/questions/36080756/archive-repository-for-debian-squeeze<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div><div class="block" id="b-index"><h1 id="install-the-synapse-matrix-server-in-an-arch-linux-virtual-machine.">Install the synapse matrix server in an Arch Linux virtual machine.</h1>
+<ol type="1">
+<li><p>Create zvol: <code>zfs create -V 15G z2mx/archsrvr-matrix</code></p></li>
+<li><p>See <em>Bridged network for virtual machines in debian bullseye</em> for information about this network setup.</p></li>
+<li><p>Create the vm:</p></li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">virt-install</span> <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="at">--name</span> archsrvr-matrix <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="at">--rng</span> /dev/random <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> <span class="at">--memory</span> 8192 <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> <span class="at">--vcpus</span> 2 <span class="dt">\</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> <span class="at">--cpu</span> host <span class="dt">\</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="at">--cdrom</span> /z2mx/ISO/arch.iso <span class="dt">\</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="at">--boot</span> cdrom <span class="dt">\</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> <span class="at">--os-variant</span> archlinux <span class="dt">\</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> <span class="at">--disk</span> path=/dev/zd32 <span class="dt">\</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> <span class="at">--network</span> network=br-net <span class="dt">\</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> <span class="at">--graphics</span> vnc</span></code></pre></div>
+<ol start="3" type="1">
+<li><p>SSH into the vm host server with <code>ssh user@server -L 5900:localhost:5900</code>, and use a VNC viewer on <code>localhost:5900</code> to install arch.</p></li>
+<li><p>Install and configure Arch Linux.</p>
+<ol type="1">
+<li><p>Type <code>passwd</code> to set root password and connect to the vm through ssh for convenience.</p></li>
+<li><p>Create the following partitions: (dos disklabel)</p></li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Device</span>     Boot   Start      End  Sectors  Size Id Type</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/vda1</span>  <span class="pp">*</span>      10240  1001471   991232  484M  c W95 FAT32 <span class="er">(</span><span class="ex">LBA</span><span class="kw">)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/vda2</span>       1011712 31457279 30445568 14.5G 83 Linux</span></code></pre></div>
+<ol start="6" type="1">
+<li><p>I don’t recommend creating a swapfile or swap partition, as 2G of memory is not enough for synapse, it will use a lot of swap and create high disk usage, without swap it is stable and causes no such issues.</p></li>
+<li><p>Format the partitions: <code>mkfs.fat -F 32 /dev/vda1</code> and <code>mkfs.ext4 /dev/vda2</code>.</p></li>
+<li><p>Mount them: <code>mount /dev/vda2 /mnt</code>, <code>mkdir /mnt/boot</code> and <code>mount /dev/vda1 /mnt/boot</code>.</p></li>
+<li><p>Install the system: <code>pacstrap /mnt base linux-lts nano matrix-synapse</code>.</p></li>
+<li><p>Run <code>genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</code> and <code>arch-chroot /mnt</code>.</p></li>
+<li><p>Set up the network, create <code>/etc/systemd/network/20-wired.network</code> and add:</p></li>
+</ol>
+<pre><code>[Match]
+Name=enp1s0
+
+[Network]
+DHCP=yes</code></pre>
+<p>Enable <code>systemd-resolved</code> and <code>systemd-networkd</code>.</p>
+<p>Using <code>dhcpcd</code> is another great option.</p>
+<ol start="8" type="1">
+<li>Install <code>openssh</code> and edit <code>/etc/ssh/sshd_config</code>:</li>
+</ol>
+<p>Find <code>PermitRootLogin</code>, uncomment and change to yes.</p>
+<p>Enable <code>sshd</code>.</p>
+<ol start="9" type="1">
+<li><p>Set root password with <code>passwd</code>.</p></li>
+<li><p>Run <code>ln -sf /usr/share/zoneinfo/Region/City /etc/localtime</code> and <code>hwclock --systohc</code>.</p></li>
+<li><p>Uncomment <code>en_US.UTF-8</code> in <code>/etc/locale.gen/</code> and run <code>locale-gen</code>.</p></li>
+<li><p>Create <code>/etc/locale</code> and add <code>LANG=en_US.UTF-8</code>.</p></li>
+<li><p>Set hostname in <code>/etc/hostname</code>.</p></li>
+<li><p>Install <code>grub</code> and <code>dosfstools</code>. Then run: <code>grub-install --target=i386-pc /dev/vda</code> and <code>grub-mkconfig -o /boot/grub/grub.cfg</code>.</p></li>
+<li><p>Exit chroot and power off. Destroy the VM if necessary.</p></li>
+<li><p>Run <code>virsh edit archsrvr-matrix</code> in the host, find <code>&lt;boot dev='cdrom'/&gt;</code> and change <code>cdrom</code> to <code>hd</code>. It is also good time to reduce the memory to <code>2097152</code>. Now start the vm.</p></li>
+<li><p>With this setup the system only uses 56M of memory, we have plenty of resources for the server.</p></li>
+<li><p>Install <code>sudo</code> and run:</p></li>
+</ol>
+<pre><code>$ cd /var/lib/synapse
+$ sudo -u synapse python -m synapse.app.homeserver \
+  --server-name my.domain.name \
+  --config-path /etc/synapse/homeserver.yaml \
+  --generate-config \
+  --report-stats=yes</code></pre>
+<ol start="15" type="1">
+<li><p>Set <code>public_baseurl</code> in <code>/etc/synapse/homeserver.yaml</code>.</p></li>
+<li><p>Run <code>systemctl enable --now synapse.service</code> and create user with <code>register_new_matrix_user -c /etc/synapse/homeserver.yaml http://127.0.0.1:8008</code>.</p></li>
+<li><p>As we are running synapse inside a vm, comment out <code>bind_addresses</code> in <code>/etc/synapse/homeserver.yaml</code>.</p></li>
+</ol></li>
+<li><p>Set up reverse proxy. (For Debian Bullseye with nginx)</p>
+<ol type="1">
+<li><p>Create <code>/etc/nginx/sites-enabled/matrix.example.com</code>. And add what’s below following these instructions https://github.com/matrix-org/synapse/blob/develop/docs/reverse_proxy.md</p>
+<pre class="nginx"><code>server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    # For the federation port
+    listen 8448 ssl http2 default_server;
+    listen [::]:8448 ssl http2 default_server;
+
+    server_name matrix.example.com;
+
+    location ~* ^(\/_matrix|\/_synapse\/client) {
+        # note: do not add a path (even a single /) after the port in `proxy_pass`,
+        # otherwise nginx will canonicalise the URI and cause signature verification
+        # errors.
+        proxy_pass http://localhost:8008;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $host;
+
+        # Nginx by default only allows file uploads up to 1M in size
+        # Increase client_max_body_size to match max_upload_size defined in homeserver.yaml
+        client_max_body_size 50M;
+    }
+}</code></pre></li>
+</ol>
+<p>Remember to change <code>server_name</code>.</p>
+<ol start="2" type="1">
+<li>Run <code>certbot</code> to get a certificate for your domain.</li>
+</ol></li>
+<li><p>Now you should have a working matrix homeserver!</p></li>
+</ol>
+</div><div class="block" id="b-index"><h2 id="rsync-commands-and-scripts">Rsync commands and scripts</h2>
+<ul>
+<li>Standard copy from current directory:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-P</span> <span class="at">-r</span> <span class="at">--exclude</span><span class="op">=</span><span class="st">&quot;.*&quot;</span> <span class="at">--archive</span> <span class="at">-t</span> . <span class="st">&#39;target&#39;</span></span></code></pre></div>
+<ul>
+<li>Remote copy with not standard port from local documents</li>
+</ul>
+<pre><code>rsync -arvz --progress -e &#39;ssh -p 222&#39; ./Documents/ user@host:/home/user/Sync/Docs/</code></pre>
+<ul>
+<li>Incremental remote snapshots script</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A script to perform remote incremental backups using rsync</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> errexit</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> nounset</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> pipefail</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">readonly</span> <span class="va">SOURCE_DIR</span><span class="op">=</span><span class="st">&quot;/home/user/python&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">readonly</span> <span class="va">REMOTE_DIR</span><span class="op">=</span><span class="st">&quot;/var/lib/jail/Backup/test/123/abc&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">readonly</span> <span class="va">DATETIME</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">date</span> <span class="st">&#39;+%Y-%m-%d_%H:%M:%S&#39;</span><span class="va">)</span><span class="st">&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">readonly</span> <span class="va">BACKUP_PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${REMOTE_DIR}</span><span class="st">/</span><span class="va">${DATETIME}</span><span class="st">&quot;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">readonly</span> <span class="va">LATEST_LINK</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${REMOTE_DIR}</span><span class="st">/latest&quot;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="va">HOST</span><span class="op">=</span>user@host</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-p</span> 222 <span class="va">${HOST}</span> <span class="st">&quot;mkdir -p </span><span class="va">${REMOTE_DIR}</span><span class="st">&quot;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> <span class="dt">\</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">--log-file</span><span class="op">=</span>rsync_snapshot.log <span class="dt">\</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">-e</span> <span class="st">&#39;ssh -p 222&#39;</span> <span class="dt">\</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">--delete</span> <span class="dt">\</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">--link-dest</span> <span class="st">&quot;../latest&quot;</span> <span class="dt">\</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude</span><span class="op">=</span><span class="st">&quot;.*&quot;</span> <span class="dt">\</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">--copy-links</span> <span class="dt">\</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="va">${SOURCE_DIR}</span> <span class="va">${HOST}</span>:<span class="va">${REMOTE_DIR}</span>/incomplete_back-<span class="va">${DATETIME}</span> <span class="dt">\</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&amp;&amp;</span> <span class="fu">ssh</span> <span class="at">-p</span> 222 <span class="va">${HOST}</span> <span class="dt">\</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;mv </span><span class="va">${REMOTE_DIR}</span><span class="st">/incomplete_back-</span><span class="va">$DATETIME</span><span class="st"> </span><span class="va">$REMOTE_DIR</span><span class="st">/back-</span><span class="va">${DATETIME}</span><span class="st"> </span><span class="dt">\</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="st">  &amp;&amp; rm -f </span><span class="va">${REMOTE_DIR}</span><span class="st">/latest </span><span class="dt">\</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="st">  &amp;&amp; ln -s back-</span><span class="va">${DATETIME}</span><span class="st"> </span><span class="va">${REMOTE_DIR}</span><span class="st">/latest&quot;</span></span></code></pre></div>
+<ul>
+<li>Another quick remote copy (preserves time and excludes hidden files + custom folders, ideal for copying /home folders)</li>
+</ul>
+<pre><code>rsync -arvzt --progress --exclude={&#39;.*&#39;,&#39;Music&#39;,&#39;anaconda3&#39;} -e &#39;ssh -p 222&#39; . user@host:/home/user/laptop-home-backup/</code></pre>
+<ul>
+<li>Remote backup script that stores modified files in another folder.</li>
+</ul>
+<pre><code>#!/bin/bash
+
+# A script to perform remote incremental backups using rsync, previous versions of the file will be moved to the OLD_PATH folder and given a suffix with the date and time of the backup time.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+readonly SOURCE_DIR=&quot;/path/to/be/backed/up&quot;
+readonly REMOTE_DIR=&quot;/path/on/remote/server&quot;
+readonly DATETIME=&quot;$(date &#39;+%Y-%m-%d_%H:%M:%S&#39;)&quot;
+readonly BACKUP_PATH=&quot;${REMOTE_DIR}/current&quot;
+readonly OLD_PATH=&quot;${REMOTE_DIR}/old&quot;
+HOST=user@hostname
+
+ssh -p 222 ${HOST} &quot;mkdir -p ${REMOTE_DIR}&quot;
+
+rsync -avztbP \
+  --log-file=rsync_snapshot.log \
+  -e &#39;ssh -p 222&#39; \
+  --delete \
+  --include=&quot;Documents/***&quot; \
+  --include=&quot;Downloads/***&quot; \
+  --include=&quot;Desktop/***&quot; \
+  --include=&quot;Pictures/***&quot; \
+  --exclude=&quot;*&quot; \
+  --copy-links \
+  --backup-dir=${OLD_PATH} \
+  --suffix=&quot;.&quot;${DATETIME} \
+  --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r \
+  ${SOURCE_DIR} ${HOST}:${BACKUP_PATH} \</code></pre>
+</div><div class="block" id="b-index"><h1 id="setting-up-an-arch-linux-virtual-machine-with-vga-pass-through-in-debian-bullseye">Setting up an Arch Linux virtual machine with VGA pass-through in Debian Bullseye</h1>
+<h2 id="install-needed-packages">Install needed packages</h2>
+<p>The command below from the debian wiki installs the basic packages, if using a host with a DE remove <code>--no-install-recommends</code> to get additional tools.</p>
+<pre><code>apt-get install --no-install-recommends qemu-system libvirt-clients libvirt-daemon-system</code></pre>
+<p>Install <code>virtinst</code> to create new virtual machines easily from the command line.</p>
+<h2 id="installing-arch-linux">Installing Arch Linux</h2>
+<p>First one needs to download the ISO file.</p>
+<pre><code>wget https://free.nchc.org.tw/arch/iso/2021.12.01/archlinux-2021.12.01-x86_64.iso</code></pre>
+<p>Then create the storage space, I used ZFS zvol:</p>
+<pre><code>zfs create -V 100G zmirror/arch-vm</code></pre>
+<p>Using ZFS on debian is just a matter of installing <code>zfsutils-linux</code>, <code>contrib</code> repo needs to be enabled.</p>
+<p>With <code>virt-install</code> I created the virtual machine. Remember that ovmf needs to be installed to boot using uefi: <code>apt install ovmf</code>.</p>
+<pre><code>virt-install --name arch-vm --boot uefi --rng /dev/random --memory 12288 --vcpus 8 --cpu host --cdrom /z2mx/ISO/arch.iso --boot cdrom --os-variant archlinux --disk path=/dev/zd0 --network network=br-net --graphics vnc</code></pre>
+<p>As I did not want to install a DE in Debian, I ssh into the debian host with port forwarding from my laptop to install Arch Linux through vnc: <code>ssh user@debian.lan -L 5900:localhost:5900</code>.</p>
+<p>Now it’s time to format the disks and <code>pacstrap</code> the OS to our partitions. Refer to the wiki for detailed instructions. It may be possible to use the <code>archinstall</code> script.</p>
+<p>Because I used a bridged network, I just followed the systemd-networkd instructions from the Arch Linux wiki, which is simply to create <code>/etc/systemd/network/20-wired.network</code> with this inside:</p>
+<pre><code>[Match]
+Name=enp1s0
+
+[Network]
+DHCP=yes</code></pre>
+<p>Of course the <code>systemd-networkd</code> and <code>systemd-resolved</code> services need to be started.</p>
+<p>I chose <code>systemd-boot</code> as the boot manager, while it is easy to install to the ESP partition with <code>bootctl install</code>, it requires some manual configuration.</p>
+<p>First modify <code>/boot/loader/loader.conf</code> (assuming /boot is the ESP):</p>
+<pre><code>default arch.conf
+timeout 0
+console-mode max
+editor no</code></pre>
+<p>As it is a virtual machine with only one system, I don’t want any timeout, the next step is to create the entries, first one being <code>/boot/loader/entries/arch.conf</code>:</p>
+<pre><code>title    Arch Linux
+linux    /vmlinuz-linux-zen
+initrd   /initramfs-linux-zen.img
+options  root=&quot;LABEL=arch_os&quot; rw</code></pre>
+<p>And second one being <code>/boot/loader/entries/arch-fallback.conf</code>:</p>
+<pre><code>title    Arch Linux (fallback initramfs)
+linux    /vmlinuz-linux-zen
+initrd   /initramfs-linux-zen-fallback.img
+options  root=&quot;LABEL=arch_os&quot; rw</code></pre>
+<p>Be aware that I am using the linux-zen kernel, that needs to be changed if using other kernel(s).</p>
+<p>The system will not boot if we don’t actually label the root partition <code>arch_os</code>, so do that with <code>e2label</code>.</p>
+<h2 id="gpu-passthrough">GPU passthrough</h2>
+<h3 id="identify-our-devices-and-make-vfio-pci-take-care-of-them.">Identify our devices and make vfio-pci take care of them.</h3>
+<p>This is the interesting part, a script from the arch wiki can tell us the IOMMU groups, and the IDs of our PCI devices.</p>
+<pre><code>#!/bin/bash
+shopt -s nullglob
+for g in `find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sort -V`; do
+    echo &quot;IOMMU Group ${g##*/}:&quot;
+    for d in $g/devices/*; do
+        echo -e &quot;\t$(lspci -nns ${d##*/})&quot;
+    done;
+done;</code></pre>
+<p>The script works without any problem in Debian, in my case the part relevant to the GPU was like this:</p>
+<pre><code>IOMMU Group 1:
+    00:01.0 PCI bridge [0604]: Intel Corporation Xeon E3-1200 v3/4th Gen Core Processor PCI Express x16 Controller [8086:0c01] (rev 06)
+    01:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere [Radeon RX 470/480/570/570X/580/580X/590] [1002:67df] (rev ef)
+    01:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere HDMI Audio [Radeon RX 470/480 / 570/580/590] [1002:aaf0]</code></pre>
+<p>Now that we know the IDs we need to add them in this format to <code>/etc/initramfs-tools/modules</code>:</p>
+<pre><code>vfio_pci ids=1002:67df,1002:aaf0</code></pre>
+<p>After a reboot if we run <code>lspci -knn</code> we should see that the kernel driver in use is vfio-pci:</p>
+<pre><code>01:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere [Radeon RX 470/480/570/570X/580/580X/590] [1002:67df] (rev ef)
+    Subsystem: Micro-Star International Co., Ltd. [MSI] Radeon RX 570 Armor 8G OC [1462:341b]
+    Kernel driver in use: vfio-pci
+    Kernel modules: amdgpu
+01:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere HDMI Audio [Radeon RX 470/480 / 570/580/590] [1002:aaf0]
+    Subsystem: Micro-Star International Co., Ltd. [MSI] Ellesmere HDMI Audio [Radeon RX 470/480 / 570/580/590] [1462:aaf0]
+    Kernel driver in use: vfio-pci
+    Kernel modules: snd_hda_intel</code></pre>
+<p>Now the GPU is ready to be used in a virtual machine.</p>
+<h3 id="giving-the-gpu-to-the-virtual-machine.">Giving the GPU to the virtual machine.</h3>
+<p>First lets run <code>virsh nodedev-list --tree</code> to see the information about our devices. In my case <code>pci_0000_01_00_0</code> and <code>pci_0000_01_00_1</code> is what I want the vm to use.</p>
+<p>If we run <code>virsh nodedev-dumpxml pci_0000_01_00_0</code> we can see all the information about our device, in <code>&lt;product&gt;</code> we can confirm that this is the gpu, but it is the <code>&lt;address&gt;</code> lines that we need.</p>
+<pre><code>&lt;device&gt;
+  &lt;name&gt;pci_0000_01_00_0&lt;/name&gt;
+  &lt;path&gt;/sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0&lt;/path&gt;
+  &lt;parent&gt;pci_0000_00_01_0&lt;/parent&gt;
+  &lt;driver&gt;
+    &lt;name&gt;vfio-pci&lt;/name&gt;
+  &lt;/driver&gt;
+  &lt;capability type=&#39;pci&#39;&gt;
+    &lt;class&gt;0x030000&lt;/class&gt;
+    &lt;domain&gt;0&lt;/domain&gt;
+    &lt;bus&gt;1&lt;/bus&gt;
+    &lt;slot&gt;0&lt;/slot&gt;
+    &lt;function&gt;0&lt;/function&gt;
+    &lt;product id=&#39;0x67df&#39;&gt;Ellesmere [Radeon RX 470/480/570/570X/580/580X/590]&lt;/product&gt;
+    &lt;vendor id=&#39;0x1002&#39;&gt;Advanced Micro Devices, Inc. [AMD/ATI]&lt;/vendor&gt;
+    &lt;iommuGroup number=&#39;1&#39;&gt;
+      &lt;address domain=&#39;0x0000&#39; bus=&#39;0x00&#39; slot=&#39;0x01&#39; function=&#39;0x0&#39;/&gt;
+      &lt;address domain=&#39;0x0000&#39; bus=&#39;0x01&#39; slot=&#39;0x00&#39; function=&#39;0x0&#39;/&gt;
+      &lt;address domain=&#39;0x0000&#39; bus=&#39;0x01&#39; slot=&#39;0x00&#39; function=&#39;0x1&#39;/&gt;
+    &lt;/iommuGroup&gt;
+    &lt;pci-express&gt;
+      &lt;link validity=&#39;cap&#39; port=&#39;0&#39; speed=&#39;8&#39; width=&#39;16&#39;/&gt;
+      &lt;link validity=&#39;sta&#39; speed=&#39;8&#39; width=&#39;16&#39;/&gt;
+    &lt;/pci-express&gt;
+  &lt;/capability&gt;
+&lt;/device&gt;</code></pre>
+<p>Now let’s edit the vm with <code>virsh edit vm-name</code>, a GPU is a multifunction device, we can see that from all the outputs of the different tools, so two <code>&lt;hostdev&gt;</code> in the <code>&lt;devices&gt;</code> section needs to be created.</p>
+<p>I originally added the following:</p>
+<pre><code>&lt;hostdev mode=&#39;subsystem&#39; type=&#39;pci&#39; managed=&#39;yes&#39;&gt;
+  &lt;source&gt;
+      &lt;address domain=&#39;0x0000&#39; bus=&#39;0x01&#39; slot=&#39;0x00&#39; function=&#39;0x0&#39;/&gt;
+  &lt;/source&gt;
+&lt;/hostdev&gt;
+&lt;hostdev mode=&#39;subsystem&#39; type=&#39;pci&#39; managed=&#39;yes&#39;&gt;
+  &lt;source&gt;
+      &lt;address domain=&#39;0x0000&#39; bus=&#39;0x01&#39; slot=&#39;0x00&#39; function=&#39;0x1&#39;/&gt;
+  &lt;/source&gt;
+&lt;/hostdev&gt;</code></pre>
+<p>This software is very smart, so it added the addresses where the pci devices are connected to the vm, while now the vm could boot and use the gpu, I opened the settings again and put the two hostdev on the same bus and slot but with a different function, just like they were on the host. It does not seems to make a difference in my case, but I do want to mention it.</p>
+<pre><code>    &lt;hostdev mode=&#39;subsystem&#39; type=&#39;pci&#39; managed=&#39;yes&#39;&gt;
+      &lt;source&gt;
+        &lt;address domain=&#39;0x0000&#39; bus=&#39;0x01&#39; slot=&#39;0x00&#39; function=&#39;0x0&#39;/&gt;
+      &lt;/source&gt;
+      &lt;address type=&#39;pci&#39; domain=&#39;0x0000&#39; bus=&#39;0x07&#39; slot=&#39;0x00&#39; function=&#39;0x0&#39; multifunction=&#39;on&#39;/&gt;
+    &lt;/hostdev&gt;
+    &lt;hostdev mode=&#39;subsystem&#39; type=&#39;pci&#39; managed=&#39;yes&#39;&gt;
+      &lt;source&gt;
+        &lt;address domain=&#39;0x0000&#39; bus=&#39;0x01&#39; slot=&#39;0x00&#39; function=&#39;0x1&#39;/&gt;
+      &lt;/source&gt;
+      &lt;address type=&#39;pci&#39; domain=&#39;0x0000&#39; bus=&#39;0x07&#39; slot=&#39;0x00&#39; function=&#39;0x1&#39;/&gt;
+    &lt;/hostdev&gt;</code></pre>
+<h2 id="a-couple-more-things">A couple more things</h2>
+<p>Another things that doesn’t seem to matter is running <code>virsh nodedev-dettach pci_0000_01_00_0</code>, supposedly that command prepared the device. But it probably is unnecessary with vfio, and when it is needed I observed no issues when not running this command, surely the software is smart enough to prepare the device when launching the vm.</p>
+<p>Now it is just a matter of installing the drivers in the guest and enjoying the vm! In my case I passed through the USB controller of my motherboard and it works flawlessly, that leaves the host usb-less, so make sure ssh before doing that.</p>
+<p>Make sure a device has the MSI capability before passing through, that can be checked with <code>lspci -v</code>, also, sometimes the bus address may be in decimal, it is usually in hexadecimal, that doesn’t matter when the number is below 10 (almost always), but be aware that sometimes 14 = 20.</p>
+<p>This is the USB controller that I passthrough, note that is has MSI:</p>
+<pre><code>00:14.0 USB controller: Intel Corporation 9 Series Chipset Family USB xHCI Controller (prog-if 30 [XHCI])
+    Subsystem: ASRock Incorporation 9 Series Chipset Family USB xHCI Controller
+    Flags: bus master, medium devsel, latency 0, IRQ 32, IOMMU group 4
+    Memory at f7e20000 (64-bit, non-prefetchable) [size=64K]
+    Capabilities: [70] Power Management version 2
+    Capabilities: [80] MSI: Enable+ Count=1/8 Maskable- 64bit+
+    Kernel driver in use: vfio-pci
+    Kernel modules: xhci_pci</code></pre>
+<p>This is the edit to the vm’s config:</p>
+<pre><code>    &lt;hostdev mode=&#39;subsystem&#39; type=&#39;pci&#39; managed=&#39;yes&#39;&gt;
+      &lt;source&gt;
+        &lt;address domain=&#39;0x0000&#39; bus=&#39;0x00&#39; slot=&#39;0x14&#39; function=&#39;0x0&#39;/&gt;
+      &lt;/source&gt;
+      &lt;address type=&#39;pci&#39; domain=&#39;0x0000&#39; bus=&#39;0x08&#39; slot=&#39;0x00&#39; function=&#39;0x0&#39;/&gt;
+    &lt;/hostdev&gt;</code></pre>
+<p>While it wasn’t defined in <code>/etc/initramfs-tools/modules</code>, it uses the vfio-pci driver automatically when the vm is launched, restarting the vm also causes no issues.</p>
+<h2 id="happy-computing">Happy computing!</h2>
+<p>Enjoy the virtual machine! The steps to have a Windows vm “should” be identical. Thanks for reading.</p>
+</div><div class="block" id="b-index"><h1 id="dynamic-wallpapers-for-kde-plasma">Dynamic wallpapers for KDE plasma</h1>
+<p>How to use wallpapers that change throughout the day in KDE plasma 5?</p>
+<p>In Arch Linux the aur package <code>plasma5-wallpapers-dynamic</code> can be used to achieve this. The project’s github is: https://github.com/zzag/plasma5-wallpapers-dynamic</p>
+<p>Once installed the wallpaper type <code>Dynamic</code> will be available in plasma’s desktop configuration.</p>
+<h2 id="to-use-a-dynamic-wallpaper-there-are-two-options">To use a dynamic wallpaper there are two options:</h2>
+<ol type="1">
+<li>Convert a <code>.heic</code> file for macOS to use in plasma.</li>
+<li>Use <code>kdynamicwallpaperbuilder</code> to create your own <code>.heic</code> wallpaper file.</li>
+</ol>
+<h3 id="to-convert-a-.heic-file">To convert a <code>.heic</code> file:</h3>
+<ol type="1">
+<li>First download a script to do that with: <code>curl https://git.io/JJkjd -sL &gt; dynamicwallpaperconverter</code>.</li>
+<li>With the script downloaded we can run <code>python dynamicwallpaperconverter --crossfade ./myfile.heic</code> to convert <code>myfile.heic</code> to a compatible format. This assumes that the script and the file is in the same folder.</li>
+<li>This will create <code>wallpaper.heic</code>, rename the file and add it as a background in plasma’s settings.</li>
+</ol>
+<h3 id="to-create-your-own-background-from-a-set-of-images">To create your own background from a set of images:</h3>
+<ol type="1">
+<li><p>Collect the images you want to use and put them in a folder.</p></li>
+<li><p>Create a <code>description.json</code> file following this format:</p>
+<pre><code>[
+ {
+     &quot;CrossFade&quot;: true,
+     &quot;Time&quot;: &quot;06:00&quot;,
+     &quot;FileName&quot;: &quot;1.png&quot;
+ },
+ {
+     &quot;CrossFade&quot;: true,
+     &quot;Time&quot;: &quot;12:00&quot;,
+     &quot;FileName&quot;: &quot;2.png&quot;
+ },
+ {
+     &quot;CrossFade&quot;: true,
+     &quot;Time&quot;: &quot;18:00&quot;,
+     &quot;FileName&quot;: &quot;3.png&quot;
+ }
+] 
+</code></pre>
+<p>Change the filenames and the time to suit your needs, more or fewer images can be used.</p>
+<p>Additionally, this software can use the position of the sun to chose when to show the images, for that it is necessary to add that information to the <code>description.json</code> file.</p>
+<p>Instructions for that can be found here: https://github.com/zzag/plasma5-wallpapers-dynamic/blob/main/src/tools/builder/README.md</p></li>
+<li><p>Now simply run <code>kdynamicwallpaperbuilder description.json</code> to create the <code>wallpaper.heic</code> file.</p></li>
+</ol>
+</div><div class="block" id="b-index"><h1 id="bhyve-wireless-nat-vm-setup1">bhyve wireless NAT vm setup<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h1>
+<p>Chapter 21 of the FreeBSD handbook on bhyve (https://www.freebsd.org/doc/handbook/virtualization-host-bhyve.html) explains how to set up bridged network for your vm. This will work on an ethernet network card, but it won’t work on wlan (wlan cannot have more than one MAC address).</p>
+<p>I use bhyve on my FreeBSD 12.1 laptop to fire up Linux VM. So typically I’m connected to a wireless network and would like to have internet working on my Linux VM. In what follows I share my setup to get a simple NAT. First let’s create the required network interfaces.</p>
+<pre><code># ifconfig bridge create name natif up
+# ifconfig tap0 create up 
+# ifconfig natif addm tap0
+# ifconfig natif inet 10.0.0.1/24</code></pre>
+<p>Next we need to forward our NAT network traffic through the wireless interface, we use pf to do that, by adding the following lines to /etc/pf.conf</p>
+<pre><code>ext_if=&quot;wlan0&quot;
+virt_net=&quot;10.0.0.0/24&quot;
+scrub all
+nat on $ext_if from $virt_net to any -&gt; ($ext_if)
+pass log all</code></pre>
+<p>Don’t forget to enable pf if it is not enabled, and restart it for the changes to take effect. We also make sure that ip forwarding is enabled on the host.</p>
+<pre><code># sysrc pf_enable=yes
+# service pf restart
+# sysctl net.inet.ip.forwarding=1</code></pre>
+<p>Then you can fire up your VM using tap0. Once booted, you can configure your guest network interface to be static (inet 10.0.0.2/24). This will allow the guest to access the NAT network, and it will be reachable from the host on 10.0.0.2.</p>
+<p>Make sure to always activate the tap device before starting your VM (or after shutting it down). Here is a startup script of my openSUSE 15.1 VM</p>
+<pre><code> ifconfig tap0 up
+ bhyve -AHP -s 0:0,hostbridge -s 1:0,lpc \
+ -s 2:0,virtio-net,tap0 -s 3:0,virtio-blk,./disk.img \
+ -s 4:0,ahci-cd,./openSUSE-Leap-15.1-NET-x86_64.iso \
+ -c 4 -m 2048M \
+ -s 11,fbuf,tcp=0.0.0.0:5901,w=1280,h=1024,wait \
+ -s 30,xhci,tablet \
+ -s 6,hda,play=/dev/dsp0,rec=/dev/dsp0 \
+ -l bootrom,/usr/local/share/uefi-firmware/BHYVE_UEFI.fd \
+ opensuse15</code></pre>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>https://aliov.org/index.php/2020/03/22/bhyve-nat-vm-setup/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div><div class="block" id="b-index"><h2 id="make-qt-software-integrate-visually-with-gnome-adwaita">Make QT software integrate visually with gnome adwaita</h2>
+<ol type="1">
+<li><p>First step is to install <code>kvantum</code>.</p></li>
+<li><p>Then open the application “Kvantum Manager” and under “Change/Delete Theme” select <code>KvGnome</code>, <code>KvGnomeDark</code> or <code>kvYaru</code> if on ubuntu.</p></li>
+<li><p>The environment variable <code>QT_STYLE_OVERRIDE=kvantum</code> needs to be set in order for it to work, but we can check the theme out by running an application from the console, an example with Audacious: <code>QT_STYLE_OVERRIDE=kvantum audacious</code>.</p></li>
+<li><p>Now that we see it working, we can go ahead and add <code>QT_STYLE_OVERRIDE=kvantum</code> to <code>/etc/environment</code>. This can be done by opening the file with any text editor or by appending a line to the file like this: <code>echo 'QT_STYLE_OVERRIDE=kvantum' &gt;&gt; /etc/environment</code>.</p></li>
+<li><p>Qt applications should now start with the kvantum theme.</p></li>
+</ol>
+<p><img src="./qt-default.png" title="Barrier, a Qt application with the default theming." alt="Default Qt theme" /> <img src="./qt-kvantum.png" title="The same application with the kvantum KvGnomeDark theme." alt="Kvantum KvGnomeDark theme" /></p>
+<p>Some applications have their own theme or settings, musescore for example doesn’t follow the system theme, in krita we can go to <code>Settings</code> &gt; <code>Styles</code> and sellect <code>kvantum</code>.</p>
+<p><sup><sub>Written on 11-Feb-2022 by Ludovit Kramar</sub></sup></p>
+</div><div class="block" id="b-index"><h1 id="setting-up-nextcloud-in-an-ubuntu-server-20.04-vm-with-snap-and-nginx-as-proxy.">Setting up Nextcloud in an Ubuntu Server 20.04 VM with snap and NGINX as proxy.</h1>
+<h2 id="installing-ubuntu-server-vm">Installing Ubuntu Server VM</h2>
+<p>First download the ISO, then I used <code>virt-install</code> to create the virtual machine:</p>
+<pre><code>virt-install \
+    --name ubnsrvr-vm \
+    --rng /dev/random \
+    --memory 4096 \
+    --vcpus 8 \
+    --cpu host \
+    --cdrom /z2mx/ISO/ubuntu-20.04.3-live-server-amd64.iso \
+    --boot cdrom \
+    --os-variant ubuntufocal \
+    --disk path=/dev/zd16 \
+    --network network=br-net \
+    --graphics vnc</code></pre>
+<p>If the host has no gui like mine, it is possible to ssh into the host with port forwarding: <code>ssh user@host -L 5900:localhost:5900</code>, then using <code>localhost:5900</code> as the address on any VNC viewer allows you to control the installer.</p>
+<p>The installation process is very simple, remember to set up ssh because using VNC is not as convenient.</p>
+<p>After the installation, type <code>virsh edit ubnsrvr-vm</code> and change <code>cdrom</code> to <code>hd</code> in the <code>&lt;boot&gt;</code> section.</p>
+<pre><code>&lt;os&gt;
+    &lt;type arch=&#39;x86_64&#39; machine=&#39;pc-q35-5.2&#39;&gt;hvm&lt;/type&gt;
+    &lt;boot dev=&#39;hd&#39;/&gt;
+&lt;/os&gt;</code></pre>
+<p>Optionally delete the graphics and VNC sections too, make a copy before doing any modifications.</p>
+<p>Now Ubuntu Server is installed and working.</p>
+<h2 id="nextcloud-reverse-proxy-with-nginx">Nextcloud reverse proxy with nginx</h2>
+<p>Looking around I ended up with this Frankenstein file for nginx (to be put inside <code>/etc/nginx/sites-enabled</code>), with which everything seems to work fine.</p>
+<pre class="nginx"><code>server {
+    server_name nc.kykvit.com;
+
+    location ~ /\.ht {
+    deny all;
+    }
+
+    listen [::]:443 ssl http2; # managed by Certbot
+    listen 443 ssl http2; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/nc.kykvit.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/nc.kykvit.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubDomains&quot; always;
+
+    # set max upload size and increase upload timeout:
+    client_max_body_size 512M;
+    client_body_timeout 300s;
+
+    # Enable gzip but do not remove ETag headers
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 4;
+    gzip_min_length 256;
+    gzip_proxied expired no-cache no-store private no_last_modified no_etag auth;
+    gzip_types application/atom+xml application/javascript application/json application/ld+json application/manifest+json application/rss+xml application/vnd.geo+json application/vnd.ms-fontobject application/wasm application/x-font-ttf application/x-web-app-manifest+json application/xhtml+xml application/xml font/opentype image/bmp image/svg+xml image/x-icon text/cache-manifest text/css text/plain text/vcard text/vnd.rim.location.xloc text/vtt text/x-component text/x-cross-domain-policy;
+
+    location / {
+        proxy_pass http://192.168.1.231:80;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /.well-known/carddav {
+        return 301 $scheme://$host/remote.php/dav;
+    }
+
+    location /.well-known/caldav {
+        return 301 $scheme://$host/remote.php/dav;
+    }
+
+}
+
+server {
+    if ($host = nc.kykvit.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+        listen 80;
+        listen [::]:80;
+
+    server_name nc.kykvit.com;
+    return 404; # managed by Certbot
+}</code></pre>
+<h2 id="nextcloud-android-app-strict-mode-complaint-when-trying-to-log-in">Nextcloud Android app strict mode complaint when trying to log in</h2>
+<p>Nextcloud was installed via snap in an ubuntu server 20.04 virtual machine, the network is bridged to my home LAN.</p>
+<p>With these tweaks to <code>/var/snap/nextcloud/current/nextcloud/config/config.php</code> everything worked fine. Some of this settings may not be necessary.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">$CONFIG</span> <span class="op">=</span> <span class="dt">array</span> (</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;trusted_domains&#39;</span> =&gt; </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">array</span> (</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> =&gt; <span class="st">&#39;nc.kykvit.com&#39;</span><span class="ot">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  )<span class="ot">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;trusted_proxies&#39;</span> =&gt; <span class="dt">array</span>(<span class="st">&#39;192.168.1.0/24&#39;</span><span class="ot">,</span> <span class="st">&#39;nc.kykvit.com&#39;</span>)<span class="ot">,</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;overwriteprotocol&#39;</span> =&gt; <span class="st">&#39;https&#39;</span><span class="ot">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;allow_local_remote_servers&#39;</span> =&gt; <span class="kw">true</span><span class="ot">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;overwrite.cli.url&#39;</span> =&gt; <span class="st">&#39;http://nc.kykvit.com&#39;</span><span class="ot">,</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;default_phone_region&#39;</span> =&gt; <span class="st">&#39;TW&#39;</span><span class="ot">,</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>)<span class="ot">;</span></span></code></pre></div>
+</div><div class="block" id="b-index"><h2 id="script-de-bash-en-el-programador-de-tareas-en-windows">Script de bash en el programador de tareas en windows</h2>
+<p>Crear tarea, navegar a propiedades, acciones, editar acción:</p>
+<ul>
+<li>Programa o script: <code>C:\cygwin64\bin\run.exe</code></li>
+<li>Argumentos: <code>bash -c -l "~/rsync.sh"</code></li>
+<li>Iniciar en: <code>C:\cygwin64\bin</code></li>
+</ul>
+</div>            <div class="footer" id="b-footer">
+                <ul class="horizontal">
+                    <li><a href="/copyright">Copyright</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
