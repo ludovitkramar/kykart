@@ -3,7 +3,7 @@
 This has been done on a default install of Ubuntu Server 20.04 running in a virtual machine.
 
 1. Run `sudo fdisk /dev/vda`
-case,
+
 2. Type `p` to print the current partitions.
 
 	```
