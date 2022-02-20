@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Ludovit Kramar" />
+    <meta name="robots" content="follow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>art.kykvit.com</title>
+    <style>
+      @font-face {
+        font-family: 'Rubik';
+        src: url('/art/Rubik-Regular.ttf');
+      }
+      body {
+        /*background-image: linear-gradient(30deg, #5b547f, #6b3931);*/
+        background-color: #4e4e4b;
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+      .headDiv {
+        padding-top: 20vh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+      .headDiv > * {
+        width: 100%;
+      }
+      * {
+        padding: 0px;
+        margin: 0px;
+        color: white;
+        font-family: 'Rubik';
+        font-size: 16px;
+      }
+      h1 {
+        font-size: 34px;
+      }
+      h2 > * {
+        font-size: 26px;
+      }
+      .footer {
+        padding: 1em;
+        padding-bottom: 0;
+      }
+      .penguin{
+        display: block;
+        max-width: 50vw;
+        max-height: 300px;
+        width: auto;
+        height: auto;
+      }
+      a:hover {
+        opacity: .5;
+        text-decoration: none;
+      }
+      .mainTitle {
+        height: 50px;
+      }
+      .mainTitle > h1 {
+        display: inline-block;
+        animation-name: mainTitleAnimation;
+        animation-duration: .6s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+        margin-top: 25px;
+        opacity: 0;
+        margin-top: 0px;
+      }
+      @keyframes mainTitleAnimation {
+          from {
+            opacity: 0;
+            margin-top: 0px;
+          }
+          to {
+            opacity: 1;
+            margin-top: 25px;
+          }
+      }
+      .titles {
+        position: relative;
+        height: 100px;
+        margin-bottom: 10px;
+      }
+      .subTitle {
+        position:absolute;
+        bottom: 0;
+      }
+      .subTitleText > :nth-child(n) {
+        margin-left: 20px;
+        opacity: 0;
+        animation-name: sideSlide;
+        animation-duration:1.2s;
+        animation-fill-mode: forwards;
+      }
+      .subTitleText > :nth-child(1) {
+        animation-delay: .2s;
+      }
+      .subTitleText > :nth-child(2) {
+        animation-delay: .4s;
+      }
+      .subTitleText > :nth-child(3) {
+        animation-delay: .6s;
+      }
+      @keyframes sideSlide {
+        from {
+          margin-left: 20px;
+          opacity: 0;
+        }
+        to {
+          margin-left: 0px;
+          opacity: 1;
+        }
+      }
+      .footerLink {
+        animation-name: sideSlide;
+        animation-duration: .6s;
+        animation-delay: .4s;
+        animation-fill-mode: forwards;
+        margin-left: 20px;
+        opacity: 0;
+      }
+      .buttonsRow {
+        position: relative;
+        height: 100px;
+        margin-bottom: 200px;
+      }
+      .buttonsRow > :nth-child(n){
+        animation-name: mainTitleAnimation;
+        animation-duration: .6s;
+        animation-fill-mode: forwards;
+        opacity: 0;
+        width: 100%;
+        margin-top: 0px;
+        margin-bottom: -10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        border-width: 0;
+        cursor: pointer;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display: block;
+      }
+      .buttonsRow > :nth-child(n):hover{
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+      .buttonsRow > :nth-child(n):active{
+        background-color: rgba(0, 0, 0, 0.8);
+        padding-top: 13px;
+        padding-bottom: 7px;
+      }
+      .buttonsRow > :nth-child(1){
+        animation-delay: 1s;
+      }
+      .buttonsRow > :nth-child(2){
+        animation-delay: 1.2s;
+      }
+      .buttonsRow > :nth-child(3){
+        animation-delay: 1.3s;
+      }
+      .buttonsRow > :nth-child(4){
+        animation-delay: 1.4s;
+      }
+      .buttonsRow > :nth-child(5){
+        animation-delay: 1.5s;
+      }
+      @keyframes slideAway {
+        to {
+          margin-left: -300px;
+          opacity: 0;
+        }
+      }
+      .fadeAway {
+        animation-name: slideAway;
+        animation-duration: .3s;
+        animation-fill-mode: forwards;
+        animation-timing-function: cubic-bezier(1,0,1,1);
+        animation-play-state: paused;
+      }
+    </style>
+  </head>
+  <body id="body">
+  <div class="headDiv fadeAway" id="fadeAway">
+    <div class="titles">
+      <div class="mainTitle"><h1>art.kykvit.com</h1></div>
+      <div class="subTitle"><h2 class="subTitleText"><span>🐧</span><span>🐧</span><span>🐧</span></h2></div>
+    </div>
+    <div class="content">
+      <span class="contactInfo">
+      <a href="https://matrix.to/#/@root:matrix.kykvit.com">
+      Find me at Matrix<br />
+      @root:matrix.kykvit.com
+      </a>
+      </span>
+    </div>
+    <div class="footer">
+      <a href="http://kykvit.com" class="footerLink">Happy Link 😙</a>
+    </div>
+    <div class="buttonsRow">
+      <button onclick="goto('/art/')">Link</button>
+      <button onclick="goto('/art/template-1/')">Template-1</button>
+      <button onclick="goto('/')">kykvit.com</button>
+      <button onclick="goto('/art/')">Again!</button>
+    </div>
+  </div>
+
+  </body>
+  <script type="text/javascript">
+    function goto(href) {
+      document.getElementById('fadeAway').style.animationPlayState="running";
+
+      setTimeout(()=> { location.href=href; }, 300)
+    }
+    function setRandomBackground() {
+      r = Math.random() * 160;
+      g = Math.random() * 160;
+      b = Math.random() * 160;
+      document.getElementById('body').style.backgroundColor="rgb("+r+","+g+","+b+")";
+      console.log("rgb("+r+","+g+","+b+")");
+    }
+    //setRandomBackground();
+  </script>
+</html>

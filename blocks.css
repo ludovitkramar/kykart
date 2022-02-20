@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&display=swap');*/
 
 @font-face {
     font-family: 'font';
@@ -180,9 +180,6 @@
       background-color: var(--accentB);
       color: white;
       color: var(--titletext);
-      display: flex;
-      justify-content: center;
-      align-items: center;
   }
   div.green > * {
       color: white;
@@ -193,9 +190,6 @@
       background-color: var(--accentA);
       color: white;
       color: var(--titletext);
-      display: flex;
-      justify-content: center;
-      align-items: center;
   }
   div.blue > * {
     color: #fff;
@@ -205,6 +199,9 @@
       transition: 0s;
       user-select: none;
       /*border:rgba(0, 0, 0, 0) solid .3em;*/
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
 
   div.clk:hover {
