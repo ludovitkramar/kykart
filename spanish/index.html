@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
@@ -7,46 +8,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&family=Raleway&display=swap" rel="stylesheet">
   <title>Spanish Material</title>
   <style>
-  .serif {
-    font-family: 'Crimson Pro', serif;
-  }
-  .sans {
-    font-family: 'Raleway', sans-serif;
-  }
+    .serif {
+      font-family: 'Crimson Pro', serif;
+    }
+
+    .sans {
+      font-family: 'Raleway', sans-serif;
+    }
+
     * {
       padding: 0;
       margin: 0;
     }
+
     .page {
       width: 100%;
       height: 100%;
       display: flex;
       justify-content: center;
     }
+
     html {
       height: 100%;
     }
+
     body {
       height: 100%;
       background-color: rgba(250, 250, 250, 1);
     }
+
     .index {
       width: 1000px;
       background-color: rgba(250, 250, 250, 1);
       padding: 20px;
       transition: .5s;
     }
+
     .header {
       text-align: center;
       padding-top: 10px;
     }
+
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-gap: 20px;
       padding-top: 30px;
     }
-    .grid > .griditem {
+
+    .grid>.griditem {
       background-color: rgba(150, 150, 150, 0.3);
       color: #000;
       cursor: pointer;
@@ -54,17 +64,21 @@
       text-align: center;
       transition: .2s;
       border-radius: 10px;
+      text-decoration: none;
     }
-    .grid > .griditem:hover {
+
+    .grid>.griditem:hover {
       background-color: rgba(150, 150, 150, 0.1);
-      box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+      box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.08), 0px 0px 10px -1px rgba(0, 0, 0, 0.4);
     }
-    .grid > .griditem:active {
+
+    .grid>.griditem:active {
       background-color: #878787;
       margin-top: 5px;
       margin-bottom: -5px;
-      box-shadow: 0px 0px 5px -2px rgba(0,0,0,0.5);
+      box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.5);
     }
+
     #iframe {
       position: absolute;
       top: 0;
@@ -73,6 +87,7 @@
       height: 100%;
       border-width: 0px;
     }
+
     #iframeBox {
       overflow: hidden;
       top: 0px;
@@ -83,6 +98,7 @@
       width: 100%;
       transition: .5s;
     }
+
     .closeButton {
       transition: .1s;
       height: 60px;
@@ -97,96 +113,125 @@
       left: 20px;
       cursor: pointer;
       text-align: center;
-      box-shadow: 0px 0px 5px -2px rgba(0,0,0,0.5);
+      box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.5);
       font-size: 26px;
     }
+
     .closeButton:hover {
       background-color: #87DEBB;
     }
+
     .closeButton:active {
       top: 25px;
       background-color: #009688
     }
+
     @media only screen and (max-width: 1000px) {
       .grid {
         grid-template-columns: auto;
       }
     }
+
     a {
       color: #18BB7B;
     }
+
     a:hover {
       color: #87DEBB;
       text-decoration: none;
     }
+
     a:active {
       color: #009688;
     }
+
     .paragraph {
       margin: 20px;
     }
+
     .center-text {
       text-align: center;
     }
   </style>
 </head>
+
 <body>
-<div class="page">
-  <div id="iframeBox">
-    <div class="closeButton" onclick="hideContent()">
-      <i class="fas fa-arrow-left"></i>
+  <div class="page">
+    <div id="iframeBox">
+      <a class="closeButton" href="#">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+      <iframe src="" id="iframe"></iframe>
     </div>
-    <iframe src="" id="iframe"></iframe>
-  </div>
-  <div class="index" id="index">
-    <header class="header serif">
-      <h1>Material de español</h1>
-      <h3>Elena García Herrero</h3>
-      <h4>2020</h4>
-    </header>
-      <div class="grid sans" >
-        <div class="griditem" onclick="showContent('./material/Vocabulario%20redaccion.html')">Vocabulario</div>
-        <div class="griditem" onclick="showContent('./material/Un%20cuento%20para%20cada%20dia%20del%20ano.html')">Texto en pretérito</div>
-        <div class="griditem" onclick="showContent('./material/Tarea%20redaccion.html')">Redacción</div>
-        <div class="griditem" onclick="showContent('./material/Prueba.html')">Introducción a la Gitanilla</div>
-        <div class="griditem" onclick="showContent('./material/Gitanilla1.pdf')">Gitanilla 1</div>
-        <div class="griditem" onclick="showContent('./material/Gitanilla2.pdf')">Gitanilla 2</div>
-        <div class="griditem" onclick="showContent('./material/Conversacion/como%20aprender%20palabras%20nuevas.html')">Cómo aprendemos nuevas palabras</div>
-        <div class="griditem" onclick="showContent('./material/Conversacion/Futuro.html')">El futuro</div>
-        <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/La%20familia%20Garcia.html')">La familia García</div>
-        <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/Transcripción.html')">Fiesta de San Valentín</div>
-        <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/Vocabulario%201.html')">Vocabulario - Familia</div>
-        <div class="griditem" onclick="showContent('./material/Nocturno%20Conv/Vocabulario%202.html')">Vocabulario - Fiestas</div>
+    <div class="index" id="index">
+      <header class="header serif">
+        <h1>Material de español</h1>
+        <h3>Elena García Herrero</h3>
+        <h4>2020</h4>
+      </header>
+      <div class="grid sans">
+        <a class="griditem" href="#Vocabulario%20redaccion.html">Vocabulario</a>
+        <a class="griditem" href="#Un%20cuento%20para%20cada%20dia%20del%20ano.html">Texto
+          en pretérito</a>
+        <a class="griditem" href="#Tarea%20redaccion.html">Redacción</a>
+        <a class="griditem" href="#Prueba.html">Introducción a la Gitanilla</a>
+        <a class="griditem" href="#Gitanilla1.pdf">Gitanilla 1</a>
+        <a class="griditem" href="#Gitanilla2.pdf">Gitanilla 2</a>
+        <a class="griditem" href="#Conversacion/como%20aprender%20palabras%20nuevas.html">
+          Cómo aprendemos nuevas palabras</a>
+        <a class="griditem" href="#Conversacion/Futuro.html">El futuro</a>
+        <a class="griditem" href="#Nocturno%20Conv/La%20familia%20Garcia.html">La familia
+          García</a>
+        <a class="griditem" href="#Nocturno%20Conv/Transcripción.html">Fiesta de San
+          Valentín</a>
+        <a class="griditem" href="#Nocturno%20Conv/Vocabulario%201.html">Vocabulario -
+          Familia</a>
+        <a class="griditem" href="#Nocturno%20Conv/Vocabulario%202.html">Vocabulario -
+          Fiestas</a>
       </div>
       <footer class="paragraph center-text serif">
         <a href="/">kykvit</a>
       </footer>
+    </div>
   </div>
-</div>
-<script type="text/javascript">
-  function showContent(contURL) {
-    const indexBox = document.getElementById('index');
-    indexBox.style.transform = 'scale(.8)';
-    indexBox.style.opacity = '0';
-    document.getElementById('iframe').src = contURL;
-    setTimeout(function () {
-      document.getElementById('iframeBox').style.opacity = '1';
-      document.getElementById('index').style.display = 'none';
-      document.getElementById('iframeBox').style.display = 'block';
-      //location.href = contURL;
-    }, 600, contURL);
-  }
-  function hideContent() {
-    document.getElementById('iframeBox').style.opacity = '0';
-    setTimeout(function(){
-      document.getElementById('iframeBox').style.display = 'none';
-      document.getElementById('iframe').src = '';
+  <script type="text/javascript">
+    window.addEventListener('hashchange', function () {
+      console.log(location.hash);
+      if (location.hash === "") {
+        console.log(true)
+        hideContent(1)
+      } else {
+        showContent("./material/"+location.hash.slice(1));
+      }
+    }, false);
+    function showContent(contURL) {
       const indexBox = document.getElementById('index');
-      indexBox.style.display = 'block';
-      indexBox.style.transform = 'scale(1)';
-      indexBox.style.opacity = '1';
-    }, 600)
-  }
-</script>
+      indexBox.style.transform = 'scale(.8)';
+      indexBox.style.opacity = '0';
+      document.getElementById('iframe').src = contURL;
+      setTimeout(function () {
+        document.getElementById('iframeBox').style.opacity = '1';
+        document.getElementById('index').style.display = 'none';
+        document.getElementById('iframeBox').style.display = 'block';
+        //location.href = contURL;
+      }, 600, contURL);
+    }
+    function hideContent(v) {
+      document.getElementById('iframeBox').style.opacity = '0';
+      if (v != 1) {
+        location.hash = "";
+        console.log('Triggered by hashchange event listener')
+      };
+      setTimeout(function () {
+        document.getElementById('iframeBox').style.display = 'none';
+        document.getElementById('iframe').src = '';
+        const indexBox = document.getElementById('index');
+        indexBox.style.display = 'block';
+        indexBox.style.transform = 'scale(1)';
+        indexBox.style.opacity = '1';
+      }, 600)
+    }
+  </script>
 </body>
+
 </html>
