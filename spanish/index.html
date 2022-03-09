@@ -208,7 +208,7 @@
       const indexBox = document.getElementById('index');
       indexBox.style.transform = 'scale(.8)';
       indexBox.style.opacity = '0';
-      document.getElementById('iframe').src = contURL;
+      document.getElementById('iframe').contentWindow.location.replace(contURL);
       setTimeout(function () {
         document.getElementById('iframeBox').style.opacity = '1';
         document.getElementById('index').style.display = 'none';
@@ -224,7 +224,7 @@
       };
       setTimeout(function () {
         document.getElementById('iframeBox').style.display = 'none';
-        document.getElementById('iframe').src = '';
+        document.getElementById('iframe').contentWindow.location.replace('');
         const indexBox = document.getElementById('index');
         indexBox.style.display = 'block';
         indexBox.style.transform = 'scale(1)';
